@@ -81,39 +81,45 @@ xfs ext* reiserfs
         - sulla VM 1
             spegni le vm e aggiungi due dischi
             pvscan
-            for x in /sys/class/scsi_host/host* ; do echo "- - -" > $x/scan && echo " test ->  $x/scan" ; done
-            dmesg -dT | egrep -i '(detected capacity change|Attached SCSI disk)'|tail -n 1
-            fdisk /dev/sdb
-            partprobe /dev/sdb se il primo non funziona usa -> partx -av /dev/sdb1
-            pvcreate /dev/sdb1
-            VG=VolGr1
-            LV=LogVol1
-            vgcreate $VG /dev/sdb1
-            lvcreate -n $LV -l +100%free $VG
-            LV_MAP=$(ls /dev/mapper/ | grep $LV )
-            mkfs.ext4 /dev/mapper/$LV_MAP
-            lsblk
-            df -h
-            pvcreate /dev/sdc
-            vgextend $VG /dev/sdc
-            lvextend -r -l +100%free /dev/mapper/$LV_MAP
-            cp -av /etc/fstab /etc/fstab.bak
-            echo "$(blkid /dev/mapper/$LV_MAP | awk '{print $2}' | sed -e 's/\"//g ') /nfs ext4 defaults 0 2" >> /etc/fstab
-            systemctl daemon-reload
-            mount /nfs
-            mkdir -p /nfs/nginx /nfs/backup /nfs/kube-nfs-pv
-            chown nobody:nogroup -R /nfs
-            rm -rf /nfs/lost+found
+```
+for x in /sys/class/scsi_host/host* ; do echo "- - -" > $x/scan && echo " test ->  $x/scan" ; done
+dmesg -dT | egrep -i '(detected capacity change|Attached SCSI disk)'|tail -n 1
+fdisk /dev/sdb
+partprobe /dev/sdb se il primo non funziona usa -> partx -av /dev/sdb1
+pvcreate /dev/sdb1
+VG=VolGr1
+LV=LogVol1
+vgcreate $VG /dev/sdb1
+lvcreate -n $LV -l +100%free $VG
+LV_MAP=$(ls /dev/mapper/ | grep $LV )
+mkfs.ext4 /dev/mapper/$LV_MAP
+lsblk
+df -h
+pvcreate /dev/sdc
+vgextend $VG /dev/sdc
+lvextend -r -l +100%free /dev/mapper/$LV_MAP
+cp -av /etc/fstab /etc/fstab.bak
+echo "$(blkid /dev/mapper/$LV_MAP | awk '{print $2}' | sed -e 's/\"//g ') /nfs ext4 defaults 0 2" >> /etc/fstab
+systemctl daemon-reload
+mount /nfs
+mkdir -p /nfs/nginx /nfs/backup /nfs/kube-nfs-pv
+chown nobody:nogroup -R /nfs
+rm -rf /nfs/lost+found
+```
 - esportiamo una share via nfs
-        - sulla VM 1
-            echo "/nfs *(rw,sync,no_root_squash,no_subtree_check)" > /etc/exports
-            systemctl restart nfs-server.service
-            exportfs -ar
-            showmount -a 127.0.0.1
-        - sulle vm 2 e 3 
-            mkdir -p /nfs
-            cp -av /etc/fstab /etc/fstab.bak
-            echo "controlplane:/nfs /nfs nfs defaults,proto=tcp,port=2049 0 0" >> /etc/fstab
-            systemctl daemon-reload
-            mount /nfs
-            ln -sf /nfs/nginx /etc/nginx
+- sulla VM 1
+```
+echo "/nfs *(rw,sync,no_root_squash,no_subtree_check)" > /etc/exports
+systemctl restart nfs-server.service
+exportfs -ar
+showmount -a 127.0.0.1
+```
+- sulle vm 2 e 3 
+```
+mkdir -p /nfs
+cp -av /etc/fstab /etc/fstab.bak
+echo "controlplane:/nfs /nfs nfs defaults,proto=tcp,port=2049 0 0" >> /etc/fstab
+systemctl daemon-reload
+mount /nfs
+ln -sf /nfs/nginx /etc/nginx
+```
