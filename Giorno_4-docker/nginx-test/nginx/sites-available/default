@@ -1,0 +1,63 @@
+map $remote_addr $logging {
+    default 1;
+    ~^127.0.0.1$ 0;
+    ~^172.29.0.1$ 0;
+}
+
+server {
+        listen 80 default_server;
+        server_name _;
+
+        access_log /var/log/nginx/www.default.innen.it.ssl_access.log combined if=$logging; 
+        error_log /var/log/nginx/www.default.innen.it.ssl_error.log;
+
+            location = / {
+                add_header Content-Type text/plain;
+                return 200 "Innovation Engineering default page!\n\nmy ip: $server_addr\n\nyour ip: $remote_addr";
+                allow 127.0.0.1; # localhost
+                allow 172.0.0.0/8; # classe docker e kubernetes
+                allow 192.168.0.0/16; # classe interna
+                deny all;
+            }
+            location /nginx_status {
+                autoindex on;
+                autoindex_exact_size on;
+                stub_status;
+                access_log off;
+                allow 127.0.0.1; # localhost
+                allow 172.0.0.0/8; # classe docker e kubernetes
+                allow 192.168.0.0/16; # classe interna
+                deny all;
+            }
+            location /health {
+                add_header Content-Type text/plain;
+                return 200 'alive';
+                access_log off;
+                allow 127.0.0.1; # localhost
+                allow 172.0.0.0/8; # classe docker e kubernetes
+                allow 192.168.0.0/16; # classe interna
+                deny all;                
+            }
+            error_page 404 /404.html;
+                location = /404.html{
+                    root ./html;
+                    internal;
+                }
+                
+            error_page 500 502 503 504 /custom_50x.html;
+            location = /custom_50x.html {
+                root ./html;
+                internal;
+            }
+
+            location = /robots.txt {
+                add_header Content-Type text/plain;
+                return 200 "User-agent: *\nDisallow: /\n";
+                access_log off;
+                allow 127.0.0.1; # localhost
+                allow 172.0.0.0/8; # classe docker e kubernetes
+                allow 192.168.0.0/16; # classe interna
+                deny all;                
+            }
+
+}

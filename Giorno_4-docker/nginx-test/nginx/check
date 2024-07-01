@@ -1,0 +1,130 @@
+ipanproject-wp05.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	ipanproject-wp05.portals
+Address: 192.168.5.126
+agrichemwey.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	agrichemwey.portals
+Address: 192.168.5.127
+arbaheat.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	arbaheat.portals
+Address: 192.168.5.127
+autonotex.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	autonotex.portals
+Address: 192.168.5.127
+biopen.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	biopen.portals
+Address: 192.168.5.127
+carbon4pur.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	carbon4pur.portals
+Address: 192.168.5.127
+chester.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	chester.portals
+Address: 192.168.5.127
+chest-project-wp05.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	chest-project-wp05.portals
+Address: 192.168.5.126
+collectors.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	collectors.portals
+Address: 192.168.5.127
+harbor.innen.it:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+** server can't find harbor.innen.it: NXDOMAIN
+demeter-wp05.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	demeter-wp05.portals
+Address: 192.168.5.126
+demeter-wp05.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	demeter-wp05.portals
+Address: 192.168.5.126
+localhost:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	localhost
+Address: 127.0.0.1
+Name:	localhost
+Address: ::1
+localhost:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	localhost
+Address: 127.0.0.1
+Name:	localhost
+Address: ::1
+ecotiles-lifeproject-wp05.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	ecotiles-lifeproject-wp05.portals
+Address: 192.168.5.126
+excornseed.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	excornseed.portals
+Address: 192.168.5.127
+gamma-project-wp05.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	gamma-project-wp05.portals
+Address: 192.168.5.126
+gasvessel.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	gasvessel.portals
+Address: 192.168.5.127
+gitlab.innen.it:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+** server can't find gitlab.innen.it: NXDOMAIN
+greencharge.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	greencharge.portals
+Address: 192.168.5.127
+dante.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	dante.portals
+Address: 192.168.5.127
+harbor.innen.it:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+** server can't find harbor.innen.it: NXDOMAIN
+health-breakthrough.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	health-breakthrough.portals
+Address: 192.168.5.127
+heatstack.eu/:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+** server can't find heatstack.eu/: NXDOMAIN
+inspire-wp05.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	inspire-wp05.portals
+Address: 192.168.5.126
+ipanproject-wp05.portals:Server:		192.168.7.211
+Address:	192.168.7.211#53
+
+Name:	ipanproject-wp05.portals
+Address: 192.168.5.126

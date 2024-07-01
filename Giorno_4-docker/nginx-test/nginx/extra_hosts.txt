@@ -1,0 +1,3 @@
+- "agrichemwey.portals arbaheat.portals autonotex.portals biopen.portals carbon4pur.portals ecotiles-lifeproject-wp05.portals gamma-project-wp05.portals greencharge.portals dante.portals ipanproject-wp05.portals:192.168.5.127"
+- "chester.portals collectors.portals excornseed.portals heatstack.eu inspire-wp05.portals:192.168.5.126"
+- "chest-project-wp05.portals health-breakthrough.portals:192.168.7.254"

@@ -1,0 +1,92 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-configmap1
+data:
+  virtualhost.conf: |
+    # Contenuto del file di configurazione del virtual host
+    server {
+        listen 80;
+        server_name example.com;
+
+        location / {
+                add_header Content-Type text/plain;
+                return 200 "Ciao!\n\nmy ip: $server_addr\n\nyour ip: $remote_addr";
+        }
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-configmap2
+data:
+  default.conf: |
+    # lasciato vuoto perche non voglio il file 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 1 # Numero di repliche del pod
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest # Utilizza l'immagine Docker di Nginx più recente
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: storage
+              mountPath: /mnt/data # Monta il PVC su /mnt/data
+            - name: config1
+              mountPath: /etc/nginx/conf.d/virtualhost.conf # Monta il file di configurazione del virtual host
+              subPath: virtualhost.conf # Specifica il nome del file nel ConfigMap
+            - name: config2
+              mountPath: /etc/nginx/conf.d/default.conf # Monta il file di configurazione del virtual host
+              subPath: default.conf # Specifica il nome del file nel ConfigMap
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: nginx-pvc # Nome del PVC da utilizzare
+        - name: config1
+          configMap:
+            name: nginx-configmap1 # Nome del ConfigMap
+        - name: config2
+          configMap:
+            name: nginx-configmap2 # Nome del ConfigMap
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-pvc
+spec:
+  storageClassName: managed-nfs-storage # Nome dello StorageClass da utilizzare
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi # Quantità di storage richiesta
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 10.0.0.245
+spec:
+  type: LoadBalancer # Espone il servizio su un indirizzo IP esterno
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
