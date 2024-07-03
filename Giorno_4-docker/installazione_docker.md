@@ -1,4 +1,6 @@
 ## setup corretto
+
+```
 mkdir -p /etc/docker
 cat > /etc/docker/daemon.json <<EOL
 {
@@ -10,8 +12,10 @@ cat > /etc/docker/daemon.json <<EOL
   "data-root": "/mnt/docker-data/docker"
 }
 EOL
+```
 
 ## installazione corretta su Debian
+```
 sudo apt-get update
 sudo apt-get install ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -26,9 +30,9 @@ sudo apt-get update
 apt -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 ln -sf /usr/libexec/docker/cli-plugins/docker-compose /usr/local/bin/
-
+```
 ## pulisci tutto
-
+```
 systemctl stop docker.socket
 systemctl stop docker.service
 
@@ -39,3 +43,4 @@ for PKG in $(dpkg -l | grep -Ei '(docker|runc|conteiner)'  | awk '{print $2}') ;
 apt autoremove -y
 for BR in $( ip --brief a s | grep br- | awk '{print $1}' ) ; do ip link delete $BR ; done
 ip link delete docker0
+```
