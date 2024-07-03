@@ -103,6 +103,7 @@ echo "$(blkid /dev/mapper/$LV_MAP | awk '{print $2}' | sed -e 's/\"//g ') /nfs e
 systemctl daemon-reload
 mount /nfs
 mkdir -p /nfs/nginx /nfs/backup /nfs/kube-nfs-pv
+ln -sf /nfs/nginx /etc/nginx
 chown nobody:nogroup -R /nfs
 rm -rf /nfs/lost+found
 ```

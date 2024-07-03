@@ -1,5 +1,3 @@
-
-# pass_aguments_to_script.sh
 #!/bin/bash
 #echo arguments to the shell
 echo $1 $2 $3 ' -> echo $1 $2 $3'

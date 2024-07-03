@@ -3,29 +3,36 @@
 `which bash
 /bin/bash`
 
-`# hello_world.sh
+```
+# hello_world.sh
 #!/bin/bash
 # declare STRING variable
 STRING="Hello World"
 # print variable on a screen
-echo $STRING`
+echo $STRING
+```
 
+```
 $ chmod +x hello_world.sh 
 $ ./hello_world.sh 
+```
 
 Hello World
 
 ## Variables in Bash scripts
 
-`# backup_nginx.sh
+```
+# backup_nginx.sh
 #!/bin/bash
-tar cvfj /nfs/backup/nginx_logs-$(date +'%d-%m-%Y'-%H.%M).tar.gz -C /var/log/nginx`
+tar cvfj /nfs/backup/nginx_logs-$(date +'%d-%m-%Y'-%H.%M).tar.gz -C /var/log/nginx .
+```
 
 
 ### Global vs. Local variables
 In Bash scripting, a global variable is a variable that can be used anywhere inside the script. A local variable will only be used within the function that it is declared in. Check out the example below where we declare both a global variable and local variable. We’ve made some comments in the script to make it a little easier to digest.
 
-`# vars.sh
+```
+# vars.sh
 #!/bin/bash
 VAR="global variable"
 
@@ -35,11 +42,13 @@ echo $VAR
 }
 echo $VAR
 bash
-echo $VAR`
+echo $VAR
+```
 
 ## Passing arguments to the bash scripting tutorial
 
-`# pass_aguments_to_script.sh
+```
+# pass_aguments_to_script.sh
 #!/bin/bash
 #echo arguments to the shell
 echo $1 $2 $3 ' -> echo $1 $2 $3'
@@ -48,7 +57,8 @@ args=("$@")
 echo ${args[0]} ${args[1]} ${args[2]} ' -> args=("$@"); echo ${args[0]} ${args[1]} ${args[2]}'
 #use $@ to print out all arguments at once
 echo $@ ' -> echo $@'
-echo Number of arguments passed: $# ' -> echo Number of arguments passed: $#'`
+echo Number of arguments passed: $# ' -> echo Number of arguments passed: $#'
+```
 
 ## Executing shell commands with bash
 
