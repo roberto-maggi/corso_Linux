@@ -2,7 +2,7 @@
 
 ```
 mkdir -p /etc/docker
-cat > /etc/docker/daemon.json <<EOL
+cat > /etc/docker/daemon.json << EOL
 {
   "bip": "10.0.1.1/24",
   "ipv6": false,
