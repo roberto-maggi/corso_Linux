@@ -13,7 +13,8 @@ server {
 
             location = / {
                 add_header Content-Type text/plain;
-                return 200 "Innovation Engineering default page!\n\nmy ip: $server_addr\n\nyour ip: $remote_addr";
+                return 200 "\n\nCiao sono 1 - 2 -3";
+                # return 200 "\n\nmy ip: $server_addr\n\nyour ip: $remote_addr\n\n";
                 allow 127.0.0.1; # localhost
                 allow 172.0.0.0/8; # classe docker e kubernetes
                 allow 192.168.0.0/16; # classe interna

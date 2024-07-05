@@ -80,8 +80,8 @@ Cioe'? e' un chroot!
 
 ```
 docker create --name="testONE" alpine
-docker run -d -ti --name testONE --hostname=ciao -l Friday=Jason -l night=Freddy -l Halloween=Michael alpine:latest
-docker exec -ti testONE /bin/sh && docker stop testONE && docker rm -f testONE
+docker run -d -ti --name testTWO --hostname=ciao -l Friday=Jason -l Night=Freddy -l Halloween=Michael alpine:latest
+docker exec -ti testTWO /bin/sh && docker stop testTWO && docker rm -f testTWO
 ```
 ```
 hostname
@@ -151,8 +151,8 @@ cancellare tutte le immagini dei container in status "exited"
 
 ### Ispezioniamo un container 
 ```
-docker run -d -ti --name testONE --hostname=ciao ubuntu:latest
-docker inspect testONE
+docker run -d -ti --name testONE --hostname=ciao alpine:latest
+docker inspect testONE | less
 ```
 
 ### Dentro un container
