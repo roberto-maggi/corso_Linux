@@ -15,12 +15,12 @@ vagrant ssh node02
 ### Il valore dell'immutabilita'
 Un container non subisce modifiche da parte dell'utente, al contrario di una vm.
 
-### Configurazione dichiaratica
+### Configurazione dichiarativa
 command line vs. yaml
 
 ### Sistemi Autoriparativi
 
-## Scaling
+### Scaling
 
 K8S ha un sistema di deploy che favorisce lo sviluppo decoupled, 
 tramite l'uso intensivo di API e Load Balancers.
