@@ -8,8 +8,8 @@ server {
         listen 80 default_server;
         server_name _;
 
-        access_log /var/log/nginx/www.default.innen.it.ssl_access.log combined if=$logging; 
-        error_log /var/log/nginx/www.default.innen.it.ssl_error.log;
+        access_log /var/log/nginx/www.default.access.log combined if=$logging; 
+        error_log /var/log/nginx/www.default.error.log;
 
             location = / {
                 add_header Content-Type text/plain;

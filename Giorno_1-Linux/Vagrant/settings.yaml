@@ -19,6 +19,17 @@ network:
     - 1.1.1.1
   pod_cidr: 172.16.1.0/16
   service_cidr: 172.17.1.0/18
+gateway:
+  host_ip: 127.0.0.1
+  host_port: 2251
+  guest_ip: 10.0.0.15
+  ssh_port: 22
+  dns_servers:
+    - 8.8.8.8
+    - 1.1.1.1
+  bridge_nic: wlp0s20f3
+  pub_in: eth2
+  priv_out: eth1
 nodes:
   control:
     cpu: 2
@@ -38,5 +49,4 @@ software:
   # To skip the dashboard installation, set its version to an empty value or comment it out:
   dashboard: 2.7.0
   kubernetes: 1.29.0-*
-
   os: wormwood
