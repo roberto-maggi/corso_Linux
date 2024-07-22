@@ -4,7 +4,7 @@
 ## install nfs
 apt -y install nfs-kernel-server
 mkdir -p /nfs
-echo -e "/nfs (*)(rw,sync,no_root_squash,no_subtree_check)"  > /etc/exports
+echo -e "/nfs *(rw,sync,no_root_squash,no_subtree_check)"  > /etc/exports
 exportfs -ra 
 
 # primo script
@@ -62,24 +62,17 @@ EOF
 
 # download the lecture's repo
 cd /opt
-git clone git@github.com:roberto-maggi/CI-CD.git
+GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new" git clone git@github.com:roberto-maggi/CI-CD.git
 
 # install MetalLB
-kubectl --kubeconfig=/etc/kubernetes/admin.conf get configmap kube-proxy -n kube-system -o yaml | sed -e "s/strictARP: false/strictARP: true/" | kubectl --kubeconfig=/etc/kubernetes/admin.conf diff -f - -n kube-system
-kubectl --kubeconfig=/etc/kubernetes/admin.conf get configmap kube-proxy -n kube-system -o yaml | sed -e "s/strictARP: false/strictARP: true/" | kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f - -n kube-system  
-kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.3/config/manifests/metallb-native.yaml
-kubectl apply -f  /opt/CI-CD/Giorno_3_k8s/manifesti/metal-lb/IPaddress-pool.yaml
-kubectl apply -f  /opt/CI-CD/Giorno_3_k8s/manifesti/metal-lb/L2Advertisement.yaml
+# kubectl --kubeconfig=/etc/kubernetes/admin.conf get configmap kube-proxy -n kube-system -o yaml | sed -e "s/strictARP: false/strictARP: true/" | kubectl --kubeconfig=/etc/kubernetes/admin.conf diff -f - -n kube-system
+# kubectl --kubeconfig=/etc/kubernetes/admin.conf get configmap kube-proxy -n kube-system -o yaml | sed -e "s/strictARP: false/strictARP: true/" | kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f - -n kube-system  
+# kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.3/config/manifests/metallb-native.yaml
+# kubectl apply -f  /opt/CI-CD/Giorno_3_k8s/manifesti/metal-lb/IPaddress-pool.yaml
+# kubectl apply -f  /opt/CI-CD/Giorno_3_k8s/manifesti/metal-lb/L2Advertisement.yaml
 
 # deploy nfs provisioner
-kubectl apply -f  /opt/CI-CD/Giorno_3_k8s/manifesti/nfs-provioner/nuovo/dynamic_subdir.yml
+# kubectl apply -f  /opt/CI-CD/Giorno_3_k8s/manifesti/nfs-provioner/nuovo/dynamic_subdir.yml
 
 # install nginx on 10.0.0.245 ( LB )
-kubectl apply -f   /opt/CI-CD/Giorno_3_k8s/manifesti/nginx/nginx+pvc+lb.yml
-
-# GIT first configuration
-cd /opt/CI-CD/Giorno_2_Docker/nginx-test-repo/
-git config --global user.name "greleaser"
-git config --global user.email greleaser@example.com
-git config --global core.editor vim
-git config --global init.defaultBranch main
+# kubectl apply -f   /opt/CI-CD/Giorno_3_k8s/manifesti/nginx/nginx+pvc+lb.yml

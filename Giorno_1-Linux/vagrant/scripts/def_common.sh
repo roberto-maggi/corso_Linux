@@ -1,13 +1,14 @@
 #!/bin/bash
-#
+
+# Common setup for all servers (Control Plane and Nodes)
+
+set -euxo pipefail
+
 systemctl set-default multi-user.target
 export DEBIAN_FRONTEND=noninteractive
 apt -y update
-apt install -y bzip2 chrony net-tools vim net-tools console-data bash-completion ufw tree git systemd-resolved parted ca-certificates curl
-systemctl disable --now apparmor
+apt install -y bzip2 chrony net-tools vim net-tools console-data bash-completion ufw tree git systemd-resolved parted
 apt -y remove apparmor
-
-# FIREWALL 
 
 ufw disable 
 
@@ -16,25 +17,6 @@ if test -e /usr/sbin/iptables ;
 		iptables -F
 		iptables -X ;
 fi
-
-sysctl net.ipv6.conf.all.disable_ipv6=1 > /dev/null
-sysctl net.ipv6.conf.default.disable_ipv6=1 > /dev/null
-for NIC in $(ip -br a s  | grep -vE '(br-|docker|vbo|tun|lo)'|awk '{print $1}') ; do
-    sysctl net.ipv4.conf.$NIC.forwarding=1 > /dev/null
-    sysctl net.ipv6.conf.$NIC.disable_ipv6=1 > /dev/null; done
-sysctl --system > /dev/null
-
-IPT="/sbin/iptables"
-
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-#SSH
-iptables -A INPUT -i $PUB_IN -p tcp --dport 22 -j ACCEPT
-
-
-# $IPT -t nat -A POSTROUTING -o $IF_OUT -j MASQUERADE
-# $IPT -A FORWARD -i $IF_IN -o $IF_OUT -j ACCEPT
-# $IPT -A FORWARD -m state --state RELATED,ESTABLISHED -i $IF_OUT -o $IF_IN -j ACCEPT
-
 
 # there's a bug in debian/ubuntu on keymap ...
 # wget https://mirrors.edge.kernel.org/pub/linux/utils/kbd/kbd-2.5.1.tar.gz -O /tmp/kbd-2.5.1.tar.gz
@@ -45,7 +27,7 @@ iptables -A INPUT -i $PUB_IN -p tcp --dport 22 -j ACCEPT
 
 # user 		vagrant
 # password 	vagrant
-usermod -aG vagrant
+usermod -aG sudo vagrant
 chmod 700 /home/vagrant/		
 ln -sf /vagrant/ /home/vagrant/
 mkdir -p /home/vagrant/.ssh
@@ -87,13 +69,13 @@ systemctl restart chrony
 
 # give system wide access to sudoers
 sed -i '/sudo/d' /etc/sudoers
-echo -e '%  ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
+echo -e '%sudo   ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # ssh setup
 mkdir -p /etc/systemd/system/ssh.socket.d/
 echo -e "[Socket]" > /etc/systemd/system/ssh.socket.d/listen.conf 
-echo -e "ListenStream=9222" >> /etc/systemd/system/ssh.socket.d/listen.conf
-sed -i 's/^#Port 22/Port 9222/g' /etc/ssh/sshd_config
+echo -e "ListenStream=22" >> /etc/systemd/system/ssh.socket.d/listen.conf
+sed -i 's/^#Port 22/Port 22/g' /etc/ssh/sshd_config
 sed -i 's/^#PermitRootLogin/PermitRootLogin/g' /etc/ssh/sshd_config
 sed -i 's/prohibit-password/yes/g' /etc/ssh/sshd_config
 sed -i 's/^#PubkeyAuthentication/PubkeyAuthentication/g' /etc/ssh/sshd_config
@@ -106,60 +88,29 @@ cp /vagrant/files/ssh_restart.sh /root/ssh_restart.sh
 chmod +x /root/ssh_restart.sh
 /root/ssh_restart.sh &
 
-# Common setup for all servers (Control Plane and Nodes)
-
-set -euxo pipefail
-
-# Variable Declaration
-
 # DNS Setting
 if [ ! -d /etc/systemd/resolved.conf.d ]; then
-	mkdir -p /etc/systemd/resolved.conf.d/
+	sudo mkdir /etc/systemd/resolved.conf.d/
 fi
-cat <<EOF | tee /etc/systemd/resolved.conf.d/dns_servers.conf
+cat <<EOF | sudo tee /etc/systemd/resolved.conf.d/dns_servers.conf
 [Resolve]
 DNS=${DNS_SERVERS}
 EOF
 
-systemctl restart systemd-resolved
+sudo systemctl restart systemd-resolved
 
-# enable swap
-swapon -a
+# disable swap
+# sudo swapoff -a
 
-# install and configure docker
-mkdir -p /etc/docker /mnt/docker-data/docker
-cat > /etc/docker/daemon.json << EOL
-{
-  "bip": "10.0.1.1/24",
-  "ipv6": false,
-  "default-address-pools": [
-    { "base": "10.0.64.0/18", "size": 24 }
-  ],
-  "data-root": "/mnt/docker-data/docker"
-}
-EOL
+# keeps the swaf off during reboot
+# (crontab -l 2>/dev/null; echo "@reboot /sbin/swapoff -a") | crontab - || true
 
-install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-chmod a+r /etc/apt/keyrings/docker.asc
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  tee /etc/apt/sources.list.d/docker.list > /dev/null
-apt-get update -y
-
-apt -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-ln -sf /usr/libexec/docker/cli-plugins/docker-compose /usr/local/bin/
-
-# install gitlab
-cd /opt
-git clone git@github.com:roberto-maggi/CI-CD.git
-ln -sf /opt/CI-CD/Giorno_2_Docker/gitlab/ ./gitlab
-GITLAB_HOME=/opt/gitlab
-cd $GITLAB_HOME
-mkdir -p data logs config/gitlab-runner
-touch config/gitlab-runner/config.toml
-GITLAB_HOME=/opt/gitlab/ docker-compose -d up
-
+sysctl -w net.ipv4.icmp_echo_ignore_all=1
+sysctl -w net.ipv6.conf.all.disable_ipv6=1
+sysctl -w net.ipv6.conf.default.disable_ipv6=1
+sysctl -w net.ipv4.ip_forward=1
+for NIC in $(ip -br a s | awk '{print $1}') ; do
+	sysctl -w net.ipv6.conf.$NIC.disable_ipv6=1 ;
+	done
+sysctl -p
 

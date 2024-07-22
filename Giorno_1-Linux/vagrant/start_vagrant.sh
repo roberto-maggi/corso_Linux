@@ -57,11 +57,9 @@ while [ $1 ]; do
                         ;;
                 '--def' | '-d' )
                         DEF
-                        exit 0
                         ;;
                 '--k8s' | '-k' )
                         K8S
-                        exit 0
                         ;;
                 * )
                         HEAD
@@ -72,6 +70,15 @@ while [ $1 ]; do
         shift
 done
 
+vagrant validate
 HEAD
-
-echo "Now you can run --> vagrant up <--"
+echo -e "\nNow you can run --> vagrant up <--\n"
+echo "to reach to the network 10.0.0.0/24 run:"
+echo "ip route del 10.0.0.0/24  via 0.0.0.0"
+echo "and something like:"
+echo "sudo ip route add 10.0.0.10/24 via 192.168.1.25 dev wlp0s20f3
+sudo ip route add 10.0.0.10/32 via 192.168.1.25 dev wlp0s20f3
+sudo ip route add 10.0.0.11/32 via 192.168.1.25 dev wlp0s20f3
+sudo ip route add 10.0.0.12/32 via 192.168.1.25 dev wlp0s20f3"
+echo "on windows, something like:"
+echo "route -p ADD 10.0.0.10 MASK 255.255.255.255 192.168.1.25"

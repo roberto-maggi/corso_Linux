@@ -1,9 +1,12 @@
 #!/bin/bash
 #
+set -euxo pipefail
+
+
 systemctl set-default multi-user.target
 export DEBIAN_FRONTEND=noninteractive
 apt -y update
-apt install -y bzip2 chrony net-tools vim net-tools console-data bash-completion ufw tree git systemd-resolved parted ca-certificates curl
+apt install -y bzip2 chrony net-tools vim net-tools console-data bash-completion ufw tree git systemd-resolved ca-certificates curl iptables-persistent
 systemctl disable --now apparmor
 apt -y remove apparmor
 
@@ -14,27 +17,34 @@ ufw disable
 if test -e /usr/sbin/iptables ;
 	then
 		iptables -F
+		iptables -t nat -F
+		iptables -t mangle -F
 		iptables -X ;
 fi
 
-sysctl net.ipv6.conf.all.disable_ipv6=1 > /dev/null
-sysctl net.ipv6.conf.default.disable_ipv6=1 > /dev/null
+
+sysctl -w net.ipv4.icmp_echo_ignore_all=1 > /dev/null
+sysctl -w net.ipv4.ip_forward=1 > /dev/null
+sysctl -w net.ipv6.conf.all.disable_ipv6=1 > /dev/null
+sysctl -w net.ipv6.conf.default.disable_ipv6=1 > /dev/null
 for NIC in $(ip -br a s  | grep -vE '(br-|docker|vbo|tun|lo)'|awk '{print $1}') ; do
-    sysctl net.ipv4.conf.$NIC.forwarding=1 > /dev/null
-    sysctl net.ipv6.conf.$NIC.disable_ipv6=1 > /dev/null; done
+    sysctl -w net.ipv4.conf.$NIC.forwarding=1 > /dev/null
+    sysctl -w net.ipv6.conf.$NIC.disable_ipv6=1 > /dev/null; done
 sysctl --system > /dev/null
 
 IPT="/sbin/iptables"
+PUB_NET=$(ip route | grep src | grep $PUB_IN | awk '{print $1}'| tail -n 1)
+PRIV_NET=$(ip route | grep src | grep $PRIV_OUT | awk '{print $1}'| tail -n 1)
 
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 #SSH
-iptables -A INPUT -i $PUB_IN -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -i $PUB_IN -p tcp --dport 9222 -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
+iptables -A FORWARD -s $PUB_NET -d $PRIV_NET -j ACCEPT
+iptables -A FORWARD -s $PRIV_NET -d $PUB_NET -j ACCEPT
+iptables -t nat -A POSTROUTING -o $PRIV_OUT -s $PUB_NET -d $PRIV_NET -j MASQUERADE
 
-# $IPT -t nat -A POSTROUTING -o $IF_OUT -j MASQUERADE
-# $IPT -A FORWARD -i $IF_IN -o $IF_OUT -j ACCEPT
-# $IPT -A FORWARD -m state --state RELATED,ESTABLISHED -i $IF_OUT -o $IF_IN -j ACCEPT
-
+netfilter-persistent save
 
 # there's a bug in debian/ubuntu on keymap ...
 # wget https://mirrors.edge.kernel.org/pub/linux/utils/kbd/kbd-2.5.1.tar.gz -O /tmp/kbd-2.5.1.tar.gz
@@ -45,7 +55,7 @@ iptables -A INPUT -i $PUB_IN -p tcp --dport 22 -j ACCEPT
 
 # user 		vagrant
 # password 	vagrant
-usermod -aG vagrant
+usermod -aG sudo vagrant
 chmod 700 /home/vagrant/		
 ln -sf /vagrant/ /home/vagrant/
 mkdir -p /home/vagrant/.ssh
@@ -107,9 +117,6 @@ chmod +x /root/ssh_restart.sh
 /root/ssh_restart.sh &
 
 # Common setup for all servers (Control Plane and Nodes)
-
-set -euxo pipefail
-
 # Variable Declaration
 
 # DNS Setting
@@ -126,40 +133,40 @@ systemctl restart systemd-resolved
 # enable swap
 swapon -a
 
-# install and configure docker
-mkdir -p /etc/docker /mnt/docker-data/docker
-cat > /etc/docker/daemon.json << EOL
-{
-  "bip": "10.0.1.1/24",
-  "ipv6": false,
-  "default-address-pools": [
-    { "base": "10.0.64.0/18", "size": 24 }
-  ],
-  "data-root": "/mnt/docker-data/docker"
-}
-EOL
+# # install and configure docker
+# mkdir -p /etc/docker /mnt/docker-data/docker
+# cat > /etc/docker/daemon.json << EOL
+# {
+#   "bip": "10.0.1.1/24",
+#   "ipv6": false,
+#   "default-address-pools": [
+#     { "base": "10.0.64.0/18", "size": 24 }
+#   ],
+#   "data-root": "/mnt/docker-data/docker"
+# }
+# EOL
 
-install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-chmod a+r /etc/apt/keyrings/docker.asc
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  tee /etc/apt/sources.list.d/docker.list > /dev/null
-apt-get update -y
+# install -m 0755 -d /etc/apt/keyrings
+# curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+# chmod a+r /etc/apt/keyrings/docker.asc
+# echo \
+#   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+#   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+#   tee /etc/apt/sources.list.d/docker.list > /dev/null
+# apt-get update -y
 
-apt -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+# apt -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-ln -sf /usr/libexec/docker/cli-plugins/docker-compose /usr/local/bin/
+# ln -sf /usr/libexec/docker/cli-plugins/docker-compose /usr/local/bin/
 
-# install gitlab
-cd /opt
-git clone git@github.com:roberto-maggi/CI-CD.git
-ln -sf /opt/CI-CD/Giorno_2_Docker/gitlab/ ./gitlab
-GITLAB_HOME=/opt/gitlab
-cd $GITLAB_HOME
-mkdir -p data logs config/gitlab-runner
-touch config/gitlab-runner/config.toml
-GITLAB_HOME=/opt/gitlab/ docker-compose -d up
+# # install gitlab
+# cd /opt
+# git clone git@github.com:roberto-maggi/CI-CD.git
+# ln -sf /opt/CI-CD/Giorno_2_Docker/gitlab/ ./gitlab
+# GITLAB_HOME=/opt/gitlab
+# cd $GITLAB_HOME
+# mkdir -p data logs config/gitlab-runner
+# touch config/gitlab-runner/config.toml
+# GITLAB_HOME=/opt/gitlab/ docker-compose -d up
 
 
