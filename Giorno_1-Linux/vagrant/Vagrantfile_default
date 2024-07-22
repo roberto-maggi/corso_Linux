@@ -1,0 +1,133 @@
+
+require "yaml"
+vagrant_root = File.dirname(File.expand_path(__FILE__))
+settings = YAML.load_file "#{vagrant_root}/settings.yaml"
+
+IP_SECTIONS = settings["network"]["control_ip"].match(/^([0-9.]+\.)([^.]+)$/)
+# First 3 octets including the trailing dot:
+IP_NW = IP_SECTIONS.captures[0]
+# Last octet excluding all dots:
+IP_START = Integer(IP_SECTIONS.captures[1])
+NUM_WORKER_NODES = settings["nodes"]["workers"]["count"]
+
+
+Vagrant.configure("2") do |config|
+  config.vm.provision "shell", env: { "IP_NW" => IP_NW, "IP_START" => IP_START, "NUM_WORKER_NODES" => NUM_WORKER_NODES }, inline: <<-SHELL
+      apt-get update -y
+      echo "$IP_NW$((IP_START)) controlplane" >> /etc/hosts
+      for i in `seq 1 ${NUM_WORKER_NODES}`; do
+        echo "$IP_NW$((IP_START+i)) node0${i}" >> /etc/hosts
+      done
+  SHELL
+
+  if `uname -m`.strip == "aarch64"
+    config.vm.box = settings["software"]["box"] + "-arm64"
+  else
+    config.vm.box = settings["software"]["box"]
+  end
+  config.vm.box_check_update = true
+
+  config.ssh.private_key_path = "./keys/id_ed25519"
+	config.ssh.forward_agent = true
+	config.ssh.username = 'vagrant'
+	config.ssh.password = 'vagrant'
+  if Vagrant.has_plugin?("vagrant-vbguest")
+		config.vbguest.auto_update = false
+	end
+	Vagrant::Config.run do |config|
+		# config.vbguest.iso_path = "~/Downloads/VBoxGuestAdditions_7.0.18.iso" 
+		config.vbguest.iso_path = "https://download.virtualbox.org/virtualbox/7.0.18/VBoxGuestAdditions_7.0.18.iso"
+		
+	end
+
+  config.vm.define "controlplane" do |controlplane|
+    controlplane.vm.hostname = "controlplane"
+    controlplane.vm.network "private_network", ip: settings["network"]["control_ip"]
+    controlplane.vm.network "forwarded_port", host_ip: settings["network"]["host_ip"], host: settings["network"]["host_port"], guest_ip: settings["network"]["control_ip"] , guest: settings["network"]["ssh_port"]
+
+    if settings["shared_folders"]
+      settings["shared_folders"].each do |shared_folder|
+        controlplane.vm.synced_folder shared_folder["host_path"], shared_folder["vm_path"]
+      end
+    end
+    controlplane.vm.provider "virtualbox" do |vb|
+        vb.cpus = settings["nodes"]["control"]["cpu"]
+        vb.memory = settings["nodes"]["control"]["memory"]
+        if settings["cluster_name"] and settings["cluster_name"] != ""
+          vb.customize ["modifyvm", :id, "--groups", ("/" + settings["cluster_name"])]
+        end
+    end
+    controlplane.vm.provision "shell",
+      env: {
+        "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
+        "ENVIRONMENT" => settings["environment"],
+        "OS" => settings["software"]["os"]
+      },
+      path: "scripts/def_common.sh"      
+    controlplane.vm.provision "shell",
+      env: {
+        "CONTROL_IP" => settings["network"]["control_ip"],
+        "SERVICE_CIDR" => settings["network"]["service_cidr"]
+      },
+      path: "scripts/def_master.sh"
+  end
+
+  (1..NUM_WORKER_NODES).each do |i|
+
+    config.vm.define "node0#{i}" do |node|
+      node.vm.hostname = "node0#{i}"
+      node.vm.network "private_network", ip: IP_NW + "#{IP_START + i}"
+      node.vm.network "forwarded_port", host_ip: settings["network"]["host_ip"], host: "224#{i}", guest_ip: IP_NW + "#{IP_START + i}" , guest: settings["network"]["ssh_port"]
+      if settings["shared_folders"]
+        settings["shared_folders"].each do |shared_folder|
+          node.vm.synced_folder shared_folder["host_path"], shared_folder["vm_path"]
+        end
+      end
+      node.vm.provider "virtualbox" do |vb|
+          vb.cpus = settings["nodes"]["workers"]["cpu"]
+          vb.memory = settings["nodes"]["workers"]["memory"]
+          if settings["cluster_name"] and settings["cluster_name"] != ""
+            vb.customize ["modifyvm", :id, "--groups", ("/" + settings["cluster_name"])]
+          end
+      end
+      node.vm.provision "shell",
+        env: {
+          "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
+          "ENVIRONMENT" => settings["environment"],
+          "OS" => settings["software"]["os"]
+        },
+        path: "scripts/def_common.sh"
+      node.vm.provision "shell", path: "scripts/def_node.sh"
+
+      # Only install the dashboard after provisioning the last worker (and when enabled).
+    end
+
+  end
+
+  config.vm.define "gateway" do |gateway|
+    gateway.vm.hostname = "gateway"
+    gateway.vm.network "private_network", ip: settings["gateway"]["guest_ip"]
+    gateway.vm.network "forwarded_port", host_ip: settings["gateway"]["host_ip"], host: settings["gateway"]["host_port"], guest_ip: settings["gateway"]["guest_ip"] , guest: settings["gateway"]["ssh_port"]
+    gateway.vm.network "public_network" , bridge: settings["gateway"]["bridge_nic"]
+    if settings["shared_folders"]
+      settings["shared_folders"].each do |shared_folder|
+        gateway.vm.synced_folder shared_folder["host_path"], shared_folder["vm_path"]
+      end
+    end
+    gateway.vm.provider "virtualbox" do |vb|
+        vb.cpus = settings["nodes"]["control"]["cpu"]
+        vb.memory = settings["nodes"]["control"]["memory"]
+        if settings["cluster_name"] and settings["cluster_name"] != ""
+          vb.customize ["modifyvm", :id, "--groups", ("/" + settings["cluster_name"])]
+        end
+    end
+    gateway.vm.provision "shell",
+    env: {
+      "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
+      "PUB_IN" => settings["gateway"]["pub_in"],
+      "PRIV_OUT" => settings["gateway"]["priv_out"]
+    },
+    path: "scripts/def_gateway.sh"
+  end
+
+end 
