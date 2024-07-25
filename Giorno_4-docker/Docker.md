@@ -36,8 +36,7 @@ I container docker sono stateless e permettono di sviluppare applicazioni decoup
 ### Filesystem layers
 I container sono costituiti da strati impilati di file system ( sempre lo stesso tipo ),
 sui quali vengono registrati solo i cambiamenti rispetto allo strato precedente.
-Questo permette un'aumento delle prestazioni di download, perche' vengono scaricati solo i layer mancanti, e gestione della storia del container. 
-
+Questo permette un'aumento delle prestazioni di download, perche' vengono scaricati solo i layer mancanti, e gestione della storia del container.
 
 ### Il nostro primo build
 ```
@@ -141,7 +140,7 @@ I limiti alla memoria ( ram / swap ) sono "hard limits".
 ### Le immagini dei container
 
 ```
-docker images
+    docker images
 docker rmi <nome_dell_immagine>
 ```
 
@@ -178,3 +177,17 @@ for BR in $( ip --brief a s | grep br- | awk '{print $1}' ) ; do ip link delete 
 ip link delete docker0
 
 ```
+
+
+### Consigli
+
+alias dock_ck='docker-compose -f config --quiet && printf "OK\n" || printf "ERROR\n"'
+alias dp='docker ps -a'
+alias docker_prune='for x in $(docker ps -a | grep Exited | awk "{print $1}") ; do docker rm -f $x ; done'
+
+function docker_sdraia_tutto() {
+        for DOCK in $( docker ps -a | awk '{print $NF}' | tail -n +2 ) ; do 
+                docker stop $DOCK 2>&1 > /dev/null
+                docker rm -f  $DOCK ;
+        done
+}

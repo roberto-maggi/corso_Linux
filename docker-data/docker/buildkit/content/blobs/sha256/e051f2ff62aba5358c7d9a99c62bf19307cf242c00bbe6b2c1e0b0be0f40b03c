@@ -1,0 +1,6989 @@
+{
+  "Name": "moby.buildkit.v1.Control/ListWorkers",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "cfa38e4d98ad2933",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "37fc21ace06e941e",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": true
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:58.761057648Z",
+  "EndTime": "2024-07-25T08:52:58.778893827Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "ListWorkers"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.frontend.LLBBridge/Ping",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "2dcea6ddcf90223d",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "0209882dc357f832",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": true
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:58.779791003Z",
+  "EndTime": "2024-07-25T08:52:58.780529855Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.frontend.LLBBridge"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Ping"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.frontend.LLBBridge/Return",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "4a5c84c2ddde0874",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "559e965d8b86cf7f",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": true
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:58.780821728Z",
+  "EndTime": "2024-07-25T08:52:58.78096008Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.frontend.LLBBridge"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Return"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.Control/Status",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "1776d74a34c62f00",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "e5a75cb13d6a9915",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": true
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:58.779816941Z",
+  "EndTime": "2024-07-25T08:52:58.781502417Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Status"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.Control/Solve",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "d7b80c4a8d351662",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "e457f0e6b0a75f3f",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": true
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:58.779794066Z",
+  "EndTime": "2024-07-25T08:52:58.781765474Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Solve"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.Control/ListWorkers",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "66bc06c40356586c",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a94aa52f4dbe9666",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": true
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:58.788370435Z",
+  "EndTime": "2024-07-25T08:52:58.788454415Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "ListWorkers"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.Control/ListWorkers",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "79f6151d672455f4",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "984e00660afdce48",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": true
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:58.789469474Z",
+  "EndTime": "2024-07-25T08:52:58.789563671Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "ListWorkers"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.frontend.LLBBridge/Ping",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "8688e080eecf0e0f",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "642f30713caae9aa",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": true
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:58.789945802Z",
+  "EndTime": "2024-07-25T08:52:58.790230058Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.frontend.LLBBridge"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Ping"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "cache request: [internal] load build definition from Dockerfile",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "400c5c2d21052584",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7af311be95a1d365",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 1,
+  "StartTime": "2024-07-25T08:52:58.79101142Z",
+  "EndTime": "2024-07-25T08:52:58.791045151Z",
+  "Attributes": [
+    {
+      "Key": "vertex",
+      "Value": {
+        "Type": "STRING",
+        "Value": "sha256:9c606f988f204c25223f3925efa93dd7b10dd2a23f38bc566da666c69eee3b97"
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/otel/sdk/tracer",
+    "Version": "",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.filesync.v1.FileSync/DiffCopy",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "b9750cbcbf9afe2e",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7007bf0aa6e242f4",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.793141708Z",
+  "EndTime": "2024-07-25T08:52:58.794932226Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.filesync.v1.FileSync"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "DiffCopy"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "[internal] load build definition from Dockerfile",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7007bf0aa6e242f4",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7af311be95a1d365",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 1,
+  "StartTime": "2024-07-25T08:52:58.791101442Z",
+  "EndTime": "2024-07-25T08:52:58.795472317Z",
+  "Attributes": [
+    {
+      "Key": "vertex",
+      "Value": {
+        "Type": "STRING",
+        "Value": "sha256:9c606f988f204c25223f3925efa93dd7b10dd2a23f38bc566da666c69eee3b97"
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 1,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/otel/sdk/tracer",
+    "Version": "",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.filesync.v1.Auth/GetTokenAuthority",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "465dca9ac77f8045",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7af311be95a1d365",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:59.404790403Z",
+  "EndTime": "2024-07-25T08:52:59.408429543Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.filesync.v1.Auth"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "GetTokenAuthority"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "remotes.docker.resolver.HTTPRequest",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "11d6a591451b2532",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7af311be95a1d365",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.798237716Z",
+  "EndTime": "2024-07-25T08:52:59.408448795Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "HEAD"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "https://registry-1.docker.io/v2/library/node/manifests/18.13.0"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.user_agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 401
+      }
+    },
+    {
+      "Key": "http.response_content_length",
+      "Value": {
+        "Type": "INT64",
+        "Value": 155
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 1,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 1,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "HTTP HEAD",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "f9b472d474d43403",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "11d6a591451b2532",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.798250335Z",
+  "EndTime": "2024-07-25T08:52:59.408450202Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "HEAD"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "https://registry-1.docker.io/v2/library/node/manifests/18.13.0"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.user_agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.request.header.host",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.request.header.user-agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.request.header.accept",
+      "Value": {
+        "Type": "STRING",
+        "Value": "application/vnd.docker.distribution.manifest.v2+json, application/vnd.docker.distribution.manifest.list.v2+json, application/vnd.oci.image.manifest.v1+json, application/vnd.oci.image.index.v1+json, */*"
+      }
+    },
+    {
+      "Key": "http.request.header.traceparent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "00-1a1fce5fa8c65723305205ea38cb2c57-f9b472d474d43403-01"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 401
+      }
+    },
+    {
+      "Key": "http.response_content_length",
+      "Value": {
+        "Type": "INT64",
+        "Value": 155
+      }
+    }
+  ],
+  "Events": [
+    {
+      "Name": "http.getconn.start",
+      "Attributes": [
+        {
+          "Key": "net.host.name",
+          "Value": {
+            "Type": "STRING",
+            "Value": "registry-1.docker.io:443"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:58.798268123Z"
+    },
+    {
+      "Name": "http.dns.start",
+      "Attributes": [
+        {
+          "Key": "net.host.name",
+          "Value": {
+            "Type": "STRING",
+            "Value": "registry-1.docker.io"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:58.798289608Z"
+    },
+    {
+      "Name": "http.dns.done",
+      "Attributes": [
+        {
+          "Key": "http.dns.addrs",
+          "Value": {
+            "Type": "STRING",
+            "Value": "34.226.69.105,54.196.99.49,3.219.239.5,2600:1f18:2148:bc00:41e1:f57f:e2e2:5e54,2600:1f18:2148:bc02:2640:1b90:cea6:b6b5,2600:1f18:2148:bc01:20a3:9c3e:d4a7:9fb"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:58.811091234Z"
+    },
+    {
+      "Name": "http.connect.34.226.69.105:443.start",
+      "Attributes": [
+        {
+          "Key": "http.remote",
+          "Value": {
+            "Type": "STRING",
+            "Value": "34.226.69.105:443"
+          }
+        },
+        {
+          "Key": "http.conn.start.network",
+          "Value": {
+            "Type": "STRING",
+            "Value": "tcp"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:58.811141232Z"
+    },
+    {
+      "Name": "http.connect.34.226.69.105:443.done",
+      "Attributes": [
+        {
+          "Key": "http.conn.done.addr",
+          "Value": {
+            "Type": "STRING",
+            "Value": "34.226.69.105:443"
+          }
+        },
+        {
+          "Key": "http.conn.done.network",
+          "Value": {
+            "Type": "STRING",
+            "Value": "tcp"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:58.995459359Z"
+    },
+    {
+      "Name": "http.tls.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:58.995609515Z"
+    },
+    {
+      "Name": "http.tls.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.222310321Z"
+    },
+    {
+      "Name": "http.getconn.done",
+      "Attributes": [
+        {
+          "Key": "http.remote",
+          "Value": {
+            "Type": "STRING",
+            "Value": "34.226.69.105:443"
+          }
+        },
+        {
+          "Key": "http.local",
+          "Value": {
+            "Type": "STRING",
+            "Value": "10.0.2.15:44014"
+          }
+        },
+        {
+          "Key": "http.conn.reused",
+          "Value": {
+            "Type": "BOOL",
+            "Value": false
+          }
+        },
+        {
+          "Key": "http.conn.wasidle",
+          "Value": {
+            "Type": "BOOL",
+            "Value": false
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.222325694Z"
+    },
+    {
+      "Name": "http.send.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.222348657Z"
+    },
+    {
+      "Name": "http.send.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.222349817Z"
+    },
+    {
+      "Name": "http.receive.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.404611366Z"
+    },
+    {
+      "Name": "http.receive.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.404668265Z"
+    }
+  ],
+  "Links": null,
+  "Status": {
+    "Code": 1,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.filesync.v1.Auth/FetchToken",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "755023b2252f95a5",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7af311be95a1d365",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:59.408593031Z",
+  "EndTime": "2024-07-25T08:52:59.752708159Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.filesync.v1.Auth"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "FetchToken"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "remotes.docker.resolver.HTTPRequest",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "55c6edccf6074834",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7af311be95a1d365",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:59.75278791Z",
+  "EndTime": "2024-07-25T08:52:59.911774812Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "HEAD"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "https://registry-1.docker.io/v2/library/node/manifests/18.13.0"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.user_agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 200
+      }
+    },
+    {
+      "Key": "http.response_content_length",
+      "Value": {
+        "Type": "INT64",
+        "Value": 1206
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 1,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "HTTP HEAD",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "ed7e97b32513d50a",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "55c6edccf6074834",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:59.7528048Z",
+  "EndTime": "2024-07-25T08:52:59.911783609Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "HEAD"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "https://registry-1.docker.io/v2/library/node/manifests/18.13.0"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.user_agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.request.header.host",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.request.header.user-agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.request.header.accept",
+      "Value": {
+        "Type": "STRING",
+        "Value": "application/vnd.docker.distribution.manifest.v2+json, application/vnd.docker.distribution.manifest.list.v2+json, application/vnd.oci.image.manifest.v1+json, application/vnd.oci.image.index.v1+json, */*"
+      }
+    },
+    {
+      "Key": "http.request.header.authorization",
+      "Value": {
+        "Type": "STRING",
+        "Value": "****"
+      }
+    },
+    {
+      "Key": "http.request.header.traceparent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "00-1a1fce5fa8c65723305205ea38cb2c57-ed7e97b32513d50a-01"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 200
+      }
+    },
+    {
+      "Key": "http.response_content_length",
+      "Value": {
+        "Type": "INT64",
+        "Value": 1206
+      }
+    }
+  ],
+  "Events": [
+    {
+      "Name": "http.getconn.start",
+      "Attributes": [
+        {
+          "Key": "net.host.name",
+          "Value": {
+            "Type": "STRING",
+            "Value": "registry-1.docker.io:443"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.75282101Z"
+    },
+    {
+      "Name": "http.getconn.done",
+      "Attributes": [
+        {
+          "Key": "http.remote",
+          "Value": {
+            "Type": "STRING",
+            "Value": "34.226.69.105:443"
+          }
+        },
+        {
+          "Key": "http.local",
+          "Value": {
+            "Type": "STRING",
+            "Value": "10.0.2.15:44014"
+          }
+        },
+        {
+          "Key": "http.conn.reused",
+          "Value": {
+            "Type": "BOOL",
+            "Value": true
+          }
+        },
+        {
+          "Key": "http.conn.wasidle",
+          "Value": {
+            "Type": "BOOL",
+            "Value": true
+          }
+        },
+        {
+          "Key": "http.conn.idletime",
+          "Value": {
+            "Type": "STRING",
+            "Value": "348.157398ms"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.752829661Z"
+    },
+    {
+      "Name": "http.send.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.752850321Z"
+    },
+    {
+      "Name": "http.send.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.752851169Z"
+    },
+    {
+      "Name": "http.receive.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.911694408Z"
+    },
+    {
+      "Name": "http.receive.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.911720009Z"
+    }
+  ],
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "HTTP GET",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "853b7d26704e8641",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "d4d7baeff5ec4308",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:59.914183952Z",
+  "EndTime": "2024-07-25T08:53:00.067579801Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "GET"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "https://registry-1.docker.io/v2/library/node/manifests/sha256:d871edd5b68105ebcbfcde3fe8c79d24cbdbb30430d9bd6251c57c56c7bd7646"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.user_agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.request.header.host",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.request.header.user-agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.request.header.accept",
+      "Value": {
+        "Type": "STRING",
+        "Value": "application/vnd.docker.distribution.manifest.list.v2+json, */*"
+      }
+    },
+    {
+      "Key": "http.request.header.authorization",
+      "Value": {
+        "Type": "STRING",
+        "Value": "****"
+      }
+    },
+    {
+      "Key": "http.request.header.traceparent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "00-1a1fce5fa8c65723305205ea38cb2c57-853b7d26704e8641-01"
+      }
+    },
+    {
+      "Key": "http.request.header.accept-encoding",
+      "Value": {
+        "Type": "STRING",
+        "Value": "gzip"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 200
+      }
+    },
+    {
+      "Key": "http.response_content_length",
+      "Value": {
+        "Type": "INT64",
+        "Value": 1206
+      }
+    }
+  ],
+  "Events": [
+    {
+      "Name": "http.getconn.start",
+      "Attributes": [
+        {
+          "Key": "net.host.name",
+          "Value": {
+            "Type": "STRING",
+            "Value": "registry-1.docker.io:443"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.914201585Z"
+    },
+    {
+      "Name": "http.getconn.done",
+      "Attributes": [
+        {
+          "Key": "http.remote",
+          "Value": {
+            "Type": "STRING",
+            "Value": "34.226.69.105:443"
+          }
+        },
+        {
+          "Key": "http.local",
+          "Value": {
+            "Type": "STRING",
+            "Value": "10.0.2.15:44014"
+          }
+        },
+        {
+          "Key": "http.conn.reused",
+          "Value": {
+            "Type": "BOOL",
+            "Value": true
+          }
+        },
+        {
+          "Key": "http.conn.wasidle",
+          "Value": {
+            "Type": "BOOL",
+            "Value": true
+          }
+        },
+        {
+          "Key": "http.conn.idletime",
+          "Value": {
+            "Type": "STRING",
+            "Value": "2.484723ms"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.914208018Z"
+    },
+    {
+      "Name": "http.send.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.914224198Z"
+    },
+    {
+      "Name": "http.send.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:52:59.9142253Z"
+    },
+    {
+      "Name": "http.receive.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.067241871Z"
+    },
+    {
+      "Name": "http.receive.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.067570231Z"
+    }
+  ],
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "remotes.docker.resolver.HTTPRequest",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "d4d7baeff5ec4308",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7af311be95a1d365",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:59.914170712Z",
+  "EndTime": "2024-07-25T08:53:00.067595168Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "GET"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "https://registry-1.docker.io/v2/library/node/manifests/sha256:d871edd5b68105ebcbfcde3fe8c79d24cbdbb30430d9bd6251c57c56c7bd7646"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.user_agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 200
+      }
+    },
+    {
+      "Key": "http.response_content_length",
+      "Value": {
+        "Type": "INT64",
+        "Value": 1206
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 1,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "HTTP GET",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "4d49f0a6814aa0be",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "4d97de6dcf60f654",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:53:00.070609723Z",
+  "EndTime": "2024-07-25T08:53:00.242893691Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "GET"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "https://registry-1.docker.io/v2/library/node/manifests/sha256:d9061fd0205c20cd47f70bdc879a7a84fb472b822d3ad3158aeef40698d2ce36"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.user_agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.request.header.host",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.request.header.user-agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.request.header.accept",
+      "Value": {
+        "Type": "STRING",
+        "Value": "application/vnd.docker.distribution.manifest.v2+json, */*"
+      }
+    },
+    {
+      "Key": "http.request.header.authorization",
+      "Value": {
+        "Type": "STRING",
+        "Value": "****"
+      }
+    },
+    {
+      "Key": "http.request.header.traceparent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "00-1a1fce5fa8c65723305205ea38cb2c57-4d49f0a6814aa0be-01"
+      }
+    },
+    {
+      "Key": "http.request.header.accept-encoding",
+      "Value": {
+        "Type": "STRING",
+        "Value": "gzip"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 200
+      }
+    },
+    {
+      "Key": "http.response_content_length",
+      "Value": {
+        "Type": "INT64",
+        "Value": 2215
+      }
+    }
+  ],
+  "Events": [
+    {
+      "Name": "http.getconn.start",
+      "Attributes": [
+        {
+          "Key": "net.host.name",
+          "Value": {
+            "Type": "STRING",
+            "Value": "registry-1.docker.io:443"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.070624085Z"
+    },
+    {
+      "Name": "http.getconn.done",
+      "Attributes": [
+        {
+          "Key": "http.remote",
+          "Value": {
+            "Type": "STRING",
+            "Value": "34.226.69.105:443"
+          }
+        },
+        {
+          "Key": "http.local",
+          "Value": {
+            "Type": "STRING",
+            "Value": "10.0.2.15:44014"
+          }
+        },
+        {
+          "Key": "http.conn.reused",
+          "Value": {
+            "Type": "BOOL",
+            "Value": true
+          }
+        },
+        {
+          "Key": "http.conn.wasidle",
+          "Value": {
+            "Type": "BOOL",
+            "Value": true
+          }
+        },
+        {
+          "Key": "http.conn.idletime",
+          "Value": {
+            "Type": "STRING",
+            "Value": "3.066415ms"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.070638844Z"
+    },
+    {
+      "Name": "http.send.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.070668696Z"
+    },
+    {
+      "Name": "http.send.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.070669544Z"
+    },
+    {
+      "Name": "http.receive.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.24279949Z"
+    },
+    {
+      "Name": "http.receive.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.242888351Z"
+    }
+  ],
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "remotes.docker.resolver.HTTPRequest",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "4d97de6dcf60f654",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7af311be95a1d365",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:53:00.070568709Z",
+  "EndTime": "2024-07-25T08:53:00.242907322Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "GET"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "https://registry-1.docker.io/v2/library/node/manifests/sha256:d9061fd0205c20cd47f70bdc879a7a84fb472b822d3ad3158aeef40698d2ce36"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.user_agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 200
+      }
+    },
+    {
+      "Key": "http.response_content_length",
+      "Value": {
+        "Type": "INT64",
+        "Value": 2215
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 1,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "HTTP GET",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "71011b213891634a",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "15e93ee1661ff856",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:53:00.245970638Z",
+  "EndTime": "2024-07-25T08:53:00.42860728Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "GET"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "https://registry-1.docker.io/v2/library/node/blobs/sha256:b68a472583efc83662785c5c6eb325c13b6662a3b421e7d78943e210efe3b254"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.user_agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.request.header.host",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.request.header.user-agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.request.header.accept",
+      "Value": {
+        "Type": "STRING",
+        "Value": "application/vnd.docker.container.image.v1+json, */*"
+      }
+    },
+    {
+      "Key": "http.request.header.authorization",
+      "Value": {
+        "Type": "STRING",
+        "Value": "****"
+      }
+    },
+    {
+      "Key": "http.request.header.traceparent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "00-1a1fce5fa8c65723305205ea38cb2c57-71011b213891634a-01"
+      }
+    },
+    {
+      "Key": "http.request.header.accept-encoding",
+      "Value": {
+        "Type": "STRING",
+        "Value": "gzip"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 307
+      }
+    }
+  ],
+  "Events": [
+    {
+      "Name": "http.getconn.start",
+      "Attributes": [
+        {
+          "Key": "net.host.name",
+          "Value": {
+            "Type": "STRING",
+            "Value": "registry-1.docker.io:443"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.245990423Z"
+    },
+    {
+      "Name": "http.getconn.done",
+      "Attributes": [
+        {
+          "Key": "http.remote",
+          "Value": {
+            "Type": "STRING",
+            "Value": "34.226.69.105:443"
+          }
+        },
+        {
+          "Key": "http.local",
+          "Value": {
+            "Type": "STRING",
+            "Value": "10.0.2.15:44014"
+          }
+        },
+        {
+          "Key": "http.conn.reused",
+          "Value": {
+            "Type": "BOOL",
+            "Value": true
+          }
+        },
+        {
+          "Key": "http.conn.wasidle",
+          "Value": {
+            "Type": "BOOL",
+            "Value": true
+          }
+        },
+        {
+          "Key": "http.conn.idletime",
+          "Value": {
+            "Type": "STRING",
+            "Value": "3.105522ms"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.245996653Z"
+    },
+    {
+      "Name": "http.send.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.246012161Z"
+    },
+    {
+      "Name": "http.send.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.246012896Z"
+    },
+    {
+      "Name": "http.receive.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.428548381Z"
+    },
+    {
+      "Name": "http.receive.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.428569299Z"
+    }
+  ],
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "remotes.docker.resolver.HTTPRequest",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "15e93ee1661ff856",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7af311be95a1d365",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:53:00.245953276Z",
+  "EndTime": "2024-07-25T08:53:00.428618538Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "GET"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "https://registry-1.docker.io/v2/library/node/blobs/sha256:b68a472583efc83662785c5c6eb325c13b6662a3b421e7d78943e210efe3b254"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "registry-1.docker.io"
+      }
+    },
+    {
+      "Key": "http.user_agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 307
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 1,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "HTTP GET",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "92c5b5a14553a33c",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "9c5c2e73e33697c8",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:53:00.428646054Z",
+  "EndTime": "2024-07-25T08:53:00.767254186Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "GET"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": ""
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "https://production.cloudflare.docker.com/registry-v2/docker/registry/v2/blobs/sha256/b6/b68a472583efc83662785c5c6eb325c13b6662a3b421e7d78943e210efe3b254/data?verify=1721900580-wEwb2rgIM1OXqb2OpbX9jWRcQsE%3D"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "production.cloudflare.docker.com"
+      }
+    },
+    {
+      "Key": "http.user_agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.request.header.host",
+      "Value": {
+        "Type": "STRING",
+        "Value": "production.cloudflare.docker.com"
+      }
+    },
+    {
+      "Key": "http.request.header.user-agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.request.header.accept",
+      "Value": {
+        "Type": "STRING",
+        "Value": "application/vnd.docker.container.image.v1+json, */*"
+      }
+    },
+    {
+      "Key": "http.request.header.referer",
+      "Value": {
+        "Type": "STRING",
+        "Value": "https://registry-1.docker.io/v2/library/node/blobs/sha256:b68a472583efc83662785c5c6eb325c13b6662a3b421e7d78943e210efe3b254"
+      }
+    },
+    {
+      "Key": "http.request.header.traceparent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "00-1a1fce5fa8c65723305205ea38cb2c57-92c5b5a14553a33c-01"
+      }
+    },
+    {
+      "Key": "http.request.header.accept-encoding",
+      "Value": {
+        "Type": "STRING",
+        "Value": "gzip"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 200
+      }
+    },
+    {
+      "Key": "http.response_content_length",
+      "Value": {
+        "Type": "INT64",
+        "Value": 7517
+      }
+    }
+  ],
+  "Events": [
+    {
+      "Name": "http.getconn.start",
+      "Attributes": [
+        {
+          "Key": "net.host.name",
+          "Value": {
+            "Type": "STRING",
+            "Value": "production.cloudflare.docker.com:443"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.428660558Z"
+    },
+    {
+      "Name": "http.dns.start",
+      "Attributes": [
+        {
+          "Key": "net.host.name",
+          "Value": {
+            "Type": "STRING",
+            "Value": "production.cloudflare.docker.com"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.428693344Z"
+    },
+    {
+      "Name": "http.dns.done",
+      "Attributes": [
+        {
+          "Key": "http.dns.addrs",
+          "Value": {
+            "Type": "STRING",
+            "Value": "104.16.101.215,104.16.98.215,104.16.97.215,104.16.100.215,104.16.99.215,2606:4700::6810:63d7,2606:4700::6810:64d7,2606:4700::6810:65d7,2606:4700::6810:62d7,2606:4700::6810:61d7"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.465961777Z"
+    },
+    {
+      "Name": "http.connect.104.16.101.215:443.start",
+      "Attributes": [
+        {
+          "Key": "http.remote",
+          "Value": {
+            "Type": "STRING",
+            "Value": "104.16.101.215:443"
+          }
+        },
+        {
+          "Key": "http.conn.start.network",
+          "Value": {
+            "Type": "STRING",
+            "Value": "tcp"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.465992002Z"
+    },
+    {
+      "Name": "http.connect.104.16.101.215:443.done",
+      "Attributes": [
+        {
+          "Key": "http.conn.done.addr",
+          "Value": {
+            "Type": "STRING",
+            "Value": "104.16.101.215:443"
+          }
+        },
+        {
+          "Key": "http.conn.done.network",
+          "Value": {
+            "Type": "STRING",
+            "Value": "tcp"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.473191409Z"
+    },
+    {
+      "Name": "http.tls.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.473211296Z"
+    },
+    {
+      "Name": "http.tls.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.718803972Z"
+    },
+    {
+      "Name": "http.getconn.done",
+      "Attributes": [
+        {
+          "Key": "http.remote",
+          "Value": {
+            "Type": "STRING",
+            "Value": "104.16.101.215:443"
+          }
+        },
+        {
+          "Key": "http.local",
+          "Value": {
+            "Type": "STRING",
+            "Value": "10.0.2.15:42286"
+          }
+        },
+        {
+          "Key": "http.conn.reused",
+          "Value": {
+            "Type": "BOOL",
+            "Value": false
+          }
+        },
+        {
+          "Key": "http.conn.wasidle",
+          "Value": {
+            "Type": "BOOL",
+            "Value": false
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.718816151Z"
+    },
+    {
+      "Name": "http.send.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.718841342Z"
+    },
+    {
+      "Name": "http.send.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.718843307Z"
+    },
+    {
+      "Name": "http.receive.start",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.767085605Z"
+    },
+    {
+      "Name": "http.receive.done",
+      "Attributes": null,
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:00.767249886Z"
+    }
+  ],
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "remotes.docker.resolver.HTTPRequest",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "9c5c2e73e33697c8",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7af311be95a1d365",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:53:00.428629867Z",
+  "EndTime": "2024-07-25T08:53:00.767272875Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "GET"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": ""
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "https://production.cloudflare.docker.com/registry-v2/docker/registry/v2/blobs/sha256/b6/b68a472583efc83662785c5c6eb325c13b6662a3b421e7d78943e210efe3b254/data?verify=1721900580-wEwb2rgIM1OXqb2OpbX9jWRcQsE%3D"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "production.cloudflare.docker.com"
+      }
+    },
+    {
+      "Key": "http.user_agent",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildkit/v0.15"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 200
+      }
+    },
+    {
+      "Key": "http.response_content_length",
+      "Value": {
+        "Type": "INT64",
+        "Value": 7517
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 1,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "cache request: [internal] load .dockerignore",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "f4bbbd4c13d66510",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7af311be95a1d365",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 1,
+  "StartTime": "2024-07-25T08:53:00.771762838Z",
+  "EndTime": "2024-07-25T08:53:00.771791411Z",
+  "Attributes": [
+    {
+      "Key": "vertex",
+      "Value": {
+        "Type": "STRING",
+        "Value": "sha256:c3c07f0531cae2355bd341d1a9417474079928cce957516286ba270c756222cf"
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/otel/sdk/tracer",
+    "Version": "",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.filesync.v1.FileSync/DiffCopy",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "6bcd1c3d24fef2e5",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "3cb270fa4284f5bc",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:53:00.773261571Z",
+  "EndTime": "2024-07-25T08:53:00.776514284Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.filesync.v1.FileSync"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "DiffCopy"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "[internal] load .dockerignore",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "3cb270fa4284f5bc",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7af311be95a1d365",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 1,
+  "StartTime": "2024-07-25T08:53:00.77197006Z",
+  "EndTime": "2024-07-25T08:53:00.777269469Z",
+  "Attributes": [
+    {
+      "Key": "vertex",
+      "Value": {
+        "Type": "STRING",
+        "Value": "sha256:c3c07f0531cae2355bd341d1a9417474079928cce957516286ba270c756222cf"
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 1,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/otel/sdk/tracer",
+    "Version": "",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.frontend.LLBBridge/Solve",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "7af311be95a1d365",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "3f5ec4f7f0b5440d",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": true
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:58.790498231Z",
+  "EndTime": "2024-07-25T08:53:00.782572533Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.frontend.LLBBridge"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Solve"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 8,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.frontend.LLBBridge/Return",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "460d46d8fe7ab50b",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "10bfc5d84c4ee287",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": true
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:53:00.783499107Z",
+  "EndTime": "2024-07-25T08:53:00.785987768Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.frontend.LLBBridge"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Return"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "cache request: [internal] load build context",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "c64c57b6e9d26b79",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "66fe3a06331cca73",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 1,
+  "StartTime": "2024-07-25T08:53:00.786964435Z",
+  "EndTime": "2024-07-25T08:53:00.786991285Z",
+  "Attributes": [
+    {
+      "Key": "vertex",
+      "Value": {
+        "Type": "STRING",
+        "Value": "sha256:293cb080b94e504c1d939bbdd97847887a8af8d6d1255498d862a04aea0d1a4a"
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/otel/sdk/tracer",
+    "Version": "",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "cache request: [1/8] FROM docker.io/library/node:18.13.0@sha256:d871edd5b68105ebcbfcde3fe8c79d24cbdbb30430d9bd6251c57c56c7bd7646",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "48103b791f731b53",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "66fe3a06331cca73",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 1,
+  "StartTime": "2024-07-25T08:53:00.785643235Z",
+  "EndTime": "2024-07-25T08:53:00.787287645Z",
+  "Attributes": [
+    {
+      "Key": "vertex",
+      "Value": {
+        "Type": "STRING",
+        "Value": "sha256:b977dfeb68a37bd063b57de3d44b44567980b180c86e54cf95e7f02c18c4a3ee"
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/otel/sdk/tracer",
+    "Version": "",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "cache request: [1/8] FROM docker.io/library/node:18.13.0@sha256:d871edd5b68105ebcbfcde3fe8c79d24cbdbb30430d9bd6251c57c56c7bd7646",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "342ec835716729bb",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "66fe3a06331cca73",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 1,
+  "StartTime": "2024-07-25T08:53:00.787342163Z",
+  "EndTime": "2024-07-25T08:53:00.792186062Z",
+  "Attributes": [
+    {
+      "Key": "vertex",
+      "Value": {
+        "Type": "STRING",
+        "Value": "sha256:b977dfeb68a37bd063b57de3d44b44567980b180c86e54cf95e7f02c18c4a3ee"
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/otel/sdk/tracer",
+    "Version": "",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.filesync.v1.FileSync/DiffCopy",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "0b4766ca50e09373",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "b6f28b3fd9b3ba4f",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:53:00.794329636Z",
+  "EndTime": "2024-07-25T08:53:00.800638013Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.filesync.v1.FileSync"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "DiffCopy"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "[internal] load build context",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "b6f28b3fd9b3ba4f",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "66fe3a06331cca73",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 1,
+  "StartTime": "2024-07-25T08:53:00.79246138Z",
+  "EndTime": "2024-07-25T08:53:00.801412903Z",
+  "Attributes": [
+    {
+      "Key": "vertex",
+      "Value": {
+        "Type": "STRING",
+        "Value": "sha256:293cb080b94e504c1d939bbdd97847887a8af8d6d1255498d862a04aea0d1a4a"
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 1,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/otel/sdk/tracer",
+    "Version": "",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "HEAD /_ping",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "0cc6bcd63f0b9fa2",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a321c5beca2c7264",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.753396661Z",
+  "EndTime": "2024-07-25T08:52:58.753861463Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "HEAD"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "http://%2Fvar%2Frun%2Fdocker.sock/_ping"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "/var/run/docker.sock"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 200
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "HEAD /_ping",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "f501b9901d60d9e7",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a321c5beca2c7264",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.755880326Z",
+  "EndTime": "2024-07-25T08:52:58.756101292Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "HEAD"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "http://%2Fvar%2Frun%2Fdocker.sock/_ping"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "/var/run/docker.sock"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 200
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "HEAD /_ping",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "1589b22b48cee6f1",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a321c5beca2c7264",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.756386602Z",
+  "EndTime": "2024-07-25T08:52:58.756526498Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "HEAD"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "http://%2Fvar%2Frun%2Fdocker.sock/_ping"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "/var/run/docker.sock"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 200
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "GET /v1.46/version",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "996524ecf5672560",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a321c5beca2c7264",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.756534406Z",
+  "EndTime": "2024-07-25T08:52:58.759951789Z",
+  "Attributes": [
+    {
+      "Key": "http.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "GET"
+      }
+    },
+    {
+      "Key": "http.flavor",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.1"
+      }
+    },
+    {
+      "Key": "http.url",
+      "Value": {
+        "Type": "STRING",
+        "Value": "http://%2Fvar%2Frun%2Fdocker.sock/v1.46/version"
+      }
+    },
+    {
+      "Key": "net.peer.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "/var/run/docker.sock"
+      }
+    },
+    {
+      "Key": "http.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 200
+      }
+    },
+    {
+      "Key": "http.response_content_length",
+      "Value": {
+        "Type": "INT64",
+        "Value": 820
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.Control/ListWorkers",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "37fc21ace06e941e",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "931e266d7112a37f",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.760399785Z",
+  "EndTime": "2024-07-25T08:52:58.779057689Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "ListWorkers"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.frontend.LLBBridge/Ping",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "0209882dc357f832",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "931e266d7112a37f",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.779416918Z",
+  "EndTime": "2024-07-25T08:52:58.78061659Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.frontend.LLBBridge"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Ping"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.frontend.LLBBridge/Return",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "559e965d8b86cf7f",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "931e266d7112a37f",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.780672097Z",
+  "EndTime": "2024-07-25T08:52:58.78103072Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.frontend.LLBBridge"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Return"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.Control/Status",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "e5a75cb13d6a9915",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "931e266d7112a37f",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.77965993Z",
+  "EndTime": "2024-07-25T08:52:58.781548846Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Status"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.Control/Solve",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "e457f0e6b0a75f3f",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "931e266d7112a37f",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.779185226Z",
+  "EndTime": "2024-07-25T08:52:58.781803605Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Solve"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.Control/ListWorkers",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a94aa52f4dbe9666",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a321c5beca2c7264",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.787815121Z",
+  "EndTime": "2024-07-25T08:52:58.78852617Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "ListWorkers"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.Control/ListWorkers",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "984e00660afdce48",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a321c5beca2c7264",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.789350203Z",
+  "EndTime": "2024-07-25T08:52:58.789588608Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "ListWorkers"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.frontend.LLBBridge/Ping",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "642f30713caae9aa",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a321c5beca2c7264",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.789785651Z",
+  "EndTime": "2024-07-25T08:52:58.790253549Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.frontend.LLBBridge"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Ping"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.filesync.v1.FileSync/DiffCopy",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "482daa5ddf56dd51",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "b9750cbcbf9afe2e",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:58.79332251Z",
+  "EndTime": "2024-07-25T08:52:58.794882754Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.filesync.v1.FileSync"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "DiffCopy"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.filesync.v1.Auth/GetTokenAuthority",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "b8222c80c123352c",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "465dca9ac77f8045",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:59.405060868Z",
+  "EndTime": "2024-07-25T08:52:59.407131476Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.filesync.v1.Auth"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "GetTokenAuthority"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.filesync.v1.Auth/FetchToken",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "b748621c9328518e",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "755023b2252f95a5",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:59.408768393Z",
+  "EndTime": "2024-07-25T08:52:59.752551511Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.filesync.v1.Auth"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "FetchToken"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.filesync.v1.FileSync/DiffCopy",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "647c362aab36f8d5",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "6bcd1c3d24fef2e5",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:53:00.774114919Z",
+  "EndTime": "2024-07-25T08:53:00.776430385Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.filesync.v1.FileSync"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "DiffCopy"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.frontend.LLBBridge/Solve",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "3f5ec4f7f0b5440d",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a321c5beca2c7264",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.79027379Z",
+  "EndTime": "2024-07-25T08:53:00.782859695Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.frontend.LLBBridge"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Solve"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.frontend.LLBBridge/Return",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "10bfc5d84c4ee287",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a321c5beca2c7264",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:53:00.782911291Z",
+  "EndTime": "2024-07-25T08:53:00.787708564Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.frontend.LLBBridge"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Return"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.filesync.v1.FileSync/DiffCopy",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "0d907ed74579fdf6",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "0b4766ca50e09373",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:53:00.794887743Z",
+  "EndTime": "2024-07-25T08:53:00.800538458Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.filesync.v1.FileSync"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "DiffCopy"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "load buildkit capabilities",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "931e266d7112a37f",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a321c5beca2c7264",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 1,
+  "StartTime": "2024-07-25T08:52:58.760299582Z",
+  "EndTime": "2024-07-25T08:52:58.781852688Z",
+  "Attributes": null,
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/otel/sdk/tracer",
+    "Version": "",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "[1/8] FROM docker.io/library/node:18.13.0@sha256:d871edd5b68105ebcbfcde3fe8c79d24cbdbb30430d9bd6251c57c56c7bd7646",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "55680730bfd42d39",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "66fe3a06331cca73",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 1,
+  "StartTime": "2024-07-25T08:53:00.792337484Z",
+  "EndTime": "2024-07-25T08:53:34.519248733Z",
+  "Attributes": [
+    {
+      "Key": "vertex",
+      "Value": {
+        "Type": "STRING",
+        "Value": "sha256:b977dfeb68a37bd063b57de3d44b44567980b180c86e54cf95e7f02c18c4a3ee"
+      }
+    }
+  ],
+  "Events": [
+    {
+      "Name": "exception",
+      "Attributes": [
+        {
+          "Key": "exception.type",
+          "Value": {
+            "Type": "STRING",
+            "Value": "*errors.errorString"
+          }
+        },
+        {
+          "Key": "exception.message",
+          "Value": {
+            "Type": "STRING",
+            "Value": "failed to register layer: link /bin/gunzip /bin/uncompress: operation not permitted"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:34.519163412Z"
+    }
+  ],
+  "Links": null,
+  "Status": {
+    "Code": 1,
+    "Description": "failed to register layer: link /bin/gunzip /bin/uncompress: operation not permitted"
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/otel/sdk/tracer",
+    "Version": "",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.Control/Status",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "b07aa5aeabd6e06d",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "c857044d6c156059",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": true
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:58.789904876Z",
+  "EndTime": "2024-07-25T08:53:34.520713354Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Status"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "create history record",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "05372db80b4b4c88",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "66fe3a06331cca73",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 1,
+  "StartTime": "2024-07-25T08:53:34.519699343Z",
+  "EndTime": "2024-07-25T08:53:34.526340479Z",
+  "Attributes": null,
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 0,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/otel/sdk/tracer",
+    "Version": "",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.Control/Solve",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "66fe3a06331cca73",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "422f8085e1303b83",
+    "TraceFlags": "01",
+    "TraceState": "",
+    "Remote": true
+  },
+  "SpanKind": 2,
+  "StartTime": "2024-07-25T08:52:58.789925956Z",
+  "EndTime": "2024-07-25T08:53:34.526986385Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Solve"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 2
+      }
+    }
+  ],
+  "Events": [
+    {
+      "Name": "/moby.buildkit.v1.Control/Solve",
+      "Attributes": [
+        {
+          "Key": "error",
+          "Value": {
+            "Type": "STRING",
+            "Value": "{}"
+          }
+        },
+        {
+          "Key": "level",
+          "Value": {
+            "Type": "STRING",
+            "Value": "error"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:34.526436291Z"
+    }
+  ],
+  "Links": null,
+  "Status": {
+    "Code": 1,
+    "Description": "failed to register layer: link /bin/gunzip /bin/uncompress: operation not permitted"
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 1,
+  "Resource": [
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "dockerd"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.Control/Status",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "c857044d6c156059",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a321c5beca2c7264",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.789647666Z",
+  "EndTime": "2024-07-25T08:53:34.520853657Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Status"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 0
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "moby.buildkit.v1.Control/Solve",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "422f8085e1303b83",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a321c5beca2c7264",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 3,
+  "StartTime": "2024-07-25T08:52:58.78973985Z",
+  "EndTime": "2024-07-25T08:53:34.527258647Z",
+  "Attributes": [
+    {
+      "Key": "rpc.service",
+      "Value": {
+        "Type": "STRING",
+        "Value": "moby.buildkit.v1.Control"
+      }
+    },
+    {
+      "Key": "rpc.method",
+      "Value": {
+        "Type": "STRING",
+        "Value": "Solve"
+      }
+    },
+    {
+      "Key": "rpc.system",
+      "Value": {
+        "Type": "STRING",
+        "Value": "grpc"
+      }
+    },
+    {
+      "Key": "rpc.grpc.status_code",
+      "Value": {
+        "Type": "INT64",
+        "Value": 2
+      }
+    }
+  ],
+  "Events": null,
+  "Links": null,
+  "Status": {
+    "Code": 1,
+    "Description": "failed to register layer: link /bin/gunzip /bin/uncompress: operation not permitted"
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+    "Version": "0.46.1",
+    "SchemaURL": ""
+  }
+}
+{
+  "Name": "build",
+  "SpanContext": {
+    "TraceID": "1a1fce5fa8c65723305205ea38cb2c57",
+    "SpanID": "a321c5beca2c7264",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "Parent": {
+    "TraceID": "00000000000000000000000000000000",
+    "SpanID": "0000000000000000",
+    "TraceFlags": "00",
+    "TraceState": "",
+    "Remote": false
+  },
+  "SpanKind": 1,
+  "StartTime": "2024-07-25T08:52:58.753214601Z",
+  "EndTime": "2024-07-25T08:53:34.52790274Z",
+  "Attributes": [
+    {
+      "Key": "command",
+      "Value": {
+        "Type": "STRING",
+        "Value": "/usr/libexec/docker/cli-plugins/docker-buildx buildx build -t example/docker-node-hello:latest ."
+      }
+    }
+  ],
+  "Events": [
+    {
+      "Name": "exception",
+      "Attributes": [
+        {
+          "Key": "exception.type",
+          "Value": {
+            "Type": "STRING",
+            "Value": "*errors.withStack"
+          }
+        },
+        {
+          "Key": "exception.message",
+          "Value": {
+            "Type": "STRING",
+            "Value": "failed to solve: failed to register layer: link /bin/gunzip /bin/uncompress: operation not permitted"
+          }
+        }
+      ],
+      "DroppedAttributeCount": 0,
+      "Time": "2024-07-25T08:53:34.527902154Z"
+    }
+  ],
+  "Links": null,
+  "Status": {
+    "Code": 2,
+    "Description": ""
+  },
+  "DroppedAttributes": 0,
+  "DroppedEvents": 0,
+  "DroppedLinks": 0,
+  "ChildSpanCount": 0,
+  "Resource": [
+    {
+      "Key": "docker.cli.cobra.command_path",
+      "Value": {
+        "Type": "STRING",
+        "Value": "docker"
+      }
+    },
+    {
+      "Key": "service.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "buildx"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.language",
+      "Value": {
+        "Type": "STRING",
+        "Value": "go"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.name",
+      "Value": {
+        "Type": "STRING",
+        "Value": "opentelemetry"
+      }
+    },
+    {
+      "Key": "telemetry.sdk.version",
+      "Value": {
+        "Type": "STRING",
+        "Value": "1.21.0"
+      }
+    }
+  ],
+  "InstrumentationLibrary": {
+    "Name": "go.opentelemetry.io/otel/sdk/tracer",
+    "Version": "",
+    "SchemaURL": ""
+  }
+}

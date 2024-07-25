@@ -61,8 +61,8 @@ EOF
 # kubectl apply -f https://raw.githubusercontent.com/techiescamp/kubeadm-scripts/main/manifests/metrics-server.yaml
 
 # download the lecture's repo
-cd /opt
-GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new" git clone git@github.com:roberto-maggi/CI-CD.git
+# cd /opt
+# GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new" git clone git@github.com:roberto-maggi/CI-CD.git
 
 # install MetalLB
 # kubectl --kubeconfig=/etc/kubernetes/admin.conf get configmap kube-proxy -n kube-system -o yaml | sed -e "s/strictARP: false/strictARP: true/" | kubectl --kubeconfig=/etc/kubernetes/admin.conf diff -f - -n kube-system

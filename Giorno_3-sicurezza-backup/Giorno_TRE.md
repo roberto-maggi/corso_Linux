@@ -6,16 +6,12 @@
     utilizzare tutti gli strumenti a disposizione per raggiungere il 
     miglior risultato possibile
 
-        internet
-        esperienza
-        internet
-
-
 ### Analisi di rete, sniffing, attacchi
 - firewall ( iptables )
 - nmap
 - tcpdump
 - curl
+   
 ### Introduzione alla sicurezza di rete
 
 ### Automatizzare le funzioni con at, cron

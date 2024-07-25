@@ -3,7 +3,7 @@
 systemctl set-default multi-user.target
 export DEBIAN_FRONTEND=noninteractive
 apt -y update
-apt install -y bzip2 chrony net-tools vim net-tools console-data bash-completion ufw tree git systemd-resolved parted
+apt install -y bzip2 chrony net-tools vim net-tools console-data bash-completion ufw tree git systemd-resolved parted keepalived haproxy
 apt -y remove apparmor
 
 ufw disable 

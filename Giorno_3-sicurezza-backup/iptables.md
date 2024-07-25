@@ -9,9 +9,9 @@ L’esame dei pacchetti può essere svolto secondo varie filosofie, con un diver
 A livello base si parla di packet filtering, politica per cui la decisione viene presa a livello di pacchetto in maniera stateless (ogni pacchetto è analizzato a sé stante, senza avere memoria dei pacchetti passati) o stateful (si ha una qualche memoria dei pacchetti precedenti e si parla talvolta di session filtering).
 Queste discriminanti solo legate esclusivamente alla connessione di riferimento.
 
-Strumenti più potenti possono agire anche a più alto livello, fino a raggiungere quello applicativo. 
+Strumenti più potenti possono agire anche a più alto livello, fino a raggiungere quello applicativo.
 
-Il filtraggio pacchetti ha senso per non consentire la ricezione di quelli provenienti da dominii o indirizzi IP indesiderati: blacklisting e whitelisting.
+Il filtraggio pacchetti ha senso per non consentire la ricezione di quelli provenienti da domini o indirizzi IP indesiderati: blacklisting e whitelisting.
 
 Altro fattore da considerare è la modalità d’uso del firewall: proteggiamo una rete o una macchina? Nel primo caso parliamo di firewall perimetrale, nel secondo di firewall personale.
 
@@ -176,9 +176,9 @@ Una tipica configurazione di iptables è bloccare le connessioni alla porta 20 a
 
 Così se immaginiamo un firewall perimetrale, con interfaccia di rete eth1 verso Internet e eth2 verso la rete locale, con policy di default DROP, potremo abilitare la connessione sulla porta 20 del server ftp locale 1.2.3.4, con le seguenti regole:
 
-iptables -A FORWARD -d 1.2.3.4 -sport 1024:65535 -dport 20 -i eth1 -o eth2 -m –state RELATED, ESTABLISHED -j ACCEPT
+iptables -A FORWARD -d 1.2.3.4 -sport 1024:65535 -dport 20 -i eth1 -o eth2 -m –state RELATED,ESTABLISHED -j ACCEPT
 
-iptables -A FORWARD -s 1.2.3.4 -sport 20 -dport 1024:65535 -i eth2 -o eth1 -m –state RELATED, ESTABLISHED -j ACCEPT
+iptables -A FORWARD -s 1.2.3.4 -sport 20 -dport 1024:65535 -i eth2 -o eth1 -m –state RELATED,ESTABLISHED -j ACCEPT
 
 I principali stati possibili sono:
 

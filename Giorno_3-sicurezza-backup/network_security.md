@@ -13,7 +13,7 @@ Network security is critical because it prevents cybercriminals from gaining acc
 
 The following are four of the most important reasons why protecting networks and the data they hold is important:
 
-- Operational risks. 
+- Operational risks.
 An organization without adequate network security risks disruption of its operations. Businesses and personal networks depend on devices and software that cannot operate effectively when compromised by viruses, malware and cyber attacks. Business also rely on networks for most internal and external communication.
 - Financial risks for compromised personally identifiable information (PII). Data breaches can be expensive for both individuals and businesses. Organizations that handle PII, such as Social Security numbers and passwords, are required to keep it safe. Exposure can cost the victims money in fines, restitution and repairing compromised devices. Data breaches and exposure also can ruin a company's reputation and expose it to lawsuits. IBM's "Cost of a Data Breach 2022 Report," which was conducted by Ponemon Institute, reported the average cost of a data breach rose to $4.35 million in 2022 from $4.24 million in 2021.
 - Financial risk for compromised intellectual property. Organizations can also have their own intellectual property stolen, which is costly. The loss of a company's ideas, inventions and products can lead to loss of business and competitive advantages.
@@ -21,7 +21,8 @@ An organization without adequate network security risks disruption of its operat
 Network security is so important that several organizations focus on instituting and sharing strategies on how to adapt to modern threats. Mitre ATT&CK, the National Institute of Standards and Technology and the Center for Internet Security provide free, nonproprietary security frameworks and knowledge bases to share cyber threat information and help businesses and other organizations evaluate their network security methods.
 
 ### How does network security work?
-Network security is enforced using a combination of hardware and software tools. The primary goal of network security is to prevent unauthorized access into or between parts of a network.
+Network security is enforced using a combination of hardware and software tools. 
+The primary goal of network security is to prevent unauthorized access into or between parts of a network.
 
 A security official or team determines strategies and policies that keep an organization's network safe and help it comply with security standards and regulations. Everyone on the network must abide by these security policies. Every point in the network where an authorized user could access data is also a point where data can be compromised, either by a malicious actor or through user carelessness or mistakes.
 
@@ -68,7 +69,7 @@ The choice of security policies and tools varies from network to network and cha
     Wireless networks are one of the riskiest parts of a network and require stringent protections and monitoring. It's important to follow wireless security best practices, such as segmenting Wi-Fi users by service set identifiers, or SSIDs, and using 802.1X authentication. Good monitoring and auditing tools are also needed to ensure wireless network security.
 - Workload security. 
     When organizations balance workloads among multiple devices across cloud and hybrid environments, they increase the potential attack surfaces. Workload security measures and secure load balancers are crucial to protecting the data contained in these workloads.
-- Zero-trust network access. 
+- Zero-trust network access.
     Similar to network access control, zero-trust network access only grants a user the access they must have do their job. It blocks all other permissions.
 
 ### Benefits of network security
@@ -99,9 +100,9 @@ This table matches the OSI levels to the corresponding type of network security.
 | Layers (ISO 7498-1)   | ISO 7498-2 Security Model |
 | --------------------- | ------------------------- |
 | Application           | Authentication            |
-| Presentation          | Access control            | 
+| Presentation          | Access control            |
 | Session               | Nonrepudiation            |
-| Transport             | Data integrity            | 
+| Transport             | Data integrity            |
 | Network               | Confidentiality           |
 | Data Link             | Assurance & availability  |
 | Physical              | Notarization & signature  |

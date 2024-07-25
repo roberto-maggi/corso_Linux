@@ -4,17 +4,17 @@
 /bin/bash`
 
 ```
-# hello_world.sh
 #!/bin/bash
-# declare STRING variable
-STRING="Hello World"
-# print variable on a screen
-echo $STRING
+# ciao.sh
+# dichiaro CIAO come  variable
+CIAO="Hello World"
+# stampo il valore della variabile
+echo $CIAO
 ```
 
 ```
-$ chmod +x hello_world.sh 
-$ ./hello_world.sh 
+chmod +x ciao.sh
+./ciao.sh 
 ```
 
 Hello World
@@ -32,17 +32,17 @@ tar cvfj /nfs/backup/nginx_logs-$(date +'%d-%m-%Y'-%H.%M).tar.gz -C /var/log/ngi
 In Bash scripting, a global variable is a variable that can be used anywhere inside the script. A local variable will only be used within the function that it is declared in. Check out the example below where we declare both a global variable and local variable. We’ve made some comments in the script to make it a little easier to digest.
 
 ```
-# vars.sh
 #!/bin/bash
+# vars.sh
 VAR="global variable"
 
 function bash {
 local VAR="local variable"
 echo $VAR
 }
-echo $VAR
+echo -e "Primo echo $VAR"
 bash
-echo $VAR
+echo -e "Secondo echo $VAR"
 ```
 
 ## Passing arguments to the bash scripting tutorial
@@ -70,8 +70,8 @@ echo $(uname -o)
 echo uname -o`
 
 ## Reading User Input
-`# read_input.sh
 #!/bin/bash
+# read_input.sh
 echo -e "Hi, please type the word: \c "
 read  word
 echo "The word you entered is: $word"

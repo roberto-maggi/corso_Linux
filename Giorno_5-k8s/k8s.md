@@ -1,26 +1,18 @@
-# kubernetes
+# Kubernetes
 
-##  Deployamo il nostro primo cluster
 
-entra nella cartella "Giorno_5"
-```
-git clone https://github.com/techiescamp/vagrant-kubeadm-kubernetes/tree/main
-mv K8s/ vagrant-kubeadm-kubernetes/
-vagrant up
-vagrant ssh controlplane
-vagrant ssh node01
-vagrant ssh node02
-```
-
+K8S ci offre "Service discovery and load balancing" esponendo i nostri servizi su container usando fqdn ( tramite coredns ) e/o ip interni. Fa "Storage orchestration" facendo il provisioning di spazio disco ai vari pod che ne fanno richiesta.
+Automatizza rollout e rollback, tramite i manifesti in yaml possiamo descrivere lo stato ( versione ) in cui vogliamo i nostri container, lasciando a lui il compito di occuparsene.
+Bin Picking automatizzato, e' possibile definire le risorse che ogni container puo' 
+assumere e K8S si occupera' di offrirgliele e gestirle.
+### Auto Guarigione
+Per i pod e' un altro potente strumento che, in caso di fallimento del componente, lo riavvia.  
 ### Il valore dell'immutabilita'
 Un container non subisce modifiche da parte dell'utente, al contrario di una vm.
-
-### Configurazione dichiarativa
-command line vs. yaml
-
-### Sistemi Autoriparativi
-
-### Scaling
+### Secret e configuration management
+K8S gestisce passwords, OAuth tokens, e chiazvi SSH, evitandoci di hardcodarle nei container
+### Batch executions
+### Horizontal Scaling
 
 K8S ha un sistema di deploy che favorisce lo sviluppo decoupled, 
 tramite l'uso intensivo di API e Load Balancers.
@@ -33,50 +25,74 @@ tramite l'uso intensivo di API e Load Balancers.
 Questo permette l'adozione di soluzioni dinamiche, quali lo scaling
 verticale e quello orizzontale.
 
-### Installazione di MetalLB
+Visto che all'esame della CKA ci vengono presentati 6 cluster preinstallati sara' necessario spostarsi tra un cluster e l'altro con 
 
- <!-- kubectl edit configmap -n kube-system kube-proxy -->
+k8s config set-context <nome_del_cluster> --namespace <nome_del_namespace>
 
-kubectl --kubeconfig=/etc/kubernetes/admin.conf get configmap kube-proxy -n kube-system -o yaml | sed -e "s/strictARP: false/strictARP: true/" | kubectl --kubeconfig=/etc/kubernetes/admin.conf diff -f - -n kube-system
+k8s ha molti comandi,la cui maggior parte ha una nomenclatura parecchio estesa, ma possiamo controllarli tutti
 
-kubectl --kubeconfig=/etc/kubernetes/admin.conf get configmap kube-proxy -n kube-system -o yaml | sed -e "s/strictARP: false/strictARP: true/" | kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f - -n kube-system  
-
-a questo punto si può deployare
-
-kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.3/config/manifests/metallb-native.yaml
+kubectl api-resources
 
 
-poi deploy il file IPaddress-pool e L2-advertise
+## Comprendere gli RBAC
 
-kubectl apply -f IPaddress-pool.yaml
-kubectl get IPAddressPool  -n metallb-system
-kubectl apply -f L2Advertisement.yaml
-kubectl get l2advertisement -n metallb-system
+Role-Based Access Control sono uno strumento di gestione degli accessi al cluster. Definiscono policy per utenti, gruppi e processi, permettendo od impedendo l'accesso di gestire le specifiche API.
 
-### deploy nfs provisioner
+  - possiamo stabilire un sistema per gli utenti, con diversi ruoli, per accedere a diversi blocchi di risorse di k8s
+  - possiamo controllare i processi in esecuzione nei pod le operazioni che essi sono in grado di fare
 
-cd /mnt/LinuX/Giorno_5-k8s/manifesti/nfs-provioner
-kubectl apply -f .
-kubectl get clusterrole,clusterrolebindings,storageclass,deployment,rolebindings,role,serviceaccount | grep nfs
+Questi strumenti rispondono a tre blocchi, collegando le API primitive alle operazioni ad esse permesse al, cosiddetto, soggetto che puo' essere un utente, gruppo o ServiceAccount.
 
+Ecco le possibili responsabilita':
 
+Soggetto: Utente o processi che vuole accedere alle risorse
+Risorsa: l'API che deve fare qualcosa
+Verbo: l'operazione che deve essere svolta dall'API su richiesta del soggetto.
 
-### Reset
-kubeadm	reset --force
-systemctl stop containerd
-systemctl stop kubelet
-pkill kubelet kube-proxy kube-apiserver kube-scheduler
-ipvsadm --clear
-for x in $(mount | grep kube | awk '{print $3}') ; do umount $x ; done
-rm -rf /etc/kubernetes ~/.kube /var/lib/etcd/ /etc/cni/net.d
-iptables -F && sudo iptables -t nat -F && sudo iptables -t mangle -F && sudo iptables -X
-sudo swapoff -a
- iptables -F && iptables -X
-for IF in $(ip a s |awk 'BEGIN { FS = ":" } ; { print $2 }' |  egrep '(dock|cni|fla|cal)') ; do ip link set $IF down && ip link delete $IF && brctl delbr $IF ; done
-systemctl restart containerd
-systemctl restart kubelet
+### Creiamo un soggetto
+Innanzitutto bisogna chiarire che utenti e gruppi non sono registrati in etcd, non facendo parte del cluster. I ServiceAccount esistono, invece, come oggetti di k8s e sibi usati dai processi in esecuzione nel cluster.
 
-se dice che non riesce ad avviare "kubeadm init ..." sdraia tutto
+mkdir -p cert
+--> creo la chiave
+openssl genrsa -out UTENTE.key 2048
+--> creo e firmo il certificato con la chiave per "utente" che e' parte di "gruppo" 
+openssl req -new -key ./UTENTE.key -out UTENTE.csr -subj /"CN=UTENTE/O=gruppo"
+--> firmo firmo il certificato definitivo con la ca del cluster
+openssl x509 -req -in ./UTENTE.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out UTENTE.crt -days 364
+--> creo un utente e lo registro in kubeconfig
+ubectl config set-credentials UTENTE --client-certificate=./UTENTE.crt --client-key=UTENTE.key
+--> creo un contesto per UTENTE
+kubectl config set-context UTENTE-context --cluster=kubernetes --user=UTENTE
+(
+--> per cambiare contesto useremmo
+kubectl config use-context UTENTE-context 
+kubectl config current-context
+--> per tornare al constesto di default usare il comando
+kubectl config use-context
+)
 
-### destroy
-pt-mark unhold kubelet kubeadm kubectl containerd.io && GNUTLS_CPUID_OVERRIDE=0x1 apt -y remove containerd.io kubectl=1.28.0-00 kubeadm=1.28.0-00  kubelet=1.28.0-00 kubernetes-cni && apt autoremove -y && find / -type d -iname "*kube*" -not -name "*kubepods*" -exec rm -rf {} + ; find / -type d -iname "*cni*"  -exec rm -rf {} + ; find / -type d -iname "*containerd*"  -exec rm -rf {} ; find / -type d -iname "*etcd*"  -exec rm -rf {} + ; find /etc/ /root/  -type f -iname "*kube*" -exec rm -f {} + ; find /etc/ /root/  -type f -iname "*containerd*" -exec rm -f  {} + && apt -y update && apt -y upgrade && reboot
+Ora abbiamo creato un utente che equivale ad una persona fisica che puo' loggarsi, ma i servizi usano i ServiceAccount per autenticarsi al cluster.
+
+kubectl create serviceaccount build-bot
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: build-bot
+---
+
+kubectl get sa
+kubectl describe serviceaccounts build-bot
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret-sa-sample
+  annotations:
+    kubernetes.io/service-account.name: "build-bot"
+type: kubernetes.io/service-account-token
+data:
+  extra: YmFyCg==
+
+https://learnk8s.io/rbac-kubernetes
