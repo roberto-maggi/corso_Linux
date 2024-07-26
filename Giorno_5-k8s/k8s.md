@@ -172,6 +172,8 @@ distribuendo in modo ordinato specifiche operazioni.
 Un cluster k8s e' composto almeno da (N*2)+1 "controplane node" e 1 "worker node", essenzialmente il cp controlla e gestisce
 il lavoro svolto dal wn.
 
+### --> ControlPlane
+
 ### kube-api-server
 E' il componente principale di un cluster, l'unico che parla con tutti gli altri e con il quale ognuno comunica.
 
@@ -180,7 +182,31 @@ E' un database estremamente performante a "key=value".
 E' fondamentale farne dei backup!
 
 ### kube-scheduler
+si occupa di selezionare il nodo appropriato per ogni pod appena creato.
+Alcuni fattori tenuti in considerazione per il deploy sono la affinita' o meno, richieste di 
+risorse individuali ( pod ) o di gruppo ( deploy ), hardware, software policy constrains ecc.
 
+### kube-controller-nanager
+Questo e' il binario da cui scaturiscono tutti i componenti che eseguono i processi di controllo
+come node, jobs, EndPointSlice, ServiAccount controllers. 
+
+### --> WorkerNodes
+
+### Kubelet
+E' un agente che in esecuzione su ogni wn del cluster e si assicura che i container siano in esecuzione dentro i relativi pod.
+Essenzialmente legge i dati presenti nei PodSpecs e li valida, assicurandosi cosi' della "salute" dei pod.
+
+### kube-proxy
+Questo e' il proxy  che gira su ogni wn del cluster e implementando una parte del concetto di Service di k8s.
+Esso  amministra le regole di networking del nodo, che ne permettono la corretta comunicazione dentro e fuori dal cluster.
+kp Usa il layer di packet filtering del OS, se presente e disponibile, altrimenti ne esegue autonomamente il forwarding.
+
+### Container Runtime
+Il CRI e' responsabile della corretta esecuzione e lifetime dei container all'interno dell'ambiente di k8s. 
+k8s supporta containerd, CRI-O e ogni implementazione di Kubernetes CRI
+
+### CNI
+La Container Network Interface e' la specification oggetto del deploy da parte dei vari network plugin come tigera, flannel o traefik tra gli altri. Il loro lavoro e' quello di allocare gli IP ai pod e abilitarli alla comunicazione interna ed esterna rispetto al cluster. 
 
 ## Perche' Kubernetes
 - pods, o gruppi di container, si possono raggruppare insieme immagini sviluppate da team differenti. 
