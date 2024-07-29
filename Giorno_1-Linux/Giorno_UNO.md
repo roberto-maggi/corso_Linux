@@ -114,9 +114,9 @@ lvextend -r -l +100%free /dev/mapper/$LV_MAP
 cp -av /etc/fstab /etc/fstab.bak
 echo "$(blkid /dev/mapper/$LV_MAP | awk '{print $2}' | sed -e 's/\"//g ') /nfs ext4 defaults 0 2" >> /etc/fstab
 systemctl daemon-reload
-mount /nfs
-df -h | grep nfs 
 mkdir -p /nfs/nginx /nfs/backup /nfs/kube-nfs-pv
+mount /nfs
+df -h | grep nfs
 ln -sf /nfs/nginx /etc/nginx
 chown nobody:nogroup -R /nfs
 rm -rf /nfs/lost+found
@@ -127,7 +127,7 @@ rm -rf /nfs/lost+found
 echo "/nfs *(rw,sync,no_root_squash,no_subtree_check)" > /etc/exports
 systemctl restart nfs-server.service
 exportfs -ar
-showmount -a 127.0.0.1
+showmount -a 10.0.0.10
 ```
 - sulle vm 2 e 3 
 ```

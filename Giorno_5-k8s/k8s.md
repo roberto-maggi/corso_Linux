@@ -8,19 +8,9 @@
 - Ingress, offrono un frontend comodo per combinare molteplici microservizi in una singola superfice 
     di API esternalizzata. 
 
-Questo permette l'adozione di soluzioni dinamiche, quali lo scaling
-verticale e quello orizzontale.
-
-Visto che all'esame della CKA ci vengono presentati 6 cluster preinstallati sara' necessario spostarsi tra un cluster e l'altro con 
-
-k8s config set-context <nome_del_cluster> --namespace <nome_del_namespace>
-
-k8s ha molti comandi,la cui maggior parte ha una nomenclatura parecchio estesa, ma possiamo controllarli tutti
-
-kubectl api-resources
-
 K8S ci offre "Service discovery and load balancing" esponendo i nostri servizi su container usando 
-fqdn ( tramite coredns ) e/o ip interni. Fa "Storage orchestration" facendo il provisioning di spazio 
+fqdn ( tramite coredns ) e/o ip interni ( ClusterIP ). 
+Fa "Storage orchestration" facendo il provisioning di spazio 
 disco ai vari pod che ne fanno richiesta.
 Automatizza rollout e rollback, tramite i manifesti in yaml possiamo descrivere lo stato ( versione ) 
 in cui vogliamo i nostri container, lasciando a lui il compito di occuparsene.
@@ -31,12 +21,26 @@ Per i pod e' un altro potente strumento che, in caso di fallimento del component
 ### Il valore dell'immutabilita'
 Un container non subisce modifiche da parte dell'utente, al contrario di una vm.
 ### Secret e configuration management
-K8S gestisce passwords, OAuth tokens, e chiazvi SSH, evitandoci di hardcodarle nei container
+K8S gestisce passwords, OAuth tokens, e chiavi SSH, evitandoci di hardcodarle nei container.
 ### Batch executions
 ### Horizontal Scaling
 
 K8S ha un sistema di deploy che favorisce lo sviluppo decoupled, 
 tramite l'uso intensivo di API e Load Balancers.
+
+
+Questo permette l'adozione di soluzioni dinamiche, quali lo scaling
+verticale e quello orizzontale.
+
+Visto che all'esame della CKA ci vengono presentati 6 cluster preinstallati sara' necessario spostarsi tra un cluster e l'altro con 
+
+kubectl config current-context
+
+k8s config set-context <nome_del_cluster> --namespace <nome_del_namespace>
+
+k8s ha molti comandi,la cui maggior parte ha una nomenclatura parecchio estesa, ma possiamo controllarli tutti
+
+kubectl api-resources
 
 ## Tecniche di gestione
 
@@ -340,6 +344,16 @@ EOF
 ### CNI
 La Container Network Interface e' la specification oggetto del deploy da parte dei vari network plugin come tigera, flannel o traefik tra gli altri. Il loro lavoro e' quello di allocare gli IP ai pod e abilitarli alla comunicazione interna ed esterna rispetto al cluster. 
 
+### kubernetes API
+
+--> Discovery API
+k8s pubblica al suo interno una lista di tutte le versioni dei gruppi e delle risorse supportate via "discovery API", che include:
+
+. nome
+. cluster o scopo all'interno del namespace
+. indirizzo dell'endpoint e dei verbi supportati
+. nomi alternativi
+. gruppi, versioni e tipi
 
 ## Architettura del cluster
 
@@ -405,50 +419,129 @@ Soggetto: Utente o processi che vuole accedere alle risorse
 Risorsa: l'API che deve fare qualcosa
 Verbo: l'operazione che deve essere svolta dall'API su richiesta del soggetto.
 
-### Creiamo un soggetto
-Innanzitutto bisogna chiarire che utenti e gruppi non sono registrati in etcd, non facendo parte del cluster. I ServiceAccount esistono, invece, come oggetti di k8s e sibi usati dai processi in esecuzione nel cluster.
+### oggetto
 
-mkdir -p cert
---> creo la chiave
-openssl genrsa -out UTENTE.key 2048
---> creo e firmo il certificato con la chiave per "utente" che e' parte di "gruppo" 
-openssl req -new -key ./UTENTE.key -out UTENTE.csr -subj /"CN=UTENTE/O=gruppo"
---> firmo firmo il certificato definitivo con la ca del cluster
-openssl x509 -req -in ./UTENTE.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out UTENTE.crt -days 364
---> creo un utente e lo registro in kubeconfig
-ubectl config set-credentials UTENTE --client-certificate=./UTENTE.crt --client-key=UTENTE.key
---> creo un contesto per UTENTE
-kubectl config set-context UTENTE-context --cluster=kubernetes --user=UTENTE
-(
---> per cambiare contesto useremmo
-kubectl config use-context UTENTE-context 
-kubectl config current-context
---> per tornare al constesto di default usare il comando
-kubectl config use-context
-)
+cat >> mypod_rbac.yaml << EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: sise
+    image: ghcr.io/learnk8s/app:1.0.0
+    ports:
+    - containerPort: 8080
+EOF
 
-Ora abbiamo creato un utente che equivale ad una persona fisica che puo' loggarsi, ma i servizi usano i ServiceAccount per autenticarsi al cluster.
+kubectl apply -f ./mypod
 
-kubectl create serviceaccount build-bot
+in questo esempio kubectl legge le configurazioni presenti in KUBECONFIG,  scopre le API e gli oggetti interpellando kube-API, valida le risorse lato client, invia le richieste del pay-load al kube-apiserver.
 
+kube-apiserver non invia tutto a etcd perche' venga scritto, controlla prima se il richiedente e' autorizzato a alla richiesta.
+
+"una volta autenticato, il richiedente e' autorizzato a creare risorse?"
+
+AAA
+Autentication
+Authorization
+Audit
+
+"Identita' e permessi non non sono la stessa cosa!"
+
+Il fatto di avere accesso al cluster non implica che sia autorizzato a creare risorse. k8s gestisce le autorizzazioni, usualmente, con gli RBAC ( Role Based Access Control )  con i quali possiamo assegnare permessi e restrizioni granulari ad azioni che utenti o applicazioni possono eseguire. 
+
+RBAC sono un modello progettato per garantire accessi alle risorse, basati sui ruoli degli utenti all'interno delle organizzazioni.
+
+Ad esempio:
+
+| User  | Permission | Resource |
+| ----- | ---------- | -------- |
+| Bob   | read+write |   app1   |
+| Alice |    read    |   app2   |
+| Mo    |    read    |   app2   |
+
+
+In Kubernetes succede qualcosa di molto simile, analizzando l'esempio deployato 
+dell'nfs-provisione:
+
+```
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: build-bot
+  name: nfs-client-provisioner
+  namespace: nfs-storage
 ---
-
-kubectl get sa
-kubectl describe serviceaccounts build-bot
-
-apiVersion: v1
-kind: Secret
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: secret-sa-sample
-  annotations:
-    kubernetes.io/service-account.name: "build-bot"
-type: kubernetes.io/service-account-token
-data:
-  extra: YmFyCg==
+  name: leader-locking-nfs-client-provisioner
+  namespace: nfs-storage
+rules:
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: leader-locking-nfs-client-provisioner
+  namespace: nfs-storage
+subjects:
+  - kind: ServiceAccount
+    name: nfs-client-provisioner
+    namespace: nfs-storage
+roleRef:
+  kind: Role
+  name: leader-locking-nfs-client-provisioner
+  apiGroup: rbac.authorization.k8s.io
+---
+```
+
+Il blocco e' diviso in tre parti:
+- Il ServiAccount -> riporta l'identita' di chi richiede l'accesso alla risorsa ( il pod "nfs-client-provisioner" del namespace "nfs-storage" )
+- il Role - che include i permessi per accedere alle risorse
+- il RoleBinding che collega l'identita ( riportata nel ServiceAccount ) ai permessi definiti ( nel RoleBinding )
+
+Una volta applicato correttamente possiamo l'utente designato, potra' accedere ai servizi :
+
+```
+--> Risorse interne di Kubernetes 
+/api/v1/namespaces/{namespace}/services
+/api/v1/namespaces/{namespace}/pods
+
+--> 2. Una specifica estensione API ad esempio
+/api/v1/namespaces/{namespace}/pods/{name}
+/api/v1/namespaces/{namespace}/pods/{name}/log
+/api/v1/namespaces/{namespace}/serviceaccounts/{name}
+```
+
+### --> Andiamo nel dettaglio:
+
+Kubernetes non ha un oggetto che rappresenta correttamente un utente,
+gli utenti vengono autenticati tramite la presentazione di certificati e 
+autorizzati tramite di roles.
+Le informazioni riportate nel certificato, vengono poi importate
+
+```
+type User struct {
+    name string   // unique for each user
+    ...           // other fields
+}
+```
+
+Come visto per autenticare un utente si parte dalla sua "creazione via ServiceAccount".
+
+In K8S noi siamo interessati, tramite questi utenti, a modellare le risorse, siano esse pods, Services o Endpoints. Usualmente le informazioni a questo
+riguardo sono salvate in etcd e ad esse si accede tramite le API.
+Esse accettano come azioni, descrizioni quali :
+
+```
+rules:
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+```
 
 https://learnk8s.io/rbac-kubernetes
