@@ -1,5 +1,24 @@
 # Kubernetes
 
+## Perche' Kubernetes
+- pods, o gruppi di container, si possono raggruppare insieme immagini sviluppate da team differenti. 
+- servizi, offrono load balancing, naming e discovery per isolare un microservizio da un altro.
+- namespaces, offrono isolamento e controlli d'accesso, cosi' che ogni microservizio possa controllare
+    il livello di interazione con gli altri.
+- Ingress, offrono un frontend comodo per combinare molteplici microservizi in una singola superfice 
+    di API esternalizzata. 
+
+Questo permette l'adozione di soluzioni dinamiche, quali lo scaling
+verticale e quello orizzontale.
+
+Visto che all'esame della CKA ci vengono presentati 6 cluster preinstallati sara' necessario spostarsi tra un cluster e l'altro con 
+
+k8s config set-context <nome_del_cluster> --namespace <nome_del_namespace>
+
+k8s ha molti comandi,la cui maggior parte ha una nomenclatura parecchio estesa, ma possiamo controllarli tutti
+
+kubectl api-resources
+
 K8S ci offre "Service discovery and load balancing" esponendo i nostri servizi su container usando 
 fqdn ( tramite coredns ) e/o ip interni. Fa "Storage orchestration" facendo il provisioning di spazio 
 disco ai vari pod che ne fanno richiesta.
@@ -205,27 +224,170 @@ kp Usa il layer di packet filtering del OS, se presente e disponibile, altriment
 Il CRI e' responsabile della corretta esecuzione e lifetime dei container all'interno dell'ambiente di k8s. 
 k8s supporta containerd, CRI-O e ogni implementazione di Kubernetes CRI
 
+### -> addons
+
+### DNS
+k8s ha un dns server cluster interno, quello di default e' coredns.
+Le query eseguite da un pod seguono una gerarchia simile a quella di ogni altra applicazione, in cui la priorita' piu' alta
+la ottiene il motore interno al pod, poi coredns, ed infine il dns dell'host su cui k8s e' installato.
+Un record DNS ottiene un fqdn simile a my-svc.my-namespace.svc.cluster-domain.example ( come A/AAA record ), mentre uno 
+"headless" si riferisce essenzialmente ad un pod, bypassandone il servizio.
+
+### Dashboard
+
+### Cluster-level loggins
+
+Testiamo il sistema di log:
+
+cat > pod_logging.yml << EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: counter
+spec:
+  containers:
+  - name: count
+    image: busybox:1.28
+    args: [/bin/sh, -c,
+            'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done']
+EOF
+
+kubectl apply -f ./pod_logging.yml 
+
+kubectl logs counter -f 
+kubectl logs --previous
+kubectl logs counter -c count
+
+Benche' k8s non offra nativamente un sistema di logging esistono svariati approcci che possiamo considerare.
+  - un agente installato sul singolo nodo ( DaemonSet )
+  - un container sidecar per loggare il pod
+
+cat > sidecar_logging.yml << EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: counter
+spec:
+  containers:
+  - name: count
+    image: busybox:1.28
+    args:
+    - /bin/sh
+    - -c
+    - >
+      i=0;
+      while true;
+      do
+        echo "$i: $(date)" >> /var/log/1.log;
+        echo "$(date) INFO $i" >> /var/log/2.log;
+        i=$((i+1));
+        sleep 1;
+      done      
+    volumeMounts:
+    - name: varlog
+      mountPath: /var/log
+  volumes:
+  - name: varlog
+    emptyDir: {}
+EOF
+
+    sidecar con agente
+
+cat > sidecar_with_fluentd.yaml << EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: counter
+spec:
+  containers:
+  - name: count
+    image: busybox:1.28
+    args:
+    - /bin/sh
+    - -c
+    - >
+      i=0;
+      while true;
+      do
+        echo "$i: $(date)" >> /var/log/1.log;
+        echo "$(date) INFO $i" >> /var/log/2.log;
+        i=$((i+1));
+        sleep 1;
+      done      
+    volumeMounts:
+    - name: varlog
+      mountPath: /var/log
+  - name: count-agent
+    image: registry.k8s.io/fluentd-gcp:1.30
+    env:
+    - name: FLUENTD_ARGS
+      value: -c /etc/fluentd-config/fluentd.conf
+    volumeMounts:
+    - name: varlog
+      mountPath: /var/log
+    - name: config-volume
+      mountPath: /etc/fluentd-config
+  volumes:
+  - name: varlog
+    emptyDir: {}
+  - name: config-volume
+    configMap:
+      name: fluentd-config
+EOF
+
+  - un log exporter o un log push verso una applicazione di backend
+
 ### CNI
 La Container Network Interface e' la specification oggetto del deploy da parte dei vari network plugin come tigera, flannel o traefik tra gli altri. Il loro lavoro e' quello di allocare gli IP ai pod e abilitarli alla comunicazione interna ed esterna rispetto al cluster. 
 
-## Perche' Kubernetes
-- pods, o gruppi di container, si possono raggruppare insieme immagini sviluppate da team differenti. 
-- servizi, offrono load balancing, naming e discovery per isolare un microservizio da un altro.
-- namespaces, offrono isolamento e controlli d'accesso, cosi' che ogni microservizio possa controllare
-    il livello di interazione con gli altri.
-- Ingress, offrono un frontend comodo per combinare molteplici microservizi in una singola superfice 
-    di API esternalizzata. 
 
-Questo permette l'adozione di soluzioni dinamiche, quali lo scaling
-verticale e quello orizzontale.
+## Architettura del cluster
 
-Visto che all'esame della CKA ci vengono presentati 6 cluster preinstallati sara' necessario spostarsi tra un cluster e l'altro con 
+### I nodi
 
-k8s config set-context <nome_del_cluster> --namespace <nome_del_namespace>
+In un cluster di k8s il workload viene deployato solo sui nodi worker abilitati a riceverlo
 
-k8s ha molti comandi,la cui maggior parte ha una nomenclatura parecchio estesa, ma possiamo controllarli tutti
+```
+Taints:             node-role.kubernetes.io/control-plane:NoSchedule
+Unschedulable:      false
+```
+Una volta che il nodo e' creato e/o si e' autoregistrato, viene analizzata la sua validita' dal controlplane, al quale basta una istruzione tipo la seguente:
 
-kubectl api-resources
+cat > nodo_che_si_rompe.yml << EOF
+{
+  "kind": "Node",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "10.240.79.157",
+    "labels": {
+      "name": "my-first-k8s-node"
+    }
+  }
+}
+EOF
+
+Nella fase di auto registrazione, il default con kubeadm, kubelet si esegue con le seguenti opzioni:
+  . --kubeconfig  ( le proprie credenziali per il kube-API-server )
+  . --cloud-provider ( solo se su cloud )
+  . --register-node ( registrazione autometica )
+  . --register-with-taints
+  . --node-ip 
+  . --node-labels
+  . --node-status-update-frequency
+
+In caso di registrazione manuale passare  `--register-node=false` a kubeadm e nel caso in cui si voglia impedire il deploy sul nodo usare `kubectl cordon $NODENAME`
+
+per analizzare lo stato di un nodo
+
+kubectl get nodes <NOME_DEL_NODO>
+kubectl describe node <NOME_DEL_NODO>
+
+k8s usa un "hub-and-spoke" in cui l'API-server fa da torre di controllo per tutti gli altri componenti del cluster.
+Il kubelet comunica direttamente tramite la 443 all'API e si autentica tramite un certificato client, generato tramite il TLS bootstrapping.
+I pod che devono comunicare con l'API server lo fanno grazie al relativo ServiceAccount nel quale viene iniettata il certificato pubblico di root e un bearer token generato alla creazione del pod stesso.
+
+nota: bearer token va interpretato come "l'auteticazione e' garantita al bearer ( portatore ) di questo token".
+Il Service relativo e' configurato con un IP virtuale e rediretto da kube-proxy all'endpoint dell API-server.
 
 
 ## Comprendere gli RBAC
