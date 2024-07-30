@@ -37,10 +37,12 @@ spec:
     metadata:
       labels:
         app: nginx
+      annotations:
+        image: nginx:1.27.0-bookworm-perl
     spec:
       containers:
         - name: nginx
-          image: nginx:latest # Utilizza l'immagine Docker di Nginx più recente
+          image: nginx:1.27.0-bookworm-perl # Utilizza l'immagine Docker di Nginx più recente
           imagePullPolicy: Always
           ports:
             - containerPort: 80

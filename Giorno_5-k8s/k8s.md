@@ -28,7 +28,6 @@ K8S gestisce passwords, OAuth tokens, e chiavi SSH, evitandoci di hardcodarle ne
 K8S ha un sistema di deploy che favorisce lo sviluppo decoupled, 
 tramite l'uso intensivo di API e Load Balancers.
 
-
 Questo permette l'adozione di soluzioni dinamiche, quali lo scaling
 verticale e quello orizzontale.
 
@@ -36,7 +35,7 @@ Visto che all'esame della CKA ci vengono presentati 6 cluster preinstallati sara
 
 kubectl config current-context
 
-k8s config set-context <nome_del_cluster> --namespace <nome_del_namespace>
+kubectl config set-context <nome_del_cluster> --namespace <nome_del_namespace>
 
 k8s ha molti comandi,la cui maggior parte ha una nomenclatura parecchio estesa, ma possiamo controllarli tutti
 
@@ -56,8 +55,10 @@ Kubernetes supporta tre modalita' di gestione:
 
 - configurazione dichiarativa degli oggetti
 
-    kubectl diff -f configs/
-    kubectl apply -f configs/
+    kubectl diff -f <NOME_PROGETTO1>/
+    kubectl apply -f <NOME_PROGETTO1>/
+    kubectl diff -f <NOME_PROGETTO2>/
+    kubectl apply -f <NOME_PROGETTO2>/
 
 ## Oggetti
 
@@ -65,11 +66,13 @@ Kubernetes supporta tre modalita' di gestione:
 
 Ascrivibilita' in codice
 
-siccome ogni oggetto verra' "encodato" e ad esso verranno fatti riferimenti tramite "path"
+siccome ogni oggetto verra' "codificato" e ad esso verranno fatti riferimenti tramite "path ( url )"
 deve essere registrato secondo delle regole, k8s non supporta quindi nomi di oggetti con 
-caratteri quali ".,/%!?"
+caratteri quali ".,\/%!?"
 
 Una volta che il nome e' accettato k8s creera' un UID unico per l'oggetto generato.
+
+kubectl get pods <NOME_POD> -o jsonpath='{.metadata.uid}'
 
 ### Labels
 
@@ -81,7 +84,7 @@ necessariamente un valore aggiunto al motore di k8s. ( > 63 )
 metadata:
   labels:
     environment: production
-    app: nginx
+    app: nginx 
 ...
 ```
 
@@ -97,6 +100,8 @@ tipi di richieste
 ...
 selector:
   environment = production
+  tier = frontend
+  partition = true
 ...
 
 oppure
@@ -104,6 +109,8 @@ oppure
 ...
 selector:
   environment != production
+  tier != frontend
+  !partition
 ...
 ```
 "Set-based requirement"
@@ -118,12 +125,12 @@ kubectl get pods -l environment in production
 ```
 
 Il primo ritornera' 0 con tutti i valori "environment" nelle chiavi "production" e "qa"
-La seconda ricerca per tutti i risultati di tier non nelle chiavi "frontend" e "backend", 
+La seconda ricerca per tutti i risultati di tier non "frontend" ma "backend", 
 mentre la terza e la quarta includeranno ed escluderanno, rispettivamente, ogni chiave 
 contenente o no "partition", a prescindere dai volori ad esse associati.   
 
-Labels suggeriti
-Al fine di garantire una gestione il piu' possibile semplificata e' comnsigliabile di utilizzare
+Labels suggerite
+Al fine di garantire una gestione il piu' possibile semplificata e' consigliabile utilizzare
 sempre il maggior numero possibile di labels potenzialmente utili. Ad esempio
 
 ```
@@ -137,6 +144,12 @@ sempre il maggior numero possibile di labels potenzialmente utili. Ad esempio
     app.kubernetes.io/managed-by: Helm
 ...
 ```
+
+### Annotations
+
+Al contrario delle labels, k8s non e' in grado di usare le informazioni presenti in questi metadati.
+Essi devono pero' rispettare alcuni criteri, come il fatto di essere "string", quindi non numerici 
+o booleani.
 
 ### Namespaces
 
@@ -165,12 +178,6 @@ kubectl api-resources --namespaced=false
 
 ```
 
-### Annotations
-
-Al contrario delle labels, k8s non e' in grado di usare le informazioni presenti in questi metadati.
-Essi devono pero' rispettare alcuni criteri, come il fatto di essere "string", quindi non numerici 
-o booleani.
-
 ### Field Selector
 
 Questo strumento ci permette di fare selezioni in base al valore dei campi attribuiti ad un oggetto
@@ -184,8 +191,7 @@ kubectl get pods --field-selector=status.phase=Running,spec.restartPolicy=Always
 
 Con questi termini definiamo la relazione di alcuni oggetti, secondo cui, ad esempio, un ReplicaSet e' "owner" dei Pod che genera.
 
-
-## I componenti di di Kubernetes
+## I componenti di Kubernetes
 
 Quando parliamo di k8s parliamo di un cluster, un gruppo di componenti che creano un sistema atto a svolgere un compito
 distribuendo in modo ordinato specifiche operazioni.
@@ -199,6 +205,15 @@ il lavoro svolto dal wn.
 
 ### kube-api-server
 E' il componente principale di un cluster, l'unico che parla con tutti gli altri e con il quale ognuno comunica.
+
+```
+siccome kubectl usa chiamate http per interrogare kube-api questo e'
+un esempio per listare i pod
+
+kubectl proxy &
+curl http://localhost:8001/api/v1/namespaces/default/pods
+```
+
 
 ### etcd
 E' un database estremamente performante a "key=value".
@@ -216,15 +231,15 @@ come node, jobs, EndPointSlice, ServiAccount controllers.
 ### --> WorkerNodes
 
 ### Kubelet
-E' un agente che in esecuzione su ogni wn del cluster e si assicura che i container siano in esecuzione dentro i relativi pod.
-Essenzialmente legge i dati presenti nei PodSpecs e li valida, assicurandosi cosi' della "salute" dei pod.
+E' un agente in esecuzione su ogni wn del cluster e si assicura che i container siano in esecuzione dentro i relativi pod.
+Essenzialmente legge i dati presenti nelle PodSpecs e li valida, assicurandosi cosi' della "salute" dei pod.
 
 ### kube-proxy
 Questo e' il proxy  che gira su ogni wn del cluster e implementando una parte del concetto di Service di k8s.
 Esso  amministra le regole di networking del nodo, che ne permettono la corretta comunicazione dentro e fuori dal cluster.
-kp Usa il layer di packet filtering del OS, se presente e disponibile, altrimenti ne esegue autonomamente il forwarding.
+kp usa il layer di packet filtering del OS, se presente e disponibile, altrimenti ne esegue autonomamente il forwarding.
 
-### Container Runtime
+### Container Runtime Interface
 Il CRI e' responsabile della corretta esecuzione e lifetime dei container all'interno dell'ambiente di k8s. 
 k8s supporta containerd, CRI-O e ogni implementazione di Kubernetes CRI
 
@@ -237,7 +252,7 @@ la ottiene il motore interno al pod, poi coredns, ed infine il dns dell'host su 
 Un record DNS ottiene un fqdn simile a my-svc.my-namespace.svc.cluster-domain.example ( come A/AAA record ), mentre uno 
 "headless" si riferisce essenzialmente ad un pod, bypassandone il servizio.
 
-### Dashboard
+### Dashboard ( meglio OpneLens )
 
 ### Cluster-level loggins
 
@@ -259,14 +274,14 @@ EOF
 kubectl apply -f ./pod_logging.yml 
 
 kubectl logs counter -f 
-kubectl logs --previous
+kubectl logs --previous ( container precedentemente restartato )
 kubectl logs counter -c count
 
 Benche' k8s non offra nativamente un sistema di logging esistono svariati approcci che possiamo considerare.
   - un agente installato sul singolo nodo ( DaemonSet )
   - un container sidecar per loggare il pod
 
-cat > sidecar_logging.yml << EOF
+cat > double_format_logging.yml << EOF
 apiVersion: v1
 kind: Pod
 metadata:
@@ -339,10 +354,11 @@ spec:
       name: fluentd-config
 EOF
 
-  - un log exporter o un log push verso una applicazione di backend
+  - un log exporter o un log push verso una applicazione di backend ( prometheus )
 
 ### CNI
-La Container Network Interface e' la specification oggetto del deploy da parte dei vari network plugin come tigera, flannel o traefik tra gli altri. Il loro lavoro e' quello di allocare gli IP ai pod e abilitarli alla comunicazione interna ed esterna rispetto al cluster. 
+La Container Network Interface e' l'oggetto specifico del deploy da parte dei vari network plugin come tigera, flannel o traefik tra gli altri. 
+Il loro lavoro e' quello di allocare gli IP ai pod e abilitarli alla comunicazione interna ed esterna rispetto al cluster.
 
 ### kubernetes API
 
@@ -365,9 +381,14 @@ In un cluster di k8s il workload viene deployato solo sui nodi worker abilitati 
 Taints:             node-role.kubernetes.io/control-plane:NoSchedule
 Unschedulable:      false
 ```
+La prima `taint` e' dichiarata tramite il comando
+`kubectl taint nodes controlplane key1=value1:NoSchedule`, per togliere la `taint` si aggiunge un "-" al comando precedente `kubectl taint nodes node1 key1=value1:NoSchedule-` . 
+`Unschedulable: false` si ottiene "cordonando" il nodo con `kubectl cordon <NOME_DEL_NODO>`, questo non ha effetto sui pod in esecuzione, che devono essere fermate ed, eventualmente, eliminati a mano.
+
+
 Una volta che il nodo e' creato e/o si e' autoregistrato, viene analizzata la sua validita' dal controlplane, al quale basta una istruzione tipo la seguente:
 
-cat > nodo_che_si_rompe.yml << EOF
+```
 {
   "kind": "Node",
   "apiVersion": "v1",
@@ -378,9 +399,10 @@ cat > nodo_che_si_rompe.yml << EOF
     }
   }
 }
-EOF
+```
 
 Nella fase di auto registrazione, il default con kubeadm, kubelet si esegue con le seguenti opzioni:
+```
   . --kubeconfig  ( le proprie credenziali per il kube-API-server )
   . --cloud-provider ( solo se su cloud )
   . --register-node ( registrazione autometica )
@@ -388,7 +410,7 @@ Nella fase di auto registrazione, il default con kubeadm, kubelet si esegue con 
   . --node-ip 
   . --node-labels
   . --node-status-update-frequency
-
+```
 In caso di registrazione manuale passare  `--register-node=false` a kubeadm e nel caso in cui si voglia impedire il deploy sul nodo usare `kubectl cordon $NODENAME`
 
 per analizzare lo stato di un nodo
@@ -397,11 +419,193 @@ kubectl get nodes <NOME_DEL_NODO>
 kubectl describe node <NOME_DEL_NODO>
 
 k8s usa un "hub-and-spoke" in cui l'API-server fa da torre di controllo per tutti gli altri componenti del cluster.
-Il kubelet comunica direttamente tramite la 443 all'API e si autentica tramite un certificato client, generato tramite il TLS bootstrapping.
-I pod che devono comunicare con l'API server lo fanno grazie al relativo ServiceAccount nel quale viene iniettata il certificato pubblico di root e un bearer token generato alla creazione del pod stesso.
+Il kubelet comunica direttamente alla 6443 dell'API e si autentica tramite un certificato client, generato tramite il TLS bootstrapping.
+I pod che devono comunicare con l'API server lo fanno grazie al relativo ServiceAccount nel quale viene iniettato il certificato pubblico di root e un bearer token generato alla creazione del pod stesso.
 
 nota: bearer token va interpretato come "l'auteticazione e' garantita al bearer ( portatore ) di questo token".
 Il Service relativo e' configurato con un IP virtuale e rediretto da kube-proxy all'endpoint dell API-server.
+
+## Il primo Deploy!
+
+### pod
+
+Il pod e' l'unita' atomica deployabile di kubernetes e consiste in x+1 container, che e' lo standard consigliato, perche' cosi' k8s gesti un pod anziche' un container direttamente.
+E' altrimenti possibile co-locare container multipli dentro un singolo pod.
+Questo li rende direttamente collegati e coesi.
+Ad ogni modo difficilmente lavoreremo con singoli pod, perche' sono entita' effimere, non direvoli.
+
+```
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 80
+  type: ClusterIP
+---
+
+curl http://$(kubectl describe svc nginx-service | grep 'IP:'|awk '{print $2}'):$(kubectl describe svc nginx-service| grep -E '^Port:' | awk '{print $3}' | sed -e 's/\/TCP//g') 
+```
+
+--> pods e controllers 
+Anziche' forzare il deploy manualmente e' buona norma usare controllers che 
+si occupino di rideployare la risorsa su componenti sani alternativi ( leggi nodi ancora vivi e vegeti ).
+
+-->> Pod Templates
+
+I controllers creano i vari pod attraverso dei `pod templates` e li gestiscono per noi.
+Questi templates sono inclusi in alcune `workload resources` come :
+  - Deployment
+  - Statefulset
+  - DaemonSet
+
+```
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello
+spec:
+  template:
+    # This is the pod template
+    spec:
+      containers:
+      - name: hello
+        image: busybox:1.28
+        command: ['sh', '-c', 'echo "Hello, Kubernetes!" && sleep 3600']
+      restartPolicy: OnFailure
+    # The pod template ends here
+```
+
+Pod phases
+
+  - Pending
+  - Running
+  - Succeeded
+  - Failed
+  - Unknown
+
+Container states
+  - Waiting
+  - Running
+  - Terminated
+
+Errori dei pods
+
+  - Initial crash: Kubernetes attempts an immediate restart based on the Pod restartPolicy.
+  - Repeated crashes: After the initial crash Kubernetes applies an exponential backoff delay for subsequent restarts, described in restartPolicy. This prevents rapid, repeated restart attempts from overloading the system.
+- CrashLoopBackOff state: This indicates that the backoff delay mechanism is currently in effect for a given container that is in a crash loop, failing and restarting repeatedly.
+  - Backoff reset: If a container runs successfully for a certain duration (e.g., 10 minutes), Kubernetes resets the backoff delay, treating any new crash as the first one.
+
+Container Restart Policy
+
+  - Always: Automatically restarts the container after any termination.
+  - OnFailure: Only restarts the container if it exits with an error (non-zero exit status).
+  - Never: Does not automatically restart the terminated container.
+
+Probes
+
+Attraverso il "readinessGates" noi possiamo iniettare feedback extra o segnali all'interno dello `PodStatus` del Pod.
+
+```
+kind: Pod
+...
+spec:
+  readinessGates:
+    - conditionType: "www.example.com/feature-1"
+status:
+  conditions:
+    - type: Ready                              # a built in PodCondition
+      status: "False"
+      lastProbeTime: null
+      lastTransitionTime: 2018-01-01T00:00:00Z
+    - type: "www.example.com/feature-1"        # an extra PodCondition
+      status: "False"
+      lastProbeTime: null
+      lastTransitionTime: 2018-01-01T00:00:00Z
+  containerStatuses:
+    - containerID: docker://abcd...
+      ready: true
+...
+```
+
+
+### Probes
+
+Ci sono quattro possibli vie di probing dei container e sono:
+
+- exec
+Executes a specified command inside the container. The diagnostic is considered successful if the command exits with a status code of 0.
+- grpc
+Performs a remote procedure call using gRPC. The target should implement gRPC health checks. The diagnostic is considered successful if the status of the response is SERVING.
+- httpGet
+Performs an HTTP GET request against the Pod's IP address on a specified port and path. The diagnostic is considered successful if the response has a status code greater than or equal to 200 and less than 400.
+- tcpSocket
+Performs a TCP check against the Pod's IP address on a specified port. The diagnostic is considered successful if the port is open. If the remote system (the container) closes the connection immediately after it opens, this counts as healthy.
+
+e posso riturnare i seguenti output:
+
+  - Success
+  - Failure
+  - Unknown
+
+### Tipi di Probes
+
+  - livenessProbe
+  - readinessProbe
+  - startupProbe
+
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+
+--> Healthcheck
+
+Simuliamo un fallimento del `Liveness Probe`
+deploy del pod
+`kubectl apply -f 6-nginx-health_check.yml`
+controlla lo stato
+`kubectl get pod nginx-healthcheck`
+descrivi il pod
+`kubectl describe pod nginx-healthcheck`
+manometto il pod!
+```
+kubectl exec -it nginx-healthcheck -- /bin/sh
+touch /usr/share/nginx/html/healthz
+exit
+```
+Osserva l'effetto
+`kubectl get pod nginx-healthcheck -w`
+
+Simuliamo ora un fallimento del `Readiness Probe`
+```
+kubectl exec -it nginx-healthcheck -- /bin/sh
+pkill nginx
+exit
+```
+Il container dovrebbe morire a breve e il pod venir riavviato
+
+`kubectl get pod nginx-healthcheck -w`
+
+
+
+
 
 
 ## Comprendere gli RBAC
@@ -544,4 +748,76 @@ rules:
     verbs: ["get", "list", "watch", "create", "update", "patch"]
 ```
 
+La apiGroup e' un API speciale vuota che si riferisce ad un oggetto "builtin", 
+ecco perche' le risorse sono interne al cluster, altre possibilita' sono pods, deploy, serviceaccounts ecc.
+
+Kubernetes legge `""` ed espande il nome a `/api/v1/xxx` altrimenti diventa
+qualcosa tipo `/apis/{apigroup_name}/{apigroup_version}/xxx`.
+Nel nostro esempio noi scriviamo `resources: ["endpoints"]` e lui legge `/api/v1/namespaces/{ns}/endpoints`
+
+In K8S una collezione di risorse e verbi si chiama "regola" perche' di fatto definisce un protocollo di ingaggio
+```
+...
+rules:
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+    ...
+```
+
+queste regole contengono gli apiGroups, resources e verbs che abbiamo appena nominato.
+
+Una collezione di regole prende il nome di "Role" in Kubernetes.
+
+```
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: leader-locking-nfs-client-provisioner
+  namespace: nfs-storage
+rules:
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+---
+```
+
+Fino ad ora abbiamo istruito Kubernetes che esiste un `ServiceAccount`, il signor `nfs-client-provisioner` e che esiste un `Role`, ma i due non sono ancora collegati in alcun modo, sono "dormienti".
+A collegare questi due oggetti ci pensano i `RoleBindings`.
+
+```
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: leader-locking-nfs-client-provisioner
+  namespace: nfs-storage
+subjects:
+  - kind: ServiceAccount
+    name: nfs-client-provisioner
+    namespace: nfs-storage
+roleRef:
+  kind: Role
+  name: leader-locking-nfs-client-provisioner
+  apiGroup: rbac.authorization.k8s.io
+```
+Osservando questo esemppio notiamo che ci sono due 
+aree specifiche di particolare importanza: 
+  - `roleRef` che fa riferimento al `Role` `leader-locking-nfs-client-provisioner`
+  - `subject` che connette il `ServiceAccount` `nfs-client-provisioner`
+
+
+
+
+
+
 https://learnk8s.io/rbac-kubernetes
+
+
+
+### resource Capping
+
+kubectl create namespace resource-cap-example
+kubectl apply -f <your-file-name>.yaml
+kubectl get pod resource-demo --namespace=resource-cap-example -o yaml
+kubectl top pod resource-demo --namespace=resource-cap-example
