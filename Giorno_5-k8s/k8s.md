@@ -383,7 +383,8 @@ Unschedulable:      false
 ```
 La prima `taint` e' dichiarata tramite il comando
 `kubectl taint nodes controlplane key1=value1:NoSchedule`, per togliere la `taint` si aggiunge un "-" al comando precedente `kubectl taint nodes node1 key1=value1:NoSchedule-` . 
-`Unschedulable: false` si ottiene "cordonando" il nodo con `kubectl cordon <NOME_DEL_NODO>`, questo non ha effetto sui pod in esecuzione, che devono essere fermate ed, eventualmente, eliminati a mano.
+`Unschedulable: true` si ottiene "recintando" il nodo con `kubectl cordon <NOME_DEL_NODO>`, questo non ha effetto sui pod in esecuzione, che devono essere fermate ed, eventualmente, eliminati a mano.
+Per eliminare tutti i pod presenti sul nodo che si sta disconnettendo, in modo "graceful" usare il comando `kubectl drain <NOME_DEL_NODO> --ignore-daemonsets --delete-emptydir-data`
 
 
 Una volta che il nodo e' creato e/o si e' autoregistrato, viene analizzata la sua validita' dal controlplane, al quale basta una istruzione tipo la seguente:
@@ -434,7 +435,10 @@ E' altrimenti possibile co-locare container multipli dentro un singolo pod.
 Questo li rende direttamente collegati e coesi.
 Ad ogni modo difficilmente lavoreremo con singoli pod, perche' sono entita' effimere, non direvoli.
 
+--> pod con singolo container 
+
 ```
+cat > nginx_singolo.yml << EOF
 ---
 apiVersion: v1
 kind: Pod
@@ -462,9 +466,101 @@ spec:
     targetPort: 80
   type: ClusterIP
 ---
+EOF
+```
+curl http://$(kubectl describe svc nginx-service | grep 'IP:'|awk '{print $2}'):$(kubectl describe svc nginx-service| grep -E '^Port:' | awk '{print $3}' | sed -e 's/\/TCP//g') 
+
+--> due container che si forwardano chiamate sul loopback
+
+```
+cat >> due_container_forward_loopback.yml << EOF
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mc3-nginx-conf
+data:
+  nginx.conf: |-
+    user  nginx;
+    worker_processes  1;
+
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+
+    events {
+        worker_connections  1024;
+    }
+
+    http {
+        include       /etc/nginx/mime.types;
+        default_type  application/octet-stream;
+
+        log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                          '$status $body_bytes_sent "$http_referer" '
+                          '"$http_user_agent" "$http_x_forwarded_for"';
+
+        access_log  /var/log/nginx/access.log  main;
+
+        sendfile        on;
+        keepalive_timeout  65;
+
+        upstream webapp {
+            server 127.0.0.1:5000;
+        }
+
+        server {
+            listen 80;
+
+            location / {
+                proxy_pass         http://webapp;
+                proxy_redirect     off;
+            }
+        }
+    }
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mc3
+  labels:
+    app: mc3
+spec:
+  containers:
+  - name: webapp
+    image: training/webapp
+  - name: nginx
+    image: nginx:alpine
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: nginx-proxy-config
+      mountPath: /etc/nginx/nginx.conf
+      subPath: nginx.conf
+  volumes:
+  - name: nginx-proxy-config
+    configMap:
+      name: mc3-nginx-conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: mc3
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 80
+  type: ClusterIP
+EOF
+```
+
+kubectl apply -f ./due_container_forward_loopback.yml
+
 
 curl http://$(kubectl describe svc nginx-service | grep 'IP:'|awk '{print $2}'):$(kubectl describe svc nginx-service| grep -E '^Port:' | awk '{print $3}' | sed -e 's/\/TCP//g') 
-```
+
 
 --> pods e controllers 
 Anziche' forzare il deploy manualmente e' buona norma usare controllers che 
@@ -477,6 +573,7 @@ Questi templates sono inclusi in alcune `workload resources` come :
   - Deployment
   - Statefulset
   - DaemonSet
+  - Job
 
 ```
 apiVersion: batch/v1
@@ -512,7 +609,7 @@ Errori dei pods
 
   - Initial crash: Kubernetes attempts an immediate restart based on the Pod restartPolicy.
   - Repeated crashes: After the initial crash Kubernetes applies an exponential backoff delay for subsequent restarts, described in restartPolicy. This prevents rapid, repeated restart attempts from overloading the system.
-- CrashLoopBackOff state: This indicates that the backoff delay mechanism is currently in effect for a given container that is in a crash loop, failing and restarting repeatedly.
+  - CrashLoopBackOff state: This indicates that the backoff delay mechanism is currently in effect for a given container that is in a crash loop, failing and restarting repeatedly.
   - Backoff reset: If a container runs successfully for a certain duration (e.g., 10 minutes), Kubernetes resets the backoff delay, treating any new crash as the first one.
 
 Container Restart Policy
@@ -521,7 +618,74 @@ Container Restart Policy
   - OnFailure: Only restarts the container if it exits with an error (non-zero exit status).
   - Never: Does not automatically restart the terminated container.
 
-Probes
+
+### Deployment
+
+Un Deployment è un oggetto Kubernetes che fornisce dichiarazioni per gestire le applicazioni. 
+Si occupa di gestire la creazione e le repliche dei pod e garantisce che il numero desiderato di 
+repliche di un'applicazione sia in esecuzione. 
+Consente aggiornamenti e rollback delle applicazioni senza interruzioni.
+
+kubectl apply -f nginx_deployment_su_lb.yml
+
+### StatefulSet
+
+Uno StatefulSet è un oggetto Kubernetes utilizzato per gestire applicazioni stateful. Garantisce che i pod siano creati e aggiornati mantenendo un'identità stabile attraverso i riavvii e le rischedulazioni.
+Quando si parla di "identità stabile" in Kubernetes, specialmente in relazione agli StatefulSet, si intende che i pod gestiti da uno StatefulSet mantengono una serie di proprietà. 
+Questa stabilità riguarda diversi aspetti:
+
+Nome dei Pod
+I pod creati da uno StatefulSet hanno nomi predicibili e stabili. Il nome di ogni pod include il nome dello StatefulSet e un suffisso numerico incrementale. Ad esempio, se il nome dello StatefulSet è nginx, i pod avranno nomi come nginx-0, nginx-1, nginx-2, e così via. Questo naming predicibile permette di sapere esattamente quale pod è quale, anche dopo riavvii o aggiornamenti.
+
+Identità di Rete
+Ogni pod in uno StatefulSet ha un DNS stabile. Ad esempio, il pod nginx-0 avrà un nome DNS come nginx-0.<servicename>. Questo significa che anche se un pod viene riavviato o spostato su un altro nodo, il suo nome DNS rimane lo stesso, facilitando la comunicazione tra i pod e altri servizi.
+
+Volumi Persistenti
+I pod in uno StatefulSet possono essere associati a PersistentVolumeClaims (PVC) che sono anch'essi stabili e univoci. Ogni pod mantiene un'associazione costante con il proprio volume di storage, che non cambia attraverso i riavvii. Questo è essenziale per applicazioni stateful che necessitano di accesso costante ai dati, come i database.
+
+In questo esempio:
+
+Nome dei Pod: nginx-0, nginx-1, nginx-2 saranno i nomi dei pod creati.
+Identità di Rete: Ogni pod avrà un nome DNS stabile come nginx-0.nginx, nginx-1.nginx.
+Volumi Persistenti: Ogni pod avrà un volume persistente associato specifico, assicurato dai volumeClaimTemplates.
+
+Vantaggi dell'Identità Stabile
+Facilità di Debug: Poiché ogni pod ha un nome prevedibile e una connessione DNS stabile, è più facile monitorare e fare debug delle applicazioni.
+Consistenza dei Dati: Volumi persistenti associati a pod specifici garantiscono che i dati non vadano persi attraverso riavvii.
+Aggiornamenti Graduali: Gli aggiornamenti ai pod possono essere eseguiti in modo graduale, riducendo il rischio di downtime o di inconsistenze.
+L'identità stabile è cruciale per applicazioni stateful, come database, sistemi di messaggistica, o altre applicazioni che richiedono un accesso persistente e consistente ai dati e alle risorse di rete.
+
+kubectl apply -f  nginx-StatefulSet.yml
+
+kubectl get statefulsets
+kubectl get pods
+kubectl get pvc
+
+### DaemonSet
+Un DaemonSet è un oggetto Kubernetes utilizzato per garantire che una copia di un pod sia in esecuzione su tutti (o alcuni) nodi del cluster. È comunemente utilizzato per eseguire agenti di sistema, come log collectors o monitoring agents, su ogni nodo.
+I DaemonSet sono comunemente utilizzati per eseguire compiti di sistema critici e di gestione del cluster. Di seguito sono riportati alcuni dei principali vantaggi dell'utilizzo di un DaemonSet:
+
+Vantaggi di un DaemonSet
+Gestione Centralizzata dei Servizi di Sistema:
+
+Logging: Esempi comuni includono l'uso di DaemonSet per distribuire agenti di logging come Fluentd o Logstash su ogni nodo per raccogliere e inviare i log.
+Monitoraggio: DaemonSet può essere utilizzato per eseguire agenti di monitoraggio come Prometheus Node Exporter, che raccoglie metriche di sistema da ogni nodo.
+Sicurezza: Implementare agenti di sicurezza come Falco per il monitoraggio della sicurezza dei container e dei nodi.
+Consistenza di Configurazione:
+Assicura che tutti i nodi nel cluster abbiano configurazioni e servizi uniformi e aggiornati. Questo è particolarmente utile per applicazioni che richiedono impostazioni coerenti su tutti i nodi.
+Facilità di Manutenzione:
+Facilita la distribuzione e l'aggiornamento degli agenti di sistema, poiché qualsiasi modifica al DaemonSet viene automaticamente propagata a tutti i nodi. Questo riduce significativamente lo sforzo di manutenzione manuale.
+Efficienza delle Risorse:
+DaemonSet utilizza efficientemente le risorse del cluster assicurando che un numero minimo di pod (uno per nodo) sia in esecuzione, riducendo la duplicazione non necessaria di servizi di sistema.
+Supporto per Nodi Specifici:
+DaemonSet può essere configurato per eseguire pod solo su nodi specifici utilizzando selettori di etichette o tolleranze per i nodi con determinati taint. Questo è utile per eseguire servizi solo su nodi dedicati o specializzati.
+Alta Disponibilità:
+Poiché un DaemonSet garantisce che ogni nodo esegua una copia del pod, contribuisce ad aumentare la disponibilità dei servizi di sistema. Anche se un nodo si guasta, gli altri nodi continueranno a eseguire i pod del DaemonSet, garantendo che il servizio rimanga operativo.
+
+kubectl apply -f  fluentd_DaemonSet.yml
+                  prometheus_DaemonSet.yml
+
+### Probes
 
 Attraverso il "readinessGates" noi possiamo iniettare feedback extra o segnali all'interno dello `PodStatus` del Pod.
 
@@ -547,9 +711,6 @@ status:
 ...
 ```
 
-
-### Probes
-
 Ci sono quattro possibli vie di probing dei container e sono:
 
 - exec
@@ -561,7 +722,7 @@ Performs an HTTP GET request against the Pod's IP address on a specified port an
 - tcpSocket
 Performs a TCP check against the Pod's IP address on a specified port. The diagnostic is considered successful if the port is open. If the remote system (the container) closes the connection immediately after it opens, this counts as healthy.
 
-e posso riturnare i seguenti output:
+e posso ritornare i seguenti output:
 
   - Success
   - Failure
@@ -573,13 +734,86 @@ e posso riturnare i seguenti output:
   - readinessProbe
   - startupProbe
 
+--> liveness probe 
+A third type of liveness probe uses a TCP socket. With this configuration, the kubelet will attempt to open a socket to your container on the specified port. If it can establish a connection, the container is considered healthy, if it can't it is considered a failure.
+
+--> readiness probes
+Sometimes, applications are temporarily unable to serve traffic. For example, an application might need to load large data or configuration files during startup, or depend on external services after startup. In such cases, you don't want to kill the application, but you don't want to send it requests either. Kubernetes provides readiness probes to detect and mitigate these situations. A pod with containers reporting that they are not ready does not receive traffic through Kubernetes Services.
+
+--> startupProbe
+The readiness and liveness probes do not depend on each other to succeed. If you want to wait before executing a readiness probe, you should use initialDelaySeconds or a startupProbe.
+
 https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+
+
+TESTARE 
+```
+cat > nginx-health_check.yml << EOF
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-configmap1
+data:
+  healthz: |
+ciao
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 10.0.0.245
+spec:
+  type: LoadBalancer # Espone il servizio su un indirizzo IP esterno
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---    
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-healthcheck
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+      - name: config1
+        mountPath: /usr/share/nginx/html/healthz
+        subPath: healthz
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 5
+    readinessProbe:
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 5
+  volumes:
+    - name: config1
+      configMap:
+        name: nginx-configmap1
+---
+EOF
+```
 
 --> Healthcheck
 
 Simuliamo un fallimento del `Liveness Probe`
 deploy del pod
-`kubectl apply -f 6-nginx-health_check.yml`
+`kubectl apply -f nginx-health_check.yml`
 controlla lo stato
 `kubectl get pod nginx-healthcheck`
 descrivi il pod
@@ -604,7 +838,229 @@ Il container dovrebbe morire a breve e il pod venir riavviato
 `kubectl get pod nginx-healthcheck -w`
 
 
+### Ingress
 
+helm install my-release oci://ghcr.io/nginxinc/charts/nginx-ingress --version 1.3.1
+kubectl get pods -n ingress-nginx
+
+https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  type: LoadBalancer
+spec:
+  rules:
+  - host: ciao.it
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service
+            port:
+              number: 80
+---
+
+
+  DNS pippo.it 195.0.0.100  
+  /                                       ( ingress )
+casa -> www ->  router_aziendale     ->   rp / lb            ->  srv ( pippo.it)
+                195.0.0.100:80/443      192.168.0.10:80/443     10.0.0.245:8080  <--> service --> nodo1 - pippo.pod1
+                                        pippo.it:80/443                                       \-> nodo2 - pippo.pod2
+                                        paperino.it             10.0.0.245:8081
+
+proxy laptop_personale -> www
+rp    www -> srv_singolo
+
+                    youtube1 20
+                  /
+lb    www ->rp/lb - youtube2 20
+                  \ 
+                    youtube3 20
+
+
+                    roundrobin
+                    hash
+                    leastconn
+
+service port        10.0.0.245:8080
+        targetport  pod:80
+pod port            172.0.0.10:80
+container           x:80
+  nginx             x:80
+      
+
+### Volumi
+
+--> emptyDir
+
+For a Pod that defines an emptyDir volume, the volume is created when the Pod is assigned to a node. As the name says, the emptyDir volume is initially empty. All containers in the Pod can read and write the same files in the emptyDir volume, though that volume can be mounted at the same or different paths in each container. When a Pod is removed from a node for any reason, the data in the emptyDir is deleted permanently.
+
+
+--> pod con container multipli
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mc1
+spec:
+  volumes:
+  - name: html
+    emptyDir: {}
+  containers:
+  - name: 1st
+    image: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: html
+      mountPath: /usr/share/nginx/html
+  - name: 2nd
+    image: debian
+    volumeMounts:
+    - name: html
+      mountPath: /html
+    command: ["/bin/sh", "-c"]
+    args:
+      - while true; do
+          date >> /html/index.html;
+          sleep 1;
+        done
+---
+
+--> configMap
+
+A ConfigMap provides a way to inject configuration data into pods. The data stored in a ConfigMap can be referenced in a volume of type configMap and then consumed by containerized applications running in a pod.
+
+When referencing a ConfigMap, you provide the name of the ConfigMap in the volume. You can customize the path to use for a specific entry in the ConfigMap. The following configuration shows how to mount the log-config ConfigMap onto a Pod called configmap-pod:
+
+kubectl apply -f nginx+pvc+lb.yml
+
+--> PersistentVolume 
+
+A PersistentVolume (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes. It is a resource in the cluster just like a node is a cluster resource. PVs are volume plugins like Volumes, but have a lifecycle independent of any individual Pod that uses the PV. This API object captures the details of the implementation of the storage, be that NFS, iSCSI, or a cloud-provider-specific storage system.
+
+A PersistentVolumeClaim (PVC) is a request for storage by a user. It is similar to a Pod. Pods consume node resources and PVCs consume PV resources. Pods can request specific levels of resources (CPU and Memory). Claims can request specific size and access modes (e.g., they can be mounted ReadWriteOnce, ReadOnlyMany, ReadWriteMany, or ReadWriteOncePod, see AccessModes).
+
+While PersistentVolumeClaims allow a user to consume abstract storage resources, it is common that users need PersistentVolumes with varying properties, such as performance, for different problems. Cluster administrators need to be able to offer a variety of PersistentVolumes that differ in more ways than size and access modes, without exposing users to the details of how those volumes are implemented. For these needs, there is the StorageClass resource.
+
+```
+cat >> pod_pv+pvc.yml << EOF
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: busybox
+    command: ["sleep", "3600"]
+    volumeMounts:   
+    - name: my-volume
+      mountPath: /mnt/my-data
+  volumes:
+  - name: my-volume
+    persistentVolumeClaim:
+      claimName: my-pvc
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"  # Replace with the actual path on your node
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Mi
+---
+EOF
+```
+kubectl apply -f pod_pv+pvc.yml
+
+
+DA TESTARE !!!
+```
+cat >> condivisione_pvc_tra_due_pod.yml << EOF
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+    name: my-pvc
+spec:
+    accessModes:
+      - ReadWriteMany
+    storageClassName: myvolume
+    resources:
+        requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp1
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+    volumeMounts:
+      - mountPath: /data
+        name: data
+        subPath: app1
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: 'my-pvc'
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp2
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+    volumeMounts:
+      - mountPath: /data
+        name: data
+        subPath: app2
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: 'my-pvc'
+---
+EOF
+```
+
+
+--> StorageClass
+A StorageClass provides a way for administrators to describe the classes of storage they offer. Different classes might map to quality-of-service levels, or to backup policies, or to arbitrary policies determined by the cluster administrators. Kubernetes itself is unopinionated about what classes represent.
+
+The Kubernetes concept of a storage class is similar to “profiles” in some other storage system designs.
 
 
 

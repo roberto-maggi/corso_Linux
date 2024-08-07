@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd
+spec:
+  selector:
+    matchLabels:
+      name: fluentd
+  template:
+    metadata:
+      labels:
+        name: fluentd
+    spec:
+      containers:
+      - name: fluentd
+        image: fluentd:v1.16.2-debian-1.1
+        ports:
+        - containerPort: 24224
+        volumeMounts:
+        - name: fluentd-log
+          mountPath: /var/log/
+        - name: storage
+          mountPath: /mnt/data
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: fluentd-pvc
+      - name: fluentd-log
+        hostPath:
+          path: /var/log
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: fluentd-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
