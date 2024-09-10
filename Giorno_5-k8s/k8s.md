@@ -77,8 +77,7 @@ kubectl get pods <NOME_POD> -o jsonpath='{.metadata.uid}'
 ### Labels
 
 le etichette sono coppie "key/value" attaccate ad oggetti, ad esempio pods.
-Servono essenzialmente agli utenti per identifica gli oggetti, ma non apportano 
-necessariamente un valore aggiunto al motore di k8s. ( > 63 )
+Servono essenzialmente a k8s per identificare gli oggetti. ( > 63 )
 ```
 ...
 metadata:
@@ -147,9 +146,9 @@ sempre il maggior numero possibile di labels potenzialmente utili. Ad esempio
 
 ### Annotations
 
-Al contrario delle labels, k8s non e' in grado di usare le informazioni presenti in questi metadati.
-Essi devono pero' rispettare alcuni criteri, come il fatto di essere "string", quindi non numerici 
-o booleani.
+Benche' si cerchi di far passare che le labels siano per K8S, mentre le annotations siano per gli umani, non e' del tutto vero.
+Nelle seconde e' possibile inserire metadati utilizzabili dal pod stesso, quindi fruibili dal kubo, benche' vadano ben gestiti perche' "sporcarli" con dati non formattati potrebbe rendere il tutto inutilizzabile. ( metalLB ) 
+Essi devono pero' rispettare alcuni criteri, come il fatto di essere "string", quindi non numerici o booleani.
 
 ### Namespaces
 
@@ -252,12 +251,13 @@ la ottiene il motore interno al pod, poi coredns, ed infine il dns dell'host su 
 Un record DNS ottiene un fqdn simile a my-svc.my-namespace.svc.cluster-domain.example ( come A/AAA record ), mentre uno 
 "headless" si riferisce essenzialmente ad un pod, bypassandone il servizio.
 
-### Dashboard ( meglio OpneLens )
+### Dashboard ( meglio OpenLens )
 
 ### Cluster-level loggins
 
 Testiamo il sistema di log:
 
+```
 cat > pod_logging.yml << EOF
 apiVersion: v1
 kind: Pod
@@ -270,7 +270,7 @@ spec:
     args: [/bin/sh, -c,
             'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done']
 EOF
-
+```
 kubectl apply -f ./pod_logging.yml 
 
 kubectl logs counter -f 
@@ -735,107 +735,401 @@ e posso ritornare i seguenti output:
   - startupProbe
 
 --> liveness probe 
-A third type of liveness probe uses a TCP socket. With this configuration, the kubelet will attempt to open a socket to your container on the specified port. If it can establish a connection, the container is considered healthy, if it can't it is considered a failure.
+Questi test di "salute" dei pod sono utilizzati per saggiare lo stato e la qualita' del servizio esposto. Possono avere end point filesystem, protocolli ( http / tcp ), socket ( rpc ).
 
 --> readiness probes
-Sometimes, applications are temporarily unable to serve traffic. For example, an application might need to load large data or configuration files during startup, or depend on external services after startup. In such cases, you don't want to kill the application, but you don't want to send it requests either. Kubernetes provides readiness probes to detect and mitigate these situations. A pod with containers reporting that they are not ready does not receive traffic through Kubernetes Services.
-
---> startupProbe
-The readiness and liveness probes do not depend on each other to succeed. If you want to wait before executing a readiness probe, you should use initialDelaySeconds or a startupProbe.
+Altre volte, benche' il servizio sia attivo non e' ancore disponibile a ricevere traffico in entrata, come ad esempio nello startup di db particolarmente grandi.
+Questi tipo di probes ritardano lo status di unhealty ad un pod, permettendo il fallimento di
+un determinato numero di prove iniziali.
 
 https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 
+-> fallimento di un check "interno" o di file system
 
-TESTARE 
 ```
-cat > nginx-health_check.yml << EOF
+cat > liveness-fs.yml << EOF
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: nginx-configmap1
-data:
-  healthz: |
-ciao
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-  annotations:
-    metallb.universe.tf/loadBalancerIPs: 10.0.0.245
-spec:
-  type: LoadBalancer # Espone il servizio su un indirizzo IP esterno
-  selector:
-    app: nginx
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
----    
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-healthcheck
   labels:
-    app: nginx
+    test: liveness
+  name: liveness-exec
 spec:
   containers:
-  - name: nginx
+  - name: liveness
+    image: registry.k8s.io/busybox
+    args:
+    - /bin/sh
+    - -c
+    - touch /tmp/healthy; sleep 30; rm -f /tmp/healthy; sleep 600
+    livenessProbe:
+      exec:
+        command:
+        - cat
+        - /tmp/healthy
+      initialDelaySeconds: 5
+      periodSeconds: 5
+---
+EOF
+```
+Noterai che il campo "restarts" comincera' ad aumentare
+
+-> fallimento di una chiamata http o di servizio esposto
+
+```
+cat >> liveness-http.yaml << EOF 
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: liveness-http
+spec:
+  containers:
+  - name: liveness
+    image: registry.k8s.io/e2e-test-images/agnhost:2.40
+    args:
+    - liveness
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 8080
+        httpHeaders:
+        - name: Custom-Header
+          value: Awesome
+      initialDelaySeconds: 3
+      periodSeconds: 3
+EOF      
+```
+
+Il codice ci dice che K8S aspettera' 3 secondi per eseguire il primo check,
+che verra' ripetuto ogni 3''.
+Ogni codice di ritorno della chiamata 200 > 400 sara' ritenuto accettabile. 
+
+`kubectl describe pod liveness-http`
+
+-> fallimento di una chiamata TCP ( servizio esposto )
+
+```
+cat > pods-probe-tcp-liveness-readiness-yaml << EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: goproxy
+  labels:
+    app: goproxy
+spec:
+  containers:
+  - name: goproxy
+    image: registry.k8s.io/goproxy:0.1
+    ports:
+    - containerPort: 8080
+    readinessProbe:
+      tcpSocket:
+        port: 8080
+      initialDelaySeconds: 15
+      periodSeconds: 10
+    livenessProbe:
+      tcpSocket:
+        port: 8080
+      initialDelaySeconds: 15
+      periodSeconds: 10
+EOF
+```
+`kubectl apply -f ./pods-probe-tcp-liveness-readiness-yaml && kubectl describe pod goproxy`
+
+### Readiness probes - proteggere i container lenti 
+```
+...
+startupProbe:
+  httpGet:
+    path: /healthz
+    port: liveness-port
+  failureThreshold: 30
+  periodSeconds: 10
+...
+```
+Grazie a questo hack anche se ogni probe fallisse il pod non diverrebbe 
+"unhealthy" per i primi 300 secondi.  
+
+## Resource management ( Capping )
+
+### Assegnamento delle risorse
+
+```
+cat > memory-request-limit.yaml << EOF
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: resource-cap-example
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: memory-demo
+  namespace: resource-cap-example
+spec:
+  containers:
+  - name: memory-demo-ctr
+    image: polinux/stress
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "50Mi"
+      limits:
+        cpu: "200m"
+        memory: "100Mi"
+    command: ["stress"]
+    args: ["--vm", "1", "--vm-bytes", "150M", "--vm-hang", "1"]
+---
+```
+
+L'istruzione  `stress args: ["--vm", "1", "--vm-bytes", "150M", "--vm-hang", "1"]` dice a kubernetes di occupare 150 mb di memoria virtuale per il pod, pur non essendo possibile.
+
+kubectl apply -f memory-request-limit.yaml
+kubectl get pod resource-demo --namespace=resource-cap-example -o yaml
+kubectl top pod resource-demo --namespace=resource-cap-example
+
+Vedremo cosi' che il pod e' stato ucciso per eccessivo utilizzo di risorse.
+
+```
+NAME          READY   STATUS      RESTARTS   AGE   IP               NODE     NOMINATED NODE   READINESS GATES
+memory-demo   0/1     OOMKilled   0          4s    172.16.196.147   node01   <none>           <none>
+```
+## Storage
+
+### Volumes
+
+Siccome il filesystem in un container e' statico e le sue modifiche effimere, e' necessario affidarsi ei volumi per gerstire i dati.
+
+--> emptyDir
+In casi di comunicazione e/o sincronizzazione tra container e/o pod e' possibile usare questa soluzione. Il nome e' dato dal fatto che sia una allocazione di memoria inizialmente vuota 
+ed e' creato nel momento in cui il pod e' assegnato al nodo che lo gestira'. Viene distrutto ed il suo contenuto cancellato, quando il/i pod che ne fanno uso sono terminati.
+
+
+--> pod con container multipli
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mc1
+spec:
+  volumes:
+  - name: html
+    emptyDir: {}
+  containers:
+  - name: 1st
     image: nginx
     ports:
     - containerPort: 80
     volumeMounts:
-      - name: config1
-        mountPath: /usr/share/nginx/html/healthz
-        subPath: healthz
-    livenessProbe:
-      httpGet:
-        path: /healthz
-        port: 80
-      initialDelaySeconds: 5
-      periodSeconds: 5
-    readinessProbe:
-      httpGet:
-        path: /
-        port: 80
-      initialDelaySeconds: 5
-      periodSeconds: 5
+    - name: html
+      mountPath: /usr/share/nginx/html
+  - name: 2nd
+    image: debian
+    volumeMounts:
+    - name: html
+      mountPath: /html
+    command: ["/bin/sh", "-c"]
+    args:
+      - while true; do
+          date >> /html/index.html;
+          sleep 1;
+        done
+---
+
+
+Alcune applicazioni possono usare un volume con l'unico scopo di migliorare le proprie performance, le emptyDir vengono spesso usate, appunto come cache.
+
+--> configMap
+
+Una ConfigMap offre un modo semplice per iniettare dati di configurazione dentro un pod, senza dover hardcodare nulla.
+Puo' essere referenziato come un `kind: ConfigMap` e consumato dai nostr pod.
+
+kubectl apply -f nginx+pvc+lb.yml
+
+### PersistentVolume 
+
+
+
+A PersistentVolume (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes. It is a resource in the cluster just like a node is a cluster resource. PVs are volume plugins like Volumes, but have a lifecycle independent of any individual Pod that uses the PV. This API object captures the details of the implementation of the storage, be that NFS, iSCSI, or a cloud-provider-specific storage system.
+
+A PersistentVolumeClaim (PVC) is a request for storage by a user. It is similar to a Pod. Pods consume node resources and PVCs consume PV resources. Pods can request specific levels of resources (CPU and Memory). Claims can request specific size and access modes (e.g., they can be mounted ReadWriteOnce, ReadOnlyMany, ReadWriteMany, or ReadWriteOncePod, see AccessModes).
+
+While PersistentVolumeClaims allow a user to consume abstract storage resources, it is common that users need PersistentVolumes with varying properties, such as performance, for different problems. Cluster administrators need to be able to offer a variety of PersistentVolumes that differ in more ways than size and access modes, without exposing users to the details of how those volumes are implemented. For these needs, there is the StorageClass resource.
+
+Il suo proviosioning puo' avvenire in due modi: statico, se l'admin crea i PV e vengono messi a disposizione degli utenti di K8S o dinamico, se basato su storageClass.
+
+Quando un PVC richiede accesso a dello storage viene creato un control loop dal control plane,
+allo scopo gestire la richiesta. Questo controlla se ci sono storage coerenti con la richiesta e, se la richiesta e' positiva, i due vengono "legati". Questo ClaimRef e' una mappatura uno-a-uno e bidirezionale.  
+
+```
+cat >> pod_pv+pvc.yml << EOF
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: busybox
+    command: ["sleep", "3600"]
+    volumeMounts:   
+    - name: my-volume
+      mountPath: /mnt/my-data
   volumes:
-    - name: config1
-      configMap:
-        name: nginx-configmap1
+  - name: my-volume
+    persistentVolumeClaim:
+      claimName: my-pvc
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"  # Replace with the actual path on your node
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Mi
 ---
 EOF
 ```
+kubectl apply -f pod_pv+pvc.yml
 
---> Healthcheck
+Si vedra' con `kubectl describe pvc my-pvc` che il flag Storage Object in Use Protection 
+e' abilitatpodi default. Questo impedisce la cancellazione automatica del claim, anche
+se attivamente cancellato dall'utente. 
 
-Simuliamo un fallimento del `Liveness Probe`
-deploy del pod
-`kubectl apply -f nginx-health_check.yml`
-controlla lo stato
-`kubectl get pod nginx-healthcheck`
-descrivi il pod
-`kubectl describe pod nginx-healthcheck`
-manometto il pod!
-```
-kubectl exec -it nginx-healthcheck -- /bin/sh
-touch /usr/share/nginx/html/healthz
-exit
-```
-Osserva l'effetto
-`kubectl get pod nginx-healthcheck -w`
+Per quanto riguarda le policies dei PVC, possono essere "retain", "delete" o "recycle".
+Questo perche' anche se il PVC dovesse essere cancellato i dati esistenti sul PV sarebbere, di default, mantenuti.
+Retain nel caso in cui esso possa essere richiesto nuovamente, DELETE cancella sia il PVC che il PV se supportato, mentre Recycle esegue un `rm -rf /<PATH>`. 
 
-Simuliamo ora un fallimento del `Readiness Probe`
-```
-kubectl exec -it nginx-healthcheck -- /bin/sh
-pkill nginx
-exit
-```
-Il container dovrebbe morire a breve e il pod venir riavviato
+Una cosa interesante da considerare e' che K8S ci permette di montare volumi in due modalita' diverse: Filesystem e Block, se il primo verra' montato come un filesystem effettivo l'altro verra percepito dal pod come un nuovo devide e montato in `/dev`.
 
-`kubectl get pod nginx-healthcheck -w`
+Le modalita' di accesso dei PV possono essere:
+`ReadWriteOnce` in cui il volume e' accessibile solo da un nodo alla volta, ma da piu' pod
+`ReadOnlyMany` dove il volume verra' montato da piu' nodi ma sono il `r`
+`ReadWriteMany` montato in modalita' `rw` da piu' nodi
+`ReadWriteOncePod` montato in `rw` ma da un singolo pod
+
+DA TESTARE !!!
+```
+cat >> condivisione_pvc_tra_due_pod.yml << EOF
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+    name: my-pvc
+spec:
+    accessModes:
+      - ReadWriteMany
+    storageClassName: myvolume
+    resources:
+        requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp1
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+    volumeMounts:
+      - mountPath: /data
+        name: data
+        subPath: app1
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: 'my-pvc'
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp2
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latet
+    ports:
+    - containerPort: 80
+    volumeMounts:
+      - mountPath: /data
+        name: data
+        subPath: app2
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: 'my-pvc'
+---
+EOF
+```
+Mentre i PV non hanno un namespace, i PVC si deve essere lo stesso del pod che lo usera'.
+
+
+--> ProjectedVolumes
+
+E' ina modalita' un po' desueta ma utile per creare un volume "on the fly", con il codice di un configMap, come questo secret.
+
+```
+cat > projected_secret.yml << EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: volume-test
+spec:
+  containers:
+  - name: container-test
+    image: busybox:1.28
+    command: ["sleep", "3600"]
+    volumeMounts:
+    - name: all-in-one
+      mountPath: "/projected-volume"
+      readOnly: true
+  volumes:
+  - name: all-in-one
+    projected:
+      sources:
+      - secret:
+          name: mysecret
+          items:
+            - key: username
+              path: my-group/my-username
+      - secret:
+          name: mysecret2
+          items:
+            - key: password
+              path: my-group/my-password
+              mode: 511
+EOF
+```
+
+--> StorageClass
+A StorageClass provides a way for administrators to describe the classes of storage they offer. Different classes might map to quality-of-service levels, or to backup policies, or to arbitrary policies determined by the cluster administrators. Kubernetes itself is unopinionated about what classes represent.
+
+The Kubernetes concept of a storage class is similar to “profiles” in some other storage system designs.
+
 
 
 ### Ingress
@@ -895,173 +1189,6 @@ pod port            172.0.0.10:80
 container           x:80
   nginx             x:80
       
-
-### Volumi
-
---> emptyDir
-
-For a Pod that defines an emptyDir volume, the volume is created when the Pod is assigned to a node. As the name says, the emptyDir volume is initially empty. All containers in the Pod can read and write the same files in the emptyDir volume, though that volume can be mounted at the same or different paths in each container. When a Pod is removed from a node for any reason, the data in the emptyDir is deleted permanently.
-
-
---> pod con container multipli
-
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: mc1
-spec:
-  volumes:
-  - name: html
-    emptyDir: {}
-  containers:
-  - name: 1st
-    image: nginx
-    ports:
-    - containerPort: 80
-    volumeMounts:
-    - name: html
-      mountPath: /usr/share/nginx/html
-  - name: 2nd
-    image: debian
-    volumeMounts:
-    - name: html
-      mountPath: /html
-    command: ["/bin/sh", "-c"]
-    args:
-      - while true; do
-          date >> /html/index.html;
-          sleep 1;
-        done
----
-
---> configMap
-
-A ConfigMap provides a way to inject configuration data into pods. The data stored in a ConfigMap can be referenced in a volume of type configMap and then consumed by containerized applications running in a pod.
-
-When referencing a ConfigMap, you provide the name of the ConfigMap in the volume. You can customize the path to use for a specific entry in the ConfigMap. The following configuration shows how to mount the log-config ConfigMap onto a Pod called configmap-pod:
-
-kubectl apply -f nginx+pvc+lb.yml
-
---> PersistentVolume 
-
-A PersistentVolume (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes. It is a resource in the cluster just like a node is a cluster resource. PVs are volume plugins like Volumes, but have a lifecycle independent of any individual Pod that uses the PV. This API object captures the details of the implementation of the storage, be that NFS, iSCSI, or a cloud-provider-specific storage system.
-
-A PersistentVolumeClaim (PVC) is a request for storage by a user. It is similar to a Pod. Pods consume node resources and PVCs consume PV resources. Pods can request specific levels of resources (CPU and Memory). Claims can request specific size and access modes (e.g., they can be mounted ReadWriteOnce, ReadOnlyMany, ReadWriteMany, or ReadWriteOncePod, see AccessModes).
-
-While PersistentVolumeClaims allow a user to consume abstract storage resources, it is common that users need PersistentVolumes with varying properties, such as performance, for different problems. Cluster administrators need to be able to offer a variety of PersistentVolumes that differ in more ways than size and access modes, without exposing users to the details of how those volumes are implemented. For these needs, there is the StorageClass resource.
-
-```
-cat >> pod_pv+pvc.yml << EOF
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: my-pod
-spec:
-  containers:
-  - name: my-container
-    image: busybox
-    command: ["sleep", "3600"]
-    volumeMounts:   
-    - name: my-volume
-      mountPath: /mnt/my-data
-  volumes:
-  - name: my-volume
-    persistentVolumeClaim:
-      claimName: my-pvc
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: my-pv
-spec:
-  capacity:
-    storage: 1Mi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/mnt/data"  # Replace with the actual path on your node
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: my-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Mi
----
-EOF
-```
-kubectl apply -f pod_pv+pvc.yml
-
-
-DA TESTARE !!!
-```
-cat >> condivisione_pvc_tra_due_pod.yml << EOF
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-    name: my-pvc
-spec:
-    accessModes:
-      - ReadWriteMany
-    storageClassName: myvolume
-    resources:
-        requests:
-            storage: 1Gi
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: myapp1
-spec:
-  containers:
-  - name: nginx
-    image: nginx:latest
-    ports:
-    - containerPort: 80
-    volumeMounts:
-      - mountPath: /data
-        name: data
-        subPath: app1
-  volumes:
-    - name: data
-      persistentVolumeClaim:
-        claimName: 'my-pvc'
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: myapp2
-spec:
-  containers:
-  - name: nginx
-    image: nginx:latest
-    ports:
-    - containerPort: 80
-    volumeMounts:
-      - mountPath: /data
-        name: data
-        subPath: app2
-  volumes:
-    - name: data
-      persistentVolumeClaim:
-        claimName: 'my-pvc'
----
-EOF
-```
-
-
---> StorageClass
-A StorageClass provides a way for administrators to describe the classes of storage they offer. Different classes might map to quality-of-service levels, or to backup policies, or to arbitrary policies determined by the cluster administrators. Kubernetes itself is unopinionated about what classes represent.
-
-The Kubernetes concept of a storage class is similar to “profiles” in some other storage system designs.
-
 
 
 ## Comprendere gli RBAC
@@ -1270,10 +1397,3 @@ aree specifiche di particolare importanza:
 https://learnk8s.io/rbac-kubernetes
 
 
-
-### resource Capping
-
-kubectl create namespace resource-cap-example
-kubectl apply -f <your-file-name>.yaml
-kubectl get pod resource-demo --namespace=resource-cap-example -o yaml
-kubectl top pod resource-demo --namespace=resource-cap-example
