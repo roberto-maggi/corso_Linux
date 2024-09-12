@@ -143,6 +143,12 @@ sempre il maggior numero possibile di labels potenzialmente utili. Ad esempio
     app.kubernetes.io/managed-by: Helm
 ...
 ```
+ 
+```
+kubectl run nginx --image=nginx:latest
+kubectl  label pod nginx  ver=1 env=prod
+```
+
 
 ### Annotations
 
@@ -213,7 +219,6 @@ kubectl proxy &
 curl http://localhost:8001/api/v1/namespaces/default/pods
 ```
 
-
 ### etcd
 E' un database estremamente performante a "key=value".
 E' fondamentale farne dei backup!
@@ -234,9 +239,12 @@ E' un agente in esecuzione su ogni wn del cluster e si assicura che i container 
 Essenzialmente legge i dati presenti nelle PodSpecs e li valida, assicurandosi cosi' della "salute" dei pod.
 
 ### kube-proxy
-Questo e' il proxy  che gira su ogni wn del cluster e implementando una parte del concetto di Service di k8s.
+Questo e' il proxy in esecuzione su ogni wn del cluster e implementando una parte del concetto di Service di k8s.
 Esso  amministra le regole di networking del nodo, che ne permettono la corretta comunicazione dentro e fuori dal cluster.
-kp usa il layer di packet filtering del OS, se presente e disponibile, altrimenti ne esegue autonomamente il forwarding.
+Kube-proxyp usa il layer di packet filtering del OS, se presente e disponibile, altrimenti ne esegue autonomamente il forwarding.
+Questo avviene parzialmente grazie ai CluserIP, che sono degli IP virtuali stabili che bilanciano il traffico tra i vari endpoint di un servizio. 
+
+<kube-proxy.png>
 
 ### Container Runtime Interface
 Il CRI e' responsabile della corretta esecuzione e lifetime dei container all'interno dell'ambiente di k8s. 
@@ -468,103 +476,7 @@ spec:
 ---
 EOF
 ```
-curl http://$(kubectl describe svc nginx-service | grep 'IP:'|awk '{print $2}'):$(kubectl describe svc nginx-service| grep -E '^Port:' | awk '{print $3}' | sed -e 's/\/TCP//g') 
-
---> due container che si forwardano chiamate sul loopback
-
-```
-cat >> due_container_forward_loopback.yml << EOF
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: mc3-nginx-conf
-data:
-  nginx.conf: |-
-    user  nginx;
-    worker_processes  1;
-
-    error_log  /var/log/nginx/error.log warn;
-    pid        /var/run/nginx.pid;
-
-    events {
-        worker_connections  1024;
-    }
-
-    http {
-        include       /etc/nginx/mime.types;
-        default_type  application/octet-stream;
-
-        log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                          '$status $body_bytes_sent "$http_referer" '
-                          '"$http_user_agent" "$http_x_forwarded_for"';
-
-        access_log  /var/log/nginx/access.log  main;
-
-        sendfile        on;
-        keepalive_timeout  65;
-
-        upstream webapp {
-            server 127.0.0.1:5000;
-        }
-
-        server {
-            listen 80;
-
-            location / {
-                proxy_pass         http://webapp;
-                proxy_redirect     off;
-            }
-        }
-    }
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: mc3
-  labels:
-    app: mc3
-spec:
-  containers:
-  - name: webapp
-    image: training/webapp
-  - name: nginx
-    image: nginx:alpine
-    ports:
-    - containerPort: 80
-    volumeMounts:
-    - name: nginx-proxy-config
-      mountPath: /etc/nginx/nginx.conf
-      subPath: nginx.conf
-  volumes:
-  - name: nginx-proxy-config
-    configMap:
-      name: mc3-nginx-conf
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-spec:
-  selector:
-    app: mc3
-  ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 80
-  type: ClusterIP
-EOF
-```
-
-kubectl apply -f ./due_container_forward_loopback.yml
-
-
-curl http://$(kubectl describe svc nginx-service | grep 'IP:'|awk '{print $2}'):$(kubectl describe svc nginx-service| grep -E '^Port:' | awk '{print $3}' | sed -e 's/\/TCP//g') 
-
-
---> pods e controllers 
-Anziche' forzare il deploy manualmente e' buona norma usare controllers che 
-si occupino di rideployare la risorsa su componenti sani alternativi ( leggi nodi ancora vivi e vegeti ).
+curl http://$(kubectl describe svc nginx-service | grep 'IP:'|awk '{print $2}'):$(kubectl describe svc nginx-service| grep -E '^Port:' | awk '{print $3}' | sed -e 's/\/TCP//g')  
 
 -->> Pod Templates
 
@@ -626,7 +538,14 @@ Si occupa di gestire la creazione e le repliche dei pod e garantisce che il nume
 repliche di un'applicazione sia in esecuzione. 
 Consente aggiornamenti e rollback delle applicazioni senza interruzioni.
 
-kubectl apply -f nginx_deployment_su_lb.yml
+`kubectl apply -f nginx_deployment_su_lb.yml`
+
+```
+kubectl create deploy  alpaca-prod --image=gcr.io/kuar-demo/kuard-amd64:blue --port=8080
+kubectl scale deployment alpaca-prod --replicas=3
+kubectl label deployment alpaca-prod ver=1  env=prod
+```
+
 
 ### StatefulSet
 
@@ -898,6 +817,7 @@ Vedremo cosi' che il pod e' stato ucciso per eccessivo utilizzo di risorse.
 NAME          READY   STATUS      RESTARTS   AGE   IP               NODE     NOMINATED NODE   READINESS GATES
 memory-demo   0/1     OOMKilled   0          4s    172.16.196.147   node01   <none>           <none>
 ```
+
 ## Storage
 
 ### Volumes
@@ -1090,7 +1010,7 @@ Mentre i PV non hanno un namespace, i PVC si deve essere lo stesso del pod che l
 
 --> ProjectedVolumes
 
-E' ina modalita' un po' desueta ma utile per creare un volume "on the fly", con il codice di un configMap, come questo secret.
+E' una modalita' un po' desueta ma utile per creare un volume "on the fly", con il codice di un configMap, come questo secret.
 
 ```
 cat > projected_secret.yml << EOF
@@ -1131,36 +1051,263 @@ A StorageClass provides a way for administrators to describe the classes of stor
 The Kubernetes concept of a storage class is similar to “profiles” in some other storage system designs.
 
 
+### Service
+
+Dopo i pod l'oggetto che maggiormente usiamo nella nostra esperienza con Kubernetes sono i "Service". Essi sono, effettivamente, i migliori amici dei programmi ( leggi servizi ) che esporre: sanno sempre dove si trovano, si sentono molto spesso e hanno uin rapporto tutto loro.
+A meno che esponiate direttamente il pod con il suo ClusterIP, quando vi connetterete al vostro programma, in realta' punterete al suo service.
+I service lavorano al livello quattro dello stack OSI, quiesto significa che a venir forwardato sono solo i protocolli TCP/UDP
+
+-> port definition esplicita
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 80
+  type: ClusterIP
+```
+
+-> port definition implicita
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    app.kubernetes.io/name: proxy
+spec:
+  containers:
+  - name: nginx
+    image: nginx:stable
+    ports:
+      - containerPort: 80
+        name: http-web-svc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app.kubernetes.io/name: proxy
+  ports:
+  - name: name-of-service-port
+    protocol: TCP
+    port: 80
+    targetPort: http-web-svc
+```
+
+Fino qui sono stati dichiarati nei "metadata" le label con cui il service poteva trovare il suo pod, non e' il contrario!
+
+--> due container che si forwardano chiamate sul loopback
+
+```
+cat >> due_container_forward_loopback.yml << EOF
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mc3-nginx-conf
+data:
+  nginx.conf: |-
+    user  nginx;
+    worker_processes  1;
+
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+
+    events {
+        worker_connections  1024;
+    }
+
+    http {
+        include       /etc/nginx/mime.types;
+        default_type  application/octet-stream;
+
+        log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                          '$status $body_bytes_sent "$http_referer" '
+                          '"$http_user_agent" "$http_x_forwarded_for"';
+
+        access_log  /var/log/nginx/access.log  main;
+
+        sendfile        on;
+        keepalive_timeout  65;
+
+        upstream webapp {
+            server 127.0.0.1:5000;
+        }
+
+        server {
+            listen 80;
+
+            location / {
+                proxy_pass         http://webapp;
+                proxy_redirect     off;
+            }
+        }
+    }
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mc3
+  labels:
+    app: mc3
+spec:
+  containers:
+  - name: webapp
+    image: training/webapp
+  - name: nginx
+    image: nginx:alpine
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: nginx-proxy-config
+      mountPath: /etc/nginx/nginx.conf
+      subPath: nginx.conf
+  volumes:
+  - name: nginx-proxy-config
+    configMap:
+      name: mc3-nginx-conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: mc3
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 80
+  type: ClusterIP
+EOF
+```
+
+kubectl apply -f ./due_container_forward_loopback.yml
+
+
+curl http://$(kubectl describe svc nginx-service | grep 'IP:'|awk '{print $2}'):$(kubectl describe svc nginx-service| grep -E '^Port:' | awk '{print $3}' | sed -e 's/\/TCP//g') 
+
+
+--> pods e controllers 
+Anziche' forzare il deploy manualmente e' buona norma usare controllers che 
+si occupino di rideployare la risorsa su componenti sani alternativi ( leggi nodi ancora vivi e vegeti ).
+
+### Service Discovery
+
+Ad un certo punto arrivara' la domanda: "si ma come fanno i vari pezzi a parlare tra di loro?"
+
+-> DNS
+
+```
+kubectl run alpaca-prod --image=gcr.io/kuar-demo/kuard-amd64:blue --port=8080 --labels="ver=1,app=alpaca,env=prod" 
+kubectl expose pods alpaca-prod
+kubectl get pods,services -o wide
+
+( altro terminale  )
+ALPACA_POD=$(kubectl get pods -l app=alpaca -o jsonpath='{.items[0].metadata.name}')
+kubectl port-forward $ALPACA_POD 48858:8080
+
+( altro terminale  )
+kubectl get endpoints alpaca-prod --watch
+
+curl / open   http://localhost:48858
+```
+In questa demo abbiamo creato un pod, lo abbiamo trovato tramite le labels che abbiamo definito e lo abbiamo contattato tramite il servizio esposto.
+
+-> Endpoints
+
+Alcune applicazioni, cosi' come kubernetes stesso, devo poter usare un servizio prescindendo dal suo IP, questo e' ottenuto tramite l'uso di un oggetto chiamato "endpoint".
+
+Con i seguenti comandi devremo l'associazione tra nome del servizio e IP cambiare, relativamente agli endpoin assegnati. 
+
+```
+kubectl create deploy  alpaca-prod --image=gcr.io/kuar-demo/kuard-amd64:blue --port=8080
+kubectl get endpoints alpaca-prod --watch
+( in un altro terminale  )
+kubectl scale deployment alpaca-prod --replicas=3
+kubectl delete deploy alpaca-prod
+```
+
+Questo permette, alle applicazioni che lo necessitano,  di richiedere le informazioni direttamente al kube-api, il quale "osserva" costantemente gli oggetti presenti notificando immediatamente eventuali cambiamenti.
 
 ### Ingress
 
-helm install my-release oci://ghcr.io/nginxinc/charts/nginx-ingress --version 1.3.1
-kubectl get pods -n ingress-nginx
+Gli ingress sono la risposta di Kubernetes ai VirtualHost dei web server, solo che sono piu' intelligenti e dinamici. Esattamente come i service sono a conoscenza, grazie le API, del nuovo IP del service con cui devo no dialogare, questo li rende estremamante affidabili. 
 
-https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
+Non esiste un Ingress standard/default, questo perche' si e' deciso negli anni di mantenere k8s totalmente agnostico.
 
----
+Un elenco parziale dei piu' noti:
+
+- NGINX è versatile, supportato ampiamente e adatto a molteplici scenari.
+- HAProxy offre prestazioni elevate in contesti di alto traffico.
+- Traefik è semplice da usare e dinamico, ma meno configurabile.
+- Istio Ingress Gateway è potente per ambienti service mesh complessi.
+- Contour punta alla leggerezza e alle prestazioni tramite Envoy.
+
+-> Ingress Spec Versus Ingress Controllers
+L' Ingress Spec e' il manifesto  dischiarativo in cui sono elencate le regole che verranno poi applicate dall'Ingress Controller.
+
+```
+
+git clone https://github.com/nginxinc/kubernetes-ingress.git --branch v3.6.2
+cd kubernetes-ingress
+kubectl apply -f deployments/common/ns-and-sa.yaml
+kubectl apply -f deployments/rbac/rbac.yaml
+kubectl apply -f deployments/rbac/ap-rbac.yaml
+kubectl apply -f examples/shared-examples/default-server-secret/default-server-secret.yaml
+kubectl apply -f deployments/common/nginx-config.yaml
+kubectl apply -f deployments/common/ingress-class.yaml
+kubectl apply -f https://raw.githubusercontent.com/nginxinc/kubernetes-ingress/v3.6.2/deploy/crds.yaml
+kubectl apply -f deployments/daemon-set/nginx-ingress.yaml
+kubectl get pods --namespace=nginx-ingress -w
+
+
+https://www.youtube.com/watch?v=chwofyGr80c 21:38
+
+kubectl get deploy,po -l app.kubernetes.io/name=nginx-ingress -w
+kubectl create deployment web --image=gcr.io/google-samples/hello-app:1.0
+kubectl get endpoints -l app.kubernetes.io/name=nginx-ingress
+kubectl expose deployment web --type=NodePort --port=8080
+
+curl http://$(kubectl describe svc web | grep 'IP:'|awk '{print $2}'):$(kubectl describe svc web | grep -E '^Port:' | awk '{print $3}' | sed -e 's/\/TCP//g')
+
+
+cat  >  simple_ingress.yaml  <<  EOF
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginx-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-  type: LoadBalancer
+  name: example-ingress
 spec:
+  ingressClassName: nginx
   rules:
-  - host: ciao.it
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx-service
-            port:
-              number: 80
----
+    - host: hello-world.example
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 8080
+EOF
 
+kubectl apply -f ./siomple_ingress.yaml
+kubectl get ingress
+```
+
+### cenni di networking
 
   DNS pippo.it 195.0.0.100  
   /                                       ( ingress )
@@ -1188,8 +1335,7 @@ service port        10.0.0.245:8080
 pod port            172.0.0.10:80
 container           x:80
   nginx             x:80
-      
-
+     
 
 ## Comprendere gli RBAC
 
