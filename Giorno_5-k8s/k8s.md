@@ -2,7 +2,7 @@
 
 ## Perche' Kubernetes
 - pods, o gruppi di container, si possono raggruppare insieme immagini sviluppate da team differenti. 
-- servizi, offrono load balancing, naming e discovery per isolare un microservizio da un altro.
+- servizi, offrono load balancing, naming e service discovery per isolare un microservizio da un altro.
 - namespaces, offrono isolamento e controlli d'accesso, cosi' che ogni microservizio possa controllare
     il livello di interazione con gli altri.
 - Ingress, offrono un frontend comodo per combinare molteplici microservizi in una singola superfice 
@@ -10,8 +10,7 @@
 
 K8S ci offre "Service discovery and load balancing" esponendo i nostri servizi su container usando 
 fqdn ( tramite coredns ) e/o ip interni ( ClusterIP ). 
-Fa "Storage orchestration" facendo il provisioning di spazio 
-disco ai vari pod che ne fanno richiesta.
+Fa "Storage orchestration" facendo il provisioning di spazio disco ai vari pod che ne fanno richiesta.
 Automatizza rollout e rollback, tramite i manifesti in yaml possiamo descrivere lo stato ( versione ) 
 in cui vogliamo i nostri container, lasciando a lui il compito di occuparsene.
 Bin Picking automatizzato, e' possibile definire le risorse che ogni container puo' assumere e 
@@ -31,16 +30,6 @@ tramite l'uso intensivo di API e Load Balancers.
 Questo permette l'adozione di soluzioni dinamiche, quali lo scaling
 verticale e quello orizzontale.
 
-Visto che all'esame della CKA ci vengono presentati 6 cluster preinstallati sara' necessario spostarsi tra un cluster e l'altro con 
-
-kubectl config current-context
-
-kubectl config set-context <nome_del_cluster> --namespace <nome_del_namespace>
-
-k8s ha molti comandi,la cui maggior parte ha una nomenclatura parecchio estesa, ma possiamo controllarli tutti
-
-kubectl api-resources
-
 ## Tecniche di gestione
 
 Kubernetes supporta tre modalita' di gestione:
@@ -57,8 +46,6 @@ Kubernetes supporta tre modalita' di gestione:
 
     kubectl diff -f <NOME_PROGETTO1>/
     kubectl apply -f <NOME_PROGETTO1>/
-    kubectl diff -f <NOME_PROGETTO2>/
-    kubectl apply -f <NOME_PROGETTO2>/
 
 ## Oggetti
 
@@ -93,7 +80,7 @@ che ce siano sia svariate etichette nello stesso oggetto che rifermenti ad ognun
 I riferimenti o ricerche delle labels si eseguono tramite i "selectors" che supportano due 
 tipi di richieste
 
-"Equality- or inequality-based requirements"
+"Equality or inequality-based requirements"
 
 ```
 ...
@@ -123,7 +110,7 @@ kubectl get pods -l environment in production
                     !partition
 ```
 
-Il primo ritornera' 0 con tutti i valori "environment" nelle chiavi "production" e "qa"
+Il primo ritornera' 0 con tutti i valori "environment" nelle chiavi "production".
 La seconda ricerca per tutti i risultati di tier non "frontend" ma "backend", 
 mentre la terza e la quarta includeranno ed escluderanno, rispettivamente, ogni chiave 
 contenente o no "partition", a prescindere dai volori ad esse associati.   
@@ -171,16 +158,28 @@ Per definire un ns nella selezione corrente usare
 kubectl run nginx --image=nginx --namespace=<insert-namespace-name-here>
 kubectl get pods --namespace=<insert-namespace-name-here>
 ```
-mentre per impostarlo definitivamente ( fino al prossimo cambio )
-```
-kubectl config set-context --current --namespace=<insert-namespace-name-here>
-kubectl config view --minify | grep namespace:
-```
 La maggiorparte degli oggetti in k8s sono dentro dei ns, ma molti altri no, ad esempio i ns stessi e i pv.
 ```
 kubectl api-resources --namespaced=true
 kubectl api-resources --namespaced=false
 
+```
+k8s ha molti comandi,la cui maggior parte ha una nomenclatura parecchio estesa, ma possiamo controllarli tutti
+
+kubectl api-resources
+
+### Contexts
+
+Visto che all'esame della CKA ci vengono presentati 6 cluster preinstallati sara' necessario spostarsi tra un cluster e l'altro con 
+
+kubectl config current-context
+
+kubectl config set-context <nome_del_cluster> --namespace <nome_del_namespace>
+
+mentre per impostarlo definitivamente ( fino al prossimo cambio )
+```
+kubectl config set-context --current --namespace=<insert-namespace-name-here>
+kubectl config view --minify | grep namespace:
 ```
 
 ### Field Selector

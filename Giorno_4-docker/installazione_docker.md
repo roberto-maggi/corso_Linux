@@ -7,9 +7,8 @@ cat > /etc/docker/daemon.json << EOL
   "bip": "10.0.1.1/24",
   "ipv6": false,
   "default-address-pools": [
-    { "base": "10.0.64.0/18", "size": 24 }
-  ],
-  "data-root": "/mnt/docker-data/docker"
+    { "base": "10.0.64.0/8", "size": 24 }
+  ]
 }
 EOL
 ```

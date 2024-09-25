@@ -1,4 +1,5 @@
-sysctl Command: Tutorial & Examples
+# Sysctl Command: Tutorial & Examples
+
 A Tool for Fine-Tuning Your System
 
 The sysctl command in Linux is a powerful tool that allows you to view, modify, and fine-tune various parameters of the Linux kernel in real-time. It gives you control over many aspects of your system's behavior, performance, and security. By adjusting these parameters, you can optimize your server's performance, improve its stability, and enhance security measures.
@@ -17,31 +18,38 @@ sudo sysctl <parameter_name>
 You can use the sysctl command without any arguments to display the current value of a specific parameter. For example, to view the maximum number of open files allowed by the system, you can run:
 
 sudo sysctl fs.file-max
+
 To modify a parameter's value, you can use the -w option followed by the parameter name and the desired value. For instance, to increase the maximum number of open files, you can execute:
 
 sudo sysctl -w fs.file-max=100000
+
 3. Common Use Cases and Examples
 3.1 Adjusting Network Buffer Sizes
 When dealing with high network traffic, optimizing network buffer sizes can significantly improve performance. You can use sysctl to adjust parameters related to network buffers. For example, to increase the receive buffer size, execute:
 
 sudo sysctl -w net.core.rmem_max=16777216
+
 3.2 Tweaking File System Behavior
 By modifying file system parameters, you can influence how Linux handles file operations. For instance, to reduce the interval at which the system writes metadata updates to disk, you can run:
 
 sudo sysctl -w vm.dirty_writeback_centisecs=500
+
 3.3 Fine-Tuning Process Scheduling
 Sysctl enables you to optimize process scheduling on your system. For example, to increase the priority of the interactive tasks, you can execute:
 
 sudo sysctl -w kernel.sched_interactive_weight=100
+
 4. Persistent Configuration with sysctl.d
 While using sysctl at runtime is useful, you may want to persist your configurations across reboots. Linux distributions provide a directory called /etc/sysctl.d/ where you can create configuration files that set the desired parameters. These files follow the .conf extension and contain lines in the format parameter=value.
 
 For example, to set the fs.file-max parameter, create a file named /etc/sysctl.d/99-custom.conf and add the following line:
 
 fs.file-max=100000
+
 After saving the file, you can reload the configuration with:
 
 sudo sysctl --system
+
 4.1 Applying settings from a configuration file
 The sudo sysctl -p command in Linux is used to apply kernel parameter changes specified in the /etc/sysctl.conf configuration file. The sysctl command is used to modify kernel parameters at runtime, and the -p option tells it to load settings from the default configuration file.
 
@@ -58,6 +66,7 @@ Save the changes and exit the text editor.
 Run the following command to apply the changes immediately:
 
 sudo sysctl -p
+
 This will reload the settings from /etc/sysctl.conf and apply them without requiring a system reboot.
 
 Here's a hypothetical example of a modification you might make in /etc/sysctl.conf:
@@ -73,6 +82,7 @@ After making such changes, you would use sudo sysctl -p to apply them.
 In addition to the default configuration file /etc/sysctl.conf, the sysctl command allows you to specify a different file location. This allows you to load kernel parameters from a custom configuration file. Here's how you can use it:
 
 sudo sysctl -p /path/to/your/sysctl_custom.conf
+
 This flexibility allows system administrators to organize and manage kernel parameter configurations in different files, making it easier to maintain and customize settings for specific purposes. Each configuration file typically contains relevant settings related to a specific aspect of the system, such as networking, security, or performance.
 
 5. Security Considerations with sysctl

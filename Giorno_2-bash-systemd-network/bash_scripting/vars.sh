@@ -1,4 +1,3 @@
-# vars.sh
 #!/bin/bash
 VAR="global variable"
 

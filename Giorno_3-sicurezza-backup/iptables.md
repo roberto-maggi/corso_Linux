@@ -1,7 +1,7 @@
 # IPTABLES
 
 
-## Introduzione ai firewall e a iptables
+## Introduzione ai firewall e a iptables 
 Un firewall è uno strumento hardware o software che, in base a regole specifiche, consente di autorizzare o meno il transito di pacchetti.
 
 L’esame dei pacchetti può essere svolto secondo varie filosofie, con un diverso livello di complessità.

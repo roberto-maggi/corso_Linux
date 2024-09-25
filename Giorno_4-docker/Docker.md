@@ -1,6 +1,6 @@
 # La nascita del Porto
 Docker significa "portuale", nel senso di colui che lavora al porto, 
-e nasce da una esigenza di semplificazione del prtocesso di deploy dei programmi.
+e nasce da una esigenza di semplificazione del processo di deploy dei programmi.
 
 ### Lo sviluppo non basato su container necessita di decine di passaggi, tra i quali:
 
@@ -120,6 +120,7 @@ la reale disponibilita' di clock.
 Cio' che avverra' sara' una sorta di "renice" del processo, percui la sua 
 "l'aggressivita'" nei confronti del processore scendera' da 100ms a 50.
 I limiti alle CPU sono "relative limits"
+
 --> CPU pinning
 
 `docker run --rm -ti -c 512 --cpuset=0 testONE --cpu 2 --io 1 --vm 2 --vm-bytes 128M --timeout 120s`
@@ -178,6 +179,15 @@ ip link delete docker0
 
 ```
 
+### cluster docker
+su tutte le vm
+```
+cat >> index.html << EOF
+ciao sono $(hostname)
+EOF
+docker run -d -p 80:80 -v ./index.html:/usr/share/nginx/html/index.html --name=nginx nginx:latest
+curl 10.0.0.230:8080
+```
 
 ### Consigli
 
