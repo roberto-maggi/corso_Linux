@@ -1224,6 +1224,10 @@ curl / open   http://localhost:48858
 ```
 In questa demo abbiamo creato un pod, lo abbiamo trovato tramite le labels che abbiamo definito e lo abbiamo contattato tramite il servizio esposto.
 
+--> Tramite i service di norma!
+
+I Service espongono i nostri oggetti pod deployati sui nodi del nostro cluster usando una singola superficie di endpoit, anche per i workload templates.
+
 -> Endpoints
 
 Alcune applicazioni, cosi' come kubernetes stesso, devo poter usare un servizio prescindendo dal suo IP, questo e' ottenuto tramite l'uso di un oggetto chiamato "endpoint".
@@ -1238,7 +1242,129 @@ kubectl scale deployment alpaca-prod --replicas=3
 kubectl delete deploy alpaca-prod
 ```
 
-Questo permette, alle applicazioni che lo necessitano,  di richiedere le informazioni direttamente al kube-api, il quale "osserva" costantemente gli oggetti presenti notificando immediatamente eventuali cambiamenti.
+Questo permette, alle applicazioni che lo necessitano, di richiedere le informazioni direttamente al kube-api, il quale "osserva" costantemente gli oggetti presenti notificando immediatamente eventuali cambiamenti.
+
+La vera utilita' degli oggetti Service in K8S, e' quella di permetterci di sviluppare applicazioni senza dover tenere conto dell'infrastruttura sottostante e la sua possibile complessita'.
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app.kubernetes.io/name: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
+```
+
+In questo manifest possiamo vedere come sia possibile dichiarare implicitamente le porte del service.
+
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    app.kubernetes.io/name: proxy
+spec:
+  containers:
+  - name: nginx
+    image: nginx:stable
+    ports:
+      - containerPort: 80
+        name: http-web-svc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app.kubernetes.io/name: proxy
+  ports:
+  - name: name-of-service-port
+    protocol: TCP
+    port: 80
+    targetPort: http-web-svc
+```
+
+E' possibile anche usare un oggetto service NON dichiarando il selector del pod.
+Questo e' fattibile quando si utilizza il corrispondente set di `EndPointSlices`.
+Questi EndPointSlices vengono creati automaticamente da K8S ogni qual volta viene deployato un service con un Selector dichiarato. Essi riportano, essenzialmente, l'elenco dei pod che fanno il match con il suddetto selector . Il loro nome deve essere un fqdn valido. 
+Il seguente e' il manifesto di un EndPointSlice.
+
+```
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: example-abc
+  labels:
+    kubernetes.io/service-name: example
+addressType: IPv4
+ports:
+  - name: http
+    protocol: TCP
+    port: 80
+endpoints:
+  - addresses:
+      - "10.1.2.3"
+    conditions:
+      ready: true
+    hostname: pod-1
+    nodeName: node-1
+    zone: us-west2-a
+```
+
+D'altro canto esistono anche gli API Endpoints che definiscono liste di endpoint nel network interno a kubernetes e vengono indicati dai Service per "sapere" a quali pod devono puntare.
+Eseguendo un `kubectl apply` a questo manifest creeremo un oggetto Service che eseguira' un forwarding della porta esposta 80 verso la 9376 del suo pod "MyApp"
+
+I Service possono riportare anche protocolli multipli a cui i pod potranno fare riferimento.
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app.kubernetes.io/name: MyApp
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 9376
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 9377
+
+```
+
+I ( network ) Type dei Service possono essere quattro: ClusterIP, NodePort, LoadBalancer ed ExternalName.
+
+type: ClusterIP 
+E' quello di default e assegna IP dal pool di indirizzi definito durante l'installazione del cluster, sappi che e' possibilie definire un `".spec.clusterIP set to "None"`: in questo caso avremo creato un `headless service`
+E' possibile definide un IP specifico all'interno dei ClusterIP, ecco come.
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  namespace: my-namespace
+spec:
+  type: ClusterIP
+  clusterIP: 10.96.0.100  # Replace with your desired IP address within the ClusterIP range
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+```
 
 ### Ingress
 
